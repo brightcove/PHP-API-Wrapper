@@ -5,9 +5,9 @@ require_once 'brightcovetestbase.php';
 
 class BrightcoveTest extends BrightcoveTestBase {
   public function testHasClientData() {
-    $this->assertTrue(!!$this->client_id, 'Client ID exists');
-    $this->assertTrue(!!$this->client_secret, 'Client secret exists');
-    $this->assertTrue(!!$this->account, 'Account exists');
+    $this->assertTrue((bool) $this->client_id, 'Client ID exists');
+    $this->assertTrue((bool) $this->client_secret, 'Client secret exists');
+    $this->assertTrue((bool) $this->account, 'Account exists');
   }
 
   public function testAuthorization() {

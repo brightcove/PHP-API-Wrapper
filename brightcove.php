@@ -10,7 +10,7 @@ class BrightcoveClient {
   }
 
   public function isAuthorized() {
-    return !!$this->access_token;
+    return (bool) $this->access_token;
   }
 
   public static function authorize($client_id, $client_secret) {
