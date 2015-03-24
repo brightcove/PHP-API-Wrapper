@@ -24,7 +24,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
     $video = new BrightcoveVideo();
     $video->name = uniqid('brightcove_api_test_', TRUE);
 
-    $video = $this->cms->postVideo($video);
+    $video = $this->cms->createVideo($video);
     $this->assertNotEmpty($video->id, 'Video id is not empty');
     return $video->id;
   }

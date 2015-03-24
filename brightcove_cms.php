@@ -18,7 +18,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   /**
    * @return BrightcoveVideo
    */
-  public function postVideo(BrightcoveVideo $video) {
+  public function createVideo(BrightcoveVideo $video) {
     return $this->cmsRequest('POST', '/videos', new BrightcoveVideo(), $video);
   }
 
