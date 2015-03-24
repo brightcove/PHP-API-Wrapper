@@ -38,4 +38,21 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
     $this->assertNotEmpty($ingest->id);
     return $ingest->id;
   }
+
+  /**
+   * @depends testVideoObjectCreation
+   */
+  public function testVideoRetrieving($video_id) {
+    $video = $this->cms->getVideo($video_id);
+    $this->assertNotEmpty($video->id, 'Video ID is not empty');
+    $this->assertEquals($video_id, $video->id, 'Returned video id is the same');
+    return $video_id;
+  }
+
+  /**
+   * @depends testVideoRetrieving
+   */
+  public function testVideoDeleting($video_id) {
+    $this->cms->deleteVideo($video_id);
+  }
 }

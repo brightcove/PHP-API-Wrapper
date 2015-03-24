@@ -18,8 +18,19 @@ class BrightcoveCMS extends BrightcoveAPI {
   /**
    * @return BrightcoveVideo
    */
+  public function getVideo($video_id) {
+    return $this->cmsRequest('GET', "/videos/{$video_id}", new BrightcoveVideo());
+  }
+
+  /**
+   * @return BrightcoveVideo
+   */
   public function createVideo(BrightcoveVideo $video) {
     return $this->cmsRequest('POST', '/videos', new BrightcoveVideo(), $video);
+  }
+
+  public function deleteVideo($video_id) {
+    return $this->cmsRequest('DELETE', "/videos/{$video_id}", NULL);
   }
 
 }
