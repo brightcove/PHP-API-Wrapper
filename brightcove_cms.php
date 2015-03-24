@@ -11,7 +11,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   /**
    * @return BrightcoveVideo[]
    */
-  public function videos($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
+  public function listVideos($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
     return $this->cmsRequest('GET', '/videos', 'BrightcoveVideo');
   }
 
