@@ -22,11 +22,11 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
 
   public function testVideoObjectCreation() {
     $video = new BrightcoveVideo();
-    $video->name = uniqid('brightcove_api_test_', TRUE);
+    $video->setName(uniqid('brightcove_api_test_', TRUE));
 
     $video = $this->cms->createVideo($video);
-    $this->assertNotEmpty($video->id, 'Video id is not empty');
-    return $video->id;
+    $this->assertNotEmpty($video->getId(), 'Video id is not empty');
+    return $video->getId();
   }
 
   /**
@@ -35,8 +35,8 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
   public function testVideoIngestions($video_id) {
     $request = BrightcoveIngestRequest::createRequest('http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi', 'high-bandwidth-devices');
     $ingest = $this->di->createIngest($video_id, $request);
-    $this->assertNotEmpty($ingest->id);
-    return $ingest->id;
+    $this->assertNotEmpty($ingest->getId());
+    return $ingest->getId();
   }
 
   /**
@@ -44,13 +44,24 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
    */
   public function testVideoRetrieving($video_id) {
     $video = $this->cms->getVideo($video_id);
-    $this->assertNotEmpty($video->id, 'Video ID is not empty');
-    $this->assertEquals($video_id, $video->id, 'Returned video id is the same');
+    $this->assertNotEmpty($video->getId(), 'Video ID is not empty');
+    $this->assertEquals($video_id, $video->getId(), 'Returned video id is the same');
     return $video_id;
   }
 
   /**
    * @depends testVideoRetrieving
+   */
+  public function testVideoUpdating($video_id) {
+    $video = $this->cms->getVideo($video_id);
+    $description = self::generateRandomString();
+    $video->setDescription($description);
+    $result = $this->cms->updateVideo($video);
+    var_dump($result);
+  }
+
+  /**
+   * @depends testVideoUpdating
    */
   public function testVideoDeleting($video_id) {
     $this->cms->deleteVideo($video_id);

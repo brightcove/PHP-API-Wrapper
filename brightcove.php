@@ -35,15 +35,15 @@ class BrightcoveClient {
     return new BrightcoveClient($json['access_token']);
   }
 
-  public function request($method, $api_type, $account, $endpoint, $result, $post = NULL) {
+  public function request($method, $api_type, $account, $endpoint, $result, BrightcoveObject $post = NULL) {
     $client = new GuzzleHttp\Client();
     $body = NULL;
     if ($post) {
-      $body = json_encode($post);
-      $body = json_decode($body, TRUE);
-      $body = array_filter($body, function ($item) {
-        return !is_null($item);
-      });
+      if ($method === 'PATCH') {
+        $body = $post->patchJSON();
+      } else {
+        $body = $post->postJSON();
+      }
       $body = json_encode($body);
     }
     $res = $client->{strtolower($method)}("https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}", [
@@ -77,6 +77,37 @@ class BrightcoveAPI {
   public function __construct(BrightcoveClient $client, $account) {
     $this->client = $client;
     $this->account = $account;
+  }
+}
+
+interface BrightcoveObject {
+  public function postJSON();
+  public function patchJSON();
+}
+
+class BrightcoveObjectBase implements BrightcoveObject {
+  private $changedFields = [];
+
+  protected function fieldChanged($field_name) {
+    $this->changedFields[] = $field_name;
+  }
+
+  public function postJSON() {
+    $data = [];
+    foreach ($this as $k => $v) {
+      if ($k === 'changedFields' || $v === NULL) {
+        continue;
+      }
+      if ($v instanceof BrightcoveObject) {
+        $data[$k] = $v->postJSON();
+      } else {
+        $data[$k] = $v;
+      }
+    }
+    return $data;
+  }
+
+  public function patchJSON() {
   }
 }
 
