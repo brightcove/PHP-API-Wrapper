@@ -1,0 +1,11 @@
+{
+  "require": {
+    "guzzlehttp/guzzle": "5.2.*",
+    "fkooman/guzzle-bearer-auth-plugin": "dev-master",
+    "fkooman/php-oauth-client": "dev-master",
+    "netresearch/jsonmapper": "0.5.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.5.*"
+  }
+}
