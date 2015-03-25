@@ -87,6 +87,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $id
+   * @return $this
    */
   public function setId($id) {
     $this->id = $id;
@@ -103,6 +104,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $account_id
+   * @return $this
    */
   public function setAccountId($account_id) {
     $this->account_id = $account_id;
@@ -119,6 +121,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $complete
+   * @return $this
    */
   public function setComplete($complete) {
     $this->complete = $complete;
@@ -135,6 +138,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $created_at
+   * @return $this
    */
   public function setCreatedAt($created_at) {
     $this->created_at = $created_at;
@@ -151,6 +155,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param BrightcoveVideoCuePoint[] $cue_points
+   * @return $this
    */
   public function setCuePoints(array $cue_points) {
     $this->cue_points = $cue_points;
@@ -167,6 +172,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $custom_fields
+   * @return $this
    */
   public function setCustomFields($custom_fields) {
     $this->custom_fields = $custom_fields;
@@ -183,6 +189,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $description
+   * @return $this
    */
   public function setDescription($description) {
     $this->description = $description;
@@ -199,6 +206,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $duration
+   * @return $this
    */
   public function setDuration($duration) {
     $this->duration = $duration;
@@ -215,6 +223,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $economics
+   * @return $this
    */
   public function setEconomics($economics) {
     $this->economics = $economics;
@@ -231,6 +240,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $folder_id
+   * @return $this
    */
   public function setFolderId($folder_id) {
     $this->folder_id = $folder_id;
@@ -247,6 +257,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param BrightcoveVideoGEO $geo
+   * @return $this
    */
   public function setGeo(BrightcoveVideoGEO $geo = NULL) {
     $this->geo = $geo;
@@ -263,6 +274,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param BrightcoveVideoImage[] $images
+   * @return $this
    */
   public function setImages(array $images) {
     $this->images = $images;
@@ -279,6 +291,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $link
+   * @return $this
    */
   public function setLink($link) {
     $this->link = $link;
@@ -295,6 +308,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $long_description
+   * @return $this
    */
   public function setLongDescription($long_description) {
     $this->long_description = $long_description;
@@ -311,6 +325,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $name
+   * @return $this
    */
   public function setName($name) {
     $this->name = $name;
@@ -327,6 +342,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $reference_id
+   * @return $this
    */
   public function setReferenceId($reference_id) {
     $this->reference_id = $reference_id;
@@ -343,6 +359,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param BrightcoveVideoSchedule $schedule
+   * @return $this
    */
   public function setSchedule(BrightcoveVideoSchedule $schedule = NULL) {
     $this->schedule = $schedule;
@@ -359,6 +376,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $sharing
+   * @return $this
    */
   public function setSharing($sharing) {
     $this->sharing = $sharing;
@@ -375,6 +393,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $state
+   * @return $this
    */
   public function setState($state) {
     $this->state = $state;
@@ -391,6 +410,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param array $tags
+   * @return $this
    */
   public function setTags(array $tags) {
     $this->tags = $tags;
@@ -407,6 +427,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $text_tracks
+   * @return $this
    */
   public function setTextTracks($text_tracks) {
     $this->text_tracks = $text_tracks;
@@ -423,6 +444,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
   /**
    * @param string $updated_at
+   * @return $this
    */
   public function setUpdatedAt($updated_at) {
     $this->updated_at = $updated_at;
@@ -443,6 +465,7 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
 
   /**
    * @param string $id
+   * @return $this
    */
   public function setId($id) {
     $this->id = $id;
@@ -459,6 +482,7 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
 
   /**
    * @param string $src
+   * @return $this
    */
   public function setSrc($src) {
     $this->src = $src;
@@ -485,6 +509,7 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
 
   /**
    * @param string $id
+   * @return $this
    */
   public function setId($id) {
     $this->id = $id;
@@ -501,6 +526,7 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
 
   /**
    * @param string $name
+   * @return $this
    */
   public function setName($name) {
     $this->name = $name;
@@ -517,6 +543,7 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
 
   /**
    * @param string $type
+   * @return $this
    */
   public function setType($type) {
     $this->type = $type;
@@ -533,6 +560,7 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
 
   /**
    * @param string $time
+   * @return $this
    */
   public function setTime($time) {
     $this->time = $time;
@@ -549,6 +577,7 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
 
   /**
    * @param string $metadata
+   * @return $this
    */
   public function setMetadata($metadata) {
     $this->metadata = $metadata;
@@ -565,6 +594,7 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
 
   /**
    * @param string $force_stop
+   * @return $this
    */
   public function setForceStop($force_stop) {
     $this->force_stop = $force_stop;
@@ -587,6 +617,7 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
 
   /**
    * @param array $countries
+   * @return $this
    */
   public function setCountries($countries) {
     $this->countries = $countries;
@@ -603,6 +634,7 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
 
   /**
    * @param boolean $exclude_countries
+   * @return $this
    */
   public function setExcludeCountries($exclude_countries) {
     $this->exclude_countries = $exclude_countries;
@@ -619,6 +651,7 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
 
   /**
    * @param boolean $restricted
+   * @return $this
    */
   public function setRestricted($restricted) {
     $this->restricted = $restricted;
@@ -640,6 +673,7 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
 
   /**
    * @param string $starts_at
+   * @return $this
    */
   public function setStartsAt($starts_at) {
     $this->starts_at = $starts_at;
@@ -656,6 +690,7 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
 
   /**
    * @param string $ends_at
+   * @return $this
    */
   public function setEndsAt($ends_at) {
     $this->ends_at = $ends_at;
