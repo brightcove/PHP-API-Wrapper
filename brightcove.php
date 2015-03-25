@@ -57,32 +57,36 @@ class BrightcoveClient {
       }
       $body = json_encode($body);
     }
-    $res = $client->{strtolower($method)}("https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}", [
-      'headers' => [
-        'Authorization' => "Bearer {$this->access_token}",
-      ],
-      'body' => $body,
-    ]);
+    try {
+      $res = $client->{strtolower($method)}("https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}", [
+        'headers' => [
+          'Authorization' => "Bearer {$this->access_token}",
+        ],
+        'body' => $body,
+      ]);
 
-    $code = $res->getStatusCode();
-    if ($code < 200 || $code >= 300) {
-      throw new BrightcoveAPIException('Invalid status code: expected 200-299, got ' . $res->getStatusCode());
-    }
-
-    $json = $res->json();
-    $mapper = new JsonMapper();
-    if (is_null($result)) {
-      return $json;
-    } else if (is_object($result)) {
-      $ret = $mapper->map($json, $result);
-      $ret->patchJSON();
-      return $ret;
-    } else {
-      $ret = $mapper->mapArray($json, [], $result);
-      foreach ($ret as $obj) {
-        $obj->patchJSON();
+      $code = $res->getStatusCode();
+      if ($code < 200 || $code >= 300) {
+        throw new BrightcoveAPIException('Invalid status code: expected 200-299, got ' . $res->getStatusCode());
       }
-      return $ret;
+
+      $json = $res->json();
+      $mapper = new JsonMapper();
+      if (is_null($result)) {
+        return $json;
+      } else if (is_object($result)) {
+        $ret = $mapper->map($json, $result);
+        $ret->patchJSON();
+        return $ret;
+      } else {
+        $ret = $mapper->mapArray($json, [], $result);
+        foreach ($ret as $obj) {
+          $obj->patchJSON();
+        }
+        return $ret;
+      }
+    } catch (GuzzleHttp\Exception\ClientException $e) {
+      throw new BrightcoveAPIException($e->getResponse()->getBody(), $e->getResponse()->getStatusCode());
     }
   }
 }
