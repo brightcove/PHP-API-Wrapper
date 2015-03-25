@@ -87,6 +87,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setId($id) {
     $this->id = $id;
+    $this->fieldChanged('id');
+    return $this;
   }
 
   /**
@@ -101,6 +103,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setAccountId($account_id) {
     $this->account_id = $account_id;
+    $this->fieldChanged('account_id');
+    return $this;
   }
 
   /**
@@ -115,6 +119,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setComplete($complete) {
     $this->complete = $complete;
+    $this->fieldChanged('complete');
+    return $this;
   }
 
   /**
@@ -129,6 +135,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setCreatedAt($created_at) {
     $this->created_at = $created_at;
+    $this->fieldChanged('created_at');
+    return $this;
   }
 
   /**
@@ -143,6 +151,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setCuePoints(array $cue_points) {
     $this->cue_points = $cue_points;
+    $this->fieldChanged('cue_points');
+    return $this;
   }
 
   /**
@@ -157,6 +167,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setCustomFields($custom_fields) {
     $this->custom_fields = $custom_fields;
+    $this->fieldChanged('custom_fields');
+    return $this;
   }
 
   /**
@@ -171,6 +183,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setDescription($description) {
     $this->description = $description;
+    $this->fieldChanged('description');
+    return $this;
   }
 
   /**
@@ -185,6 +199,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setDuration($duration) {
     $this->duration = $duration;
+    $this->fieldChanged('duration');
+    return $this;
   }
 
   /**
@@ -199,6 +215,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setEconomics($economics) {
     $this->economics = $economics;
+    $this->fieldChanged('economics');
+    return $this;
   }
 
   /**
@@ -213,6 +231,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setFolderId($folder_id) {
     $this->folder_id = $folder_id;
+    $this->fieldChanged('folder_id');
+    return $this;
   }
 
   /**
@@ -227,6 +247,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setGeo(BrightcoveVideoGEO $geo = NULL) {
     $this->geo = $geo;
+    $this->fieldChanged('geo');
+    return $this;
   }
 
   /**
@@ -241,6 +263,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setImages(array $images) {
     $this->images = $images;
+    $this->fieldChanged('images');
+    return $this;
   }
 
   /**
@@ -255,6 +279,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setLink($link) {
     $this->link = $link;
+    $this->fieldChanged('link');
+    return $this;
   }
 
   /**
@@ -269,6 +295,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setLongDescription($long_description) {
     $this->long_description = $long_description;
+    $this->fieldChanged('long_description');
+    return $this;
   }
 
   /**
@@ -283,6 +311,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setName($name) {
     $this->name = $name;
+    $this->fieldChanged('name');
+    return $this;
   }
 
   /**
@@ -297,6 +327,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setReferenceId($reference_id) {
     $this->reference_id = $reference_id;
+    $this->fieldChanged('reference_id');
+    return $this;
   }
 
   /**
@@ -311,6 +343,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setSchedule(BrightcoveVideoSchedule $schedule = NULL) {
     $this->schedule = $schedule;
+    $this->fieldChanged('schedule');
+    return $this;
   }
 
   /**
@@ -325,6 +359,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setSharing($sharing) {
     $this->sharing = $sharing;
+    $this->fieldChanged('sharing');
+    return $this;
   }
 
   /**
@@ -339,6 +375,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setState($state) {
     $this->state = $state;
+    $this->fieldChanged('state');
+    return $this;
   }
 
   /**
@@ -353,6 +391,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setTags(array $tags) {
     $this->tags = $tags;
+    $this->fieldChanged('tags');
+    return $this;
   }
 
   /**
@@ -367,6 +407,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setTextTracks($text_tracks) {
     $this->text_tracks = $text_tracks;
+    $this->fieldChanged('text_tracks');
+    return $this;
   }
 
   /**
@@ -381,6 +423,8 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   public function setUpdatedAt($updated_at) {
     $this->updated_at = $updated_at;
+    $this->fieldChanged('updated_at');
+    return $this;
   }
 }
 
@@ -399,6 +443,8 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
    */
   public function setId($id) {
     $this->id = $id;
+    $this->fieldChanged('id');
+    return $this;
   }
 
   /**
@@ -413,6 +459,8 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
    */
   public function setSrc($src) {
     $this->src = $src;
+    $this->fieldChanged('src');
+    return $this;
   }
   protected $src;
 }
@@ -437,6 +485,8 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
    */
   public function setId($id) {
     $this->id = $id;
+    $this->fieldChanged('id');
+    return $this;
   }
 
   /**
@@ -451,6 +501,8 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
    */
   public function setName($name) {
     $this->name = $name;
+    $this->fieldChanged('name');
+    return $this;
   }
 
   /**
@@ -465,6 +517,8 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
    */
   public function setType($type) {
     $this->type = $type;
+    $this->fieldChanged('type');
+    return $this;
   }
 
   /**
@@ -479,6 +533,8 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
    */
   public function setTime($time) {
     $this->time = $time;
+    $this->fieldChanged('time');
+    return $this;
   }
 
   /**
@@ -493,6 +549,8 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
    */
   public function setMetadata($metadata) {
     $this->metadata = $metadata;
+    $this->fieldChanged('metadata');
+    return $this;
   }
 
   /**
@@ -507,6 +565,8 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
    */
   public function setForceStop($force_stop) {
     $this->force_stop = $force_stop;
+    $this->fieldChanged('force_stop');
+    return $this;
   }
 }
 
@@ -527,6 +587,8 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
    */
   public function setCountries($countries) {
     $this->countries = $countries;
+    $this->fieldChanged('countries');
+    return $this;
   }
 
   /**
@@ -541,6 +603,8 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
    */
   public function setExcludeCountries($exclude_countries) {
     $this->exclude_countries = $exclude_countries;
+    $this->fieldChanged('exclude_countries');
+    return $this;
   }
 
   /**
@@ -555,6 +619,8 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
    */
   public function setRestricted($restricted) {
     $this->restricted = $restricted;
+    $this->fieldChanged('restricted');
+    return $this;
   }
 }
 
@@ -574,6 +640,8 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
    */
   public function setStartsAt($starts_at) {
     $this->starts_at = $starts_at;
+    $this->fieldChanged('starts_at');
+    return $this;
   }
 
   /**
@@ -588,5 +656,7 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
    */
   public function setEndsAt($ends_at) {
     $this->ends_at = $ends_at;
+    $this->fieldChanged('ends_at');
+    return $this;
   }
 }
