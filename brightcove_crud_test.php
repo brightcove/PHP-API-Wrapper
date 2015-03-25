@@ -57,7 +57,9 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
     $description = self::generateRandomString();
     $video->setDescription($description);
     $result = $this->cms->updateVideo($video);
-    var_dump($result);
+    $this->assertEquals($video_id, $result->getId(), 'Video IDs should be equals');
+    $this->assertEquals($description, $result->getDescription(), 'Description should be updated');
+    return $video_id;
   }
 
   /**
