@@ -1,28 +1,11 @@
 <?php
 
-require_once 'brightcove.php';
 require_once 'brightcovetestbase.php';
 
 class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
-  /**
-   * @var BrightcoveCMS
-   */
-  protected $cms;
-  /**
-   * @var BrightcoveDI
-   */
-  protected $di;
-
-  public function setUp() {
-    parent::setUp();
-    $client = $this->getClient();
-    $this->cms = $this->createCMSObject($client);
-    $this->di = $this->createDIObject($client);
-  }
 
   public function testVideoObjectCreation() {
-    $video = new BrightcoveVideo();
-    $video->setName(uniqid('brightcove_api_test_', TRUE));
+    $video = $this->createRandomVideoObject();
 
     $video = $this->cms->createVideo($video);
     $this->assertNotEmpty($video->getId(), 'Video id is not empty');

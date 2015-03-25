@@ -111,14 +111,25 @@ class BrightcoveObjectBase implements BrightcoveObject {
 
   public function postJSON() {
     $data = [];
-    foreach ($this as $k => $v) {
-      if ($k === 'changedFields' || $v === NULL) {
+    foreach ($this as $field => $val) {
+      if ($field === 'changedFields' || $val === NULL) {
         continue;
       }
-      if ($v instanceof BrightcoveObject) {
-        $data[$k] = $v->postJSON();
+      if ($val instanceof BrightcoveObject) {
+        $data[$field] = $val->postJSON();
+      }
+      else if (is_array($val)) {
+        $data[$field] = [];
+        foreach ($val as $k => $v) {
+          if ($v instanceof BrightcoveObject) {
+            $data[$field][$k] = $v->postJSON();
+          }
+          else {
+            $data[$field][$k] = $v;
+          }
+        }
       } else {
-        $data[$k] = $v;
+        $data[$field] = $val;
       }
     }
     return $data;
@@ -134,6 +145,15 @@ class BrightcoveObjectBase implements BrightcoveObject {
 
       if ($val instanceof BrightcoveObject) {
         $data[$field] = $val->patchJSON();
+      } else if (is_array($val)) {
+        $data[$field] = [];
+        foreach ($val as $k => $v) {
+          if ($v instanceof BrightcoveObject) {
+            $data[$field][$k] = $v->patchJSON();
+          } else {
+            $data[$field][$k] = $v;
+          }
+        }
       } else {
         $data[$field] = $val;
       }

@@ -9,6 +9,21 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
   protected $client_secret;
   protected $account;
 
+  /**
+   * @var BrightcoveClient
+   */
+  protected $client;
+
+  /**
+   * @var BrightcoveCMS
+   */
+  protected $cms;
+
+  /**
+   * @var BrightcoveDI
+   */
+  protected $di;
+
   protected function getClient() {
     return BrightcoveClient::authorize($this->client_id, $this->client_secret);
   }
@@ -31,6 +46,10 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
         }
       }
     }
+
+    $this->client = $this->getClient();
+    $this->cms = $this->createCMSObject($this->client);
+    $this->di = $this->createDIObject($this->client);
   }
 
   protected function createCMSObject(BrightcoveClient $client = NULL) {
@@ -45,6 +64,12 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
       $client = $this->getClient();
     }
     return new BrightcoveDI($client, $this->account);
+  }
+
+  protected function createRandomVideoObject() {
+    $video = new BrightcoveVideo();
+    $video->setName(uniqid('brightcove_api_test_', TRUE));
+    return $video;
   }
 
   public static function generateRandomString($length = 16) {
