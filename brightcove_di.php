@@ -45,6 +45,8 @@ class BrightcoveIngestRequest extends BrightcoveObjectBase {
    */
   public function setMaster(BrightcoveIngestRequestMaster $master = NULL) {
     $this->master = $master;
+    $this->fieldChanged('master');
+    return $this;
   }
 
   /**
@@ -59,6 +61,8 @@ class BrightcoveIngestRequest extends BrightcoveObjectBase {
    */
   public function setProfile($profile) {
     $this->profile = $profile;
+    $this->fieldChanged('profile');
+    return $this;
   }
 
   /**
@@ -73,6 +77,8 @@ class BrightcoveIngestRequest extends BrightcoveObjectBase {
    */
   public function setCallbacks(array $callbacks) {
     $this->callbacks = $callbacks;
+    $this->fieldChanged('callbacks');
+    return $this;
   }
 }
 
@@ -91,6 +97,8 @@ class BrightcoveIngestRequestMaster extends BrightcoveObjectBase {
    */
   public function setUrl($url) {
     $this->url = $url;
+    $this->fieldChanged('url');
+    return $this;
   }
 }
 
@@ -109,5 +117,7 @@ class BrightcoveIngestResponse extends BrightcoveObjectBase {
    */
   public function setId($id) {
     $this->id = $id;
+    $this->fieldChanged('id');
+    return $this;
   }
 }
