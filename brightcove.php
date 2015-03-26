@@ -13,21 +13,58 @@ class BrightcoveClient {
     return (bool) $this->access_token;
   }
 
-  public static function authorize($client_id, $client_secret) {
-    $client = new GuzzleHttp\Client();
-    $res = $client->post('https://oauth.brightcove.com/v3/access_token', [
-      'body' => 'grant_type=client_credentials',
-      'headers' => [
-        'Content-Type' => 'application/x-www-form-urlencoded',
-      ],
-      'auth' => [$client_id, $client_secret],
+  /**
+   * @param string $method
+   * @param string $url
+   * @param array $headers
+   * @param null|array|string $postdata
+   * @param null|callable $extraconfig
+   * @return array
+   */
+  public static function HTTPRequest($method, $url, $headers = [], $postdata = NULL, $extraconfig = NULL) {
+    $ch = curl_init();
+
+    if ($postdata !== NULL) {
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+      $headers[] = 'Content-Length: ' . strlen($postdata);
+    }
+
+    curl_setopt_array($ch, [
+      CURLOPT_AUTOREFERER => TRUE,
+      CURLOPT_FOLLOWLOCATION => TRUE,
+      CURLOPT_RETURNTRANSFER => TRUE,
+      CURLOPT_SAFE_UPLOAD => TRUE,
+      CURLOPT_MAXREDIRS => 5,
+      CURLOPT_CUSTOMREQUEST => $method,
+      CURLOPT_URL => $url,
+      CURLOPT_HTTPHEADER => $headers,
     ]);
 
-    if ($res->getStatusCode() !== 200) {
+    if ($extraconfig !== NULL) {
+      $extraconfig($ch);
+    }
+
+    $result = curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    curl_close($ch);
+
+    return [$code, $result];
+  }
+
+  public static function authorize($client_id, $client_secret) {
+    list($code, $response) = self::HTTPRequest('POST', 'https://oauth.brightcove.com/v3/access_token',
+      ['Content-Type: application/x-www-form-urlencoded'],
+      'grant_type=client_credentials',
+      function ($ch) use ($client_id, $client_secret) {
+        curl_setopt($ch, CURLOPT_USERPWD, "{$client_id}:{$client_secret}");
+      });
+
+    if ($code !== 200) {
       throw new BrightcoveAuthenticationException();
     }
 
-    $json = $res->json();
+    $json = json_decode($response, TRUE);
     if ($json['token_type'] !== 'Bearer') {
       throw new BrightcoveAuthenticationException('Unsupported token type: ' . $json['token_type']);
     }
@@ -47,7 +84,6 @@ class BrightcoveClient {
    * @throws JsonMapper_Exception
    */
   public function request($method, $api_type, $account, $endpoint, $result, BrightcoveObject $post = NULL) {
-    $client = new GuzzleHttp\Client();
     $body = NULL;
     if ($post) {
       if ($method === 'PATCH') {
@@ -57,36 +93,26 @@ class BrightcoveClient {
       }
       $body = json_encode($body);
     }
-    try {
-      $res = $client->{strtolower($method)}("https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}", [
-        'headers' => [
-          'Authorization' => "Bearer {$this->access_token}",
-        ],
-        'body' => $body,
-      ]);
+    list($code, $res) = self::HTTPRequest($method, "https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}",
+      ["Authorization: Bearer {$this->access_token}"], $body);
+    if ($code < 200 || $code >= 300) {
+      throw new BrightcoveAPIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}");
+    }
 
-      $code = $res->getStatusCode();
-      if ($code < 200 || $code >= 300) {
-        throw new BrightcoveAPIException('Invalid status code: expected 200-299, got ' . $res->getStatusCode());
+    $json = json_decode($res, TRUE);
+    $mapper = new JsonMapper();
+    if (is_null($result)) {
+      return $json;
+    } else if (is_object($result)) {
+      $ret = $mapper->map($json, $result);
+      $ret->patchJSON();
+      return $ret;
+    } else {
+      $ret = $mapper->mapArray($json, [], $result);
+      foreach ($ret as $obj) {
+        $obj->patchJSON();
       }
-
-      $json = $res->json();
-      $mapper = new JsonMapper();
-      if (is_null($result)) {
-        return $json;
-      } else if (is_object($result)) {
-        $ret = $mapper->map($json, $result);
-        $ret->patchJSON();
-        return $ret;
-      } else {
-        $ret = $mapper->mapArray($json, [], $result);
-        foreach ($ret as $obj) {
-          $obj->patchJSON();
-        }
-        return $ret;
-      }
-    } catch (GuzzleHttp\Exception\ClientException $e) {
-      throw new BrightcoveAPIException($e->getResponse()->getBody(), $e->getResponse()->getStatusCode());
+      return $ret;
     }
   }
 }

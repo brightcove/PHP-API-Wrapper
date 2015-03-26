@@ -1,6 +1,5 @@
 {
   "require": {
-    "guzzlehttp/guzzle": "5.2.*",
     "netresearch/jsonmapper": "0.5.*"
   },
   "require-dev": {

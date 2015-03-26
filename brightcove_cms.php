@@ -12,7 +12,21 @@ class BrightcoveCMS extends BrightcoveAPI {
    * @return BrightcoveVideo[]
    */
   public function listVideos($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
-    return $this->cmsRequest('GET', '/videos', 'BrightcoveVideo');
+    $args = [];
+    if ($search !== NULL) {
+      $args['q'] = $search;
+    }
+    if ($sort !== NULL) {
+      $args['sort'] = $sort;
+    }
+    if ($limit !== NULL) {
+      $args['limit'] = $limit;
+    }
+    if ($offset !== NULL) {
+      $args['offset'] = $offset;
+    }
+    $query = count($args) > 0 ? '?' . http_build_query($args) : '';
+    return $this->cmsRequest('GET', "/videos{$query}", 'BrightcoveVideo');
   }
 
   /**
