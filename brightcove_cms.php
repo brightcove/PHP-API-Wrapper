@@ -566,14 +566,14 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
   }
 
   /**
-   * @return string
+   * @return float
    */
   public function getTime() {
     return $this->time;
   }
 
   /**
-   * @param string $time
+   * @param float $time
    * @return $this
    */
   public function setTime($time) {
