@@ -15,11 +15,30 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
   /**
    * @depends testVideoObjectCreation
    */
-  public function testVideoIngestions($video_id) {
+  public function testVideoIngestion($video_id) {
     $request = BrightcoveIngestRequest::createRequest('http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi', 'high-bandwidth-devices');
+    if (!empty($this->callback_addr_remote)) {
+      $request->setCallbacks([$this->callback_addr_remote]);
+    }
     $ingest = $this->di->createIngest($video_id, $request);
     $this->assertNotEmpty($ingest->getId());
-    return $ingest->getId();
+    return $video_id;
+  }
+
+  /**
+   * @depends testVideoIngestion
+   */
+  public function testVideoIngestionCallback($video_id) {
+    if (empty($this->callback_host)) {
+      $this->markTestSkipped();
+    }
+
+    $json = self::waitForHTTPCallback($this->callback_host);
+    $this->assertNotEmpty($json, 'Callback result');
+    $result = json_decode($json, TRUE);
+    $this->assertNotEmpty($result, 'The result is correct JSON');
+    $this->assertEquals('SUCCESS', $result['status']);
+    return $video_id;
   }
 
   /**
@@ -37,6 +56,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
    */
   public function testVideoUpdating($video_id) {
     $video = $this->cms->getVideo($video_id);
+
     $description = self::generateRandomString();
     $video->setDescription($description);
     $name = self::generateRandomString();
@@ -46,7 +66,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
     $cue_point->setName($cue_name);
     $type = "AD";
     $cue_point->setType($type);
-    $time = 1.01;
+    $time = 0.0;
     $cue_point->setTime($time);
     $force_stop = false;
     $cue_point->setForceStop(false);
@@ -60,22 +80,21 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
     ];
     sort($tags);
     $video->setTags($tags);
-    sleep(1);
+
     $result = $this->cms->updateVideo($video);
+
     $this->assertEquals($video_id, $result->getId(), 'Video IDs should be equals');
     $this->assertEquals($description, $result->getDescription(), 'Description should be updated');
     $this->assertEquals($name, $result->getName(), 'Names should be updated');
-    $this->assertEquals(1, count($result->getCuePoints()), 'Cue points == 1');
     $this->assertEquals([$cue_point], $result->getCuePoints(), 'CuePoints should be updated');
     $this->assertEquals($cue_name, $result->getCuePoints()[0]->getName(), 'Cue Names should be updated');
-    $this->assertEquals($time, $result->getCuePoints()[0]->getTime(), 'Tmes should be updated');
+    $this->assertEquals($time, $result->getCuePoints()[0]->getTime(), 'Times should be updated');
     $this->assertEquals($force_stop, $result->getCuePoints()[0]->getForceStop(), 'Force should be updated');
-
-
 
     $new_tags = $result->getTags();
     sort($new_tags);
     $this->assertEquals($tags, $new_tags, 'Tags should be updated');
+
     return $video_id;
   }
 

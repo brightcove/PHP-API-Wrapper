@@ -4,50 +4,78 @@ require_once 'brightcove.php';
 
 class BrightcoveCMS extends BrightcoveAPI {
 
-  protected function cmsRequest($method, $endpoint, $result, $post = NULL) {
-    return $this->client->request($method, 'cms', $this->account, $endpoint, $result, $post);
+  protected function cmsRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
+    return $this->client->request($method, 'cms', $this->account, $endpoint, $result, $is_array, $post);
   }
 
   /**
    * @return BrightcoveVideo[]
    */
   public function listVideos($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
-    $args = [];
-    if ($search !== NULL) {
-      $args['q'] = $search;
+    $query = '';
+    if ($search) {
+      $query .= "&q={$search}";
     }
-    if ($sort !== NULL) {
-      $args['sort'] = $sort;
+    if ($sort) {
+      $query .= "&sort={$sort}";
     }
-    if ($limit !== NULL) {
-      $args['limit'] = $limit;
+    if ($limit) {
+      $query .= "&limit={$limit}";
     }
-    if ($offset !== NULL) {
-      $args['offset'] = $offset;
+    if ($offset) {
+      $query .= "&offset={$offset}";
     }
-    $query = count($args) > 0 ? '?' . http_build_query($args) : '';
-    return $this->cmsRequest('GET', "/videos{$query}", 'BrightcoveVideo');
+    if (strlen($query) > 0) {
+      $query = '?' . substr($query, 1);
+    }
+    return $this->cmsRequest('GET', "/videos{$query}", 'BrightcoveVideo', TRUE);
+  }
+
+  /**
+   * @return int|null
+   */
+  public function countVideos($search = NULL) {
+    $query = $search === NULL ? '' : "?q={$search}";
+    $result = $this->cmsRequest('GET', "/counts/videos{$query}", NULL);
+    if ($result && !empty($result['count'])) {
+      return $result['count'];
+    }
+    return NULL;
+  }
+
+  /**
+   * @return BrightcoveVideoImages
+   */
+  public function getVideoImages($video_id) {
+    return $this->cmsRequest('GET', "/videos/{$video_id}/images", 'BrightcoveVideoImages');
+  }
+
+  /**
+   * @return BrightcoveVideoSource[]
+   */
+  public function getVideoSources($video_id) {
+    return $this->cmsRequest('GET', "/videos/{$video_id}/sources", 'BrightcoveVideoSource', TRUE);
   }
 
   /**
    * @return BrightcoveVideo
    */
   public function getVideo($video_id) {
-    return $this->cmsRequest('GET', "/videos/{$video_id}", new BrightcoveVideo());
+    return $this->cmsRequest('GET', "/videos/{$video_id}", 'BrightcoveVideo');
   }
 
   /**
    * @return BrightcoveVideo
    */
   public function createVideo(BrightcoveVideo $video) {
-    return $this->cmsRequest('POST', '/videos', new BrightcoveVideo(), $video);
+    return $this->cmsRequest('POST', '/videos', 'BrightcoveVideo', FALSE, $video);
   }
 
   /**
    * @return BrightcoveVideo
    */
   public function updateVideo(BrightcoveVideo $video) {
-    return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", new BrightcoveVideo(), $video);
+    return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", 'BrightcoveVideo', FALSE, $video);
   }
 
   public function deleteVideo($video_id) {
@@ -91,6 +119,32 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   protected $tags;
   protected $text_tracks;
   protected $updated_at;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'id');
+    $this->applyProperty($json, 'account_id');
+    $this->applyProperty($json, 'complete');
+    $this->applyProperty($json, 'created_at');
+    $this->applyProperty($json, 'cue_points', NULL, 'BrightcoveVideoCuePoint', TRUE);
+    $this->applyProperty($json, 'custom_fields');
+    $this->applyProperty($json, 'description');
+    $this->applyProperty($json, 'duration');
+    $this->applyProperty($json, 'economics');
+    $this->applyProperty($json, 'folder_id');
+    $this->applyProperty($json, 'geo', NULL, 'BrightcoveVideoGEO');
+    $this->applyProperty($json, 'images', NULL, 'BrightcoveVideoImage', TRUE);
+    $this->applyProperty($json, 'link');
+    $this->applyProperty($json, 'long_description');
+    $this->applyProperty($json, 'name');
+    $this->applyProperty($json, 'reference_id');
+    $this->applyProperty($json, 'schedule', NULL, 'BrightcoveVideoSchedule');
+    $this->applyProperty($json, 'sharing');
+    $this->applyProperty($json, 'state');
+    $this->applyProperty($json, 'tags');
+    $this->applyProperty($json, 'text_tracks');
+    $this->applyProperty($json, 'updated_at');
+  }
 
   /**
    * @return string
@@ -469,6 +523,13 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 
 class BrightcoveVideoImage extends BrightcoveObjectBase {
   protected $id;
+  protected $src;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'id');
+    $this->applyProperty($json, 'src');
+  }
 
   /**
    * @return string
@@ -503,32 +564,22 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
     $this->fieldChanged('src');
     return $this;
   }
-  protected $src;
 }
 
 class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
-  protected $id;
   protected $name;
   protected $type;
   protected $time;
   protected $metadata;
   protected $force_stop;
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
-
-  /**
-   * @param string $id
-   * @return $this
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'name');
+    $this->applyProperty($json, 'type');
+    $this->applyProperty($json, 'time');
+    $this->applyProperty($json, 'metadata');
+    $this->applyProperty($json, 'force_stop');
   }
 
   /**
@@ -622,6 +673,13 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
   protected $exclude_countries = FALSE;
   protected $restricted = FALSE;
 
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'countries');
+    $this->applyProperty($json, 'exclude_countries');
+    $this->applyProperty($json, 'restricted');
+  }
+
   /**
    * @return array
    */
@@ -678,6 +736,12 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
   protected $starts_at;
   protected $ends_at;
 
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'starts_at');
+    $this->applyProperty($json, 'ends_at');
+  }
+
   /**
    * @return string
    */
@@ -709,6 +773,318 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
   public function setEndsAt($ends_at) {
     $this->ends_at = $ends_at;
     $this->fieldChanged('ends_at');
+    return $this;
+  }
+}
+
+class BrightcoveVideoImages extends BrightcoveObjectBase {
+  /**
+   * @var BrightcoveVideoImage
+   */
+  protected $thumbnail;
+
+  /**
+   * @var BrightcoveVideoImage
+   */
+  protected $poster;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'thumbnail');
+    $this->applyProperty($json, 'poster');
+  }
+
+  /**
+   * @return BrightcoveVideoImage
+   */
+  public function getThumbnail() {
+    return $this->thumbnail;
+  }
+
+  /**
+   * @param BrightcoveVideoImage $thumbnail
+   * @return $this
+   */
+  public function setThumbnail($thumbnail) {
+    $this->thumbnail = $thumbnail;
+    $this->fieldChanged('thumbnail');
+    return $this;
+  }
+
+  /**
+   * @return BrightcoveVideoImage
+   */
+  public function getPoster() {
+    return $this->poster;
+  }
+
+  /**
+   * @param BrightcoveVideoImage $poster
+   * @return $this
+   */
+  public function setPoster($poster) {
+    $this->poster = $poster;
+    $this->fieldChanged('poster');
+    return $this;
+  }
+
+}
+
+class BrightcoveVideoSource extends BrightcoveObjectBase {
+  /**
+   * @var string
+   */
+  protected $id;
+
+  /**
+   * @var string
+   */
+  protected $app_name;
+
+  /**
+   * @var string
+   */
+  protected $stream_name;
+
+  /**
+   * @var string
+   */
+  protected $codec;
+
+  /**
+   * @var string
+   */
+  protected $container;
+
+  /**
+   * @var int
+   */
+  protected $encoding_rate;
+
+  /**
+   * @var int
+   */
+  protected $duration;
+
+  /**
+   * @var int
+   */
+  protected $height;
+
+  /**
+   * @var int
+   */
+  protected $width;
+
+  /**
+   * @var int
+   */
+  protected $size;
+
+  /**
+   * @var string
+   */
+  protected $uploaded_at;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'id');
+    $this->applyProperty($json, 'app_name');
+    $this->applyProperty($json, 'stream_name');
+    $this->applyProperty($json, 'codec');
+    $this->applyProperty($json, 'container');
+    $this->applyProperty($json, 'encoding_rate');
+    $this->applyProperty($json, 'duration');
+    $this->applyProperty($json, 'height');
+    $this->applyProperty($json, 'width');
+    $this->applyProperty($json, 'size');
+    $this->applyProperty($json, 'uploaded_at');
+  }
+
+  /**
+   * @return string
+   */
+  public function getId() {
+    return $this->id;
+  }
+
+  /**
+   * @param string $id
+   * @return BrightcoveVideoSource
+   */
+  public function setId($id) {
+    $this->id = $id;
+    $this->fieldChanged('id');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getAppName() {
+    return $this->app_name;
+  }
+
+  /**
+   * @param string $app_name
+   * @return BrightcoveVideoSource
+   */
+  public function setAppName($app_name) {
+    $this->app_name = $app_name;
+    $this->fieldChanged('app_name');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getStreamName() {
+    return $this->stream_name;
+  }
+
+  /**
+   * @param string $stream_name
+   * @return BrightcoveVideoSource
+   */
+  public function setStreamName($stream_name) {
+    $this->stream_name = $stream_name;
+    $this->fieldChanged('stream_name');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getCodec() {
+    return $this->codec;
+  }
+
+  /**
+   * @param string $codec
+   * @return BrightcoveVideoSource
+   */
+  public function setCodec($codec) {
+    $this->codec = $codec;
+    $this->fieldChanged('codec');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getContainer() {
+    return $this->container;
+  }
+
+  /**
+   * @param string $container
+   * @return BrightcoveVideoSource
+   */
+  public function setContainer($container) {
+    $this->container = $container;
+    $this->fieldChanged('container');
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getEncodingRate() {
+    return $this->encoding_rate;
+  }
+
+  /**
+   * @param int $encoding_rate
+   * @return BrightcoveVideoSource
+   */
+  public function setEncodingRate($encoding_rate) {
+    $this->encoding_rate = $encoding_rate;
+    $this->fieldChanged('encoding_rate');
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getDuration() {
+    return $this->duration;
+  }
+
+  /**
+   * @param int $duration
+   * @return BrightcoveVideoSource
+   */
+  public function setDuration($duration) {
+    $this->duration = $duration;
+    $this->fieldChanged('duration');
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getHeight() {
+    return $this->height;
+  }
+
+  /**
+   * @param int $height
+   * @return BrightcoveVideoSource
+   */
+  public function setHeight($height) {
+    $this->height = $height;
+    $this->fieldChanged('height');
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getWidth() {
+    return $this->width;
+  }
+
+  /**
+   * @param int $width
+   * @return BrightcoveVideoSource
+   */
+  public function setWidth($width) {
+    $this->width = $width;
+    $this->fieldChanged('width');
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getSize() {
+    return $this->size;
+  }
+
+  /**
+   * @param int $size
+   * @return BrightcoveVideoSource
+   */
+  public function setSize($size) {
+    $this->size = $size;
+    $this->fieldChanged('size');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getUploadedAt() {
+    return $this->uploaded_at;
+  }
+
+  /**
+   * @param string $uploaded_at
+   * @return BrightcoveVideoSource
+   */
+  public function setUploadedAt($uploaded_at) {
+    $this->uploaded_at = $uploaded_at;
+    $this->fieldChanged('uploaded_at');
     return $this;
   }
 }

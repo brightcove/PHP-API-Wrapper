@@ -4,15 +4,15 @@ require_once 'brightcove.php';
 
 class BrightcoveDI extends BrightcoveAPI {
 
-  protected function diRequest($method, $endpoint, $result, $post = NULL) {
-    return $this->client->request($method, 'ingest', $this->account, $endpoint, $result, $post);
+  protected function diRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
+    return $this->client->request($method, 'ingest', $this->account, $endpoint, $result, $is_array, $post);
   }
 
   /**
    * @return BrightcoveIngestResponse
    */
   public function createIngest($video_id, BrightcoveIngestRequest $request) {
-    return $this->diRequest('POST', "/videos/{$video_id}/ingest-requests", new BrightcoveIngestResponse(), $request);
+    return $this->diRequest('POST', "/videos/{$video_id}/ingest-requests", 'BrightcoveIngestResponse', FALSE, $request);
   }
 }
 
@@ -31,6 +31,13 @@ class BrightcoveIngestRequest extends BrightcoveObjectBase {
     $request->setProfile($profile);
 
     return $request;
+  }
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'master');
+    $this->applyProperty($json, 'profile');
+    $this->applyProperty($json, 'callbacks');
   }
 
   /**
@@ -88,6 +95,11 @@ class BrightcoveIngestRequest extends BrightcoveObjectBase {
 class BrightcoveIngestRequestMaster extends BrightcoveObjectBase {
   protected $url;
 
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'url');
+  }
+
   /**
    * @return string
    */
@@ -108,6 +120,11 @@ class BrightcoveIngestRequestMaster extends BrightcoveObjectBase {
 
 class BrightcoveIngestResponse extends BrightcoveObjectBase {
   protected $id;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'id');
+  }
 
   /**
    * @return string
