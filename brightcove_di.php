@@ -12,7 +12,7 @@ class BrightcoveDI extends BrightcoveAPI {
    * @return BrightcoveIngestResponse
    */
   public function createIngest($video_id, BrightcoveIngestRequest $request) {
-    return $this->diRequest('POST', "/videos/{$video_id}/ingest-requests", 'BrightcoveIngestResponse', FALSE, $request);
+    return $this->diRequest('POST', "/videos/{$video_id}/ingest-requests", BrightcoveIngestResponse::class, FALSE, $request);
   }
 }
 
@@ -21,7 +21,9 @@ class BrightcoveIngestRequest extends BrightcoveObjectBase {
    * @var BrightcoveIngestRequestMaster
    */
   protected $master;
+
   protected $profile;
+
   protected $callbacks;
 
   public static function createRequest($url, $profile) {

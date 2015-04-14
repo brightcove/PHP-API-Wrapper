@@ -2,6 +2,11 @@
 
 require_once 'brightcove.php';
 
+/**
+ * Class BrightcoveCMS
+ *
+ * This class provides uncached read access to the data via request functions.
+ */
 class BrightcoveCMS extends BrightcoveAPI {
 
   protected function cmsRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
@@ -9,6 +14,8 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
+   * Create a cmsRequest with the desired parameters which we want to search for.
+   *
    * @return BrightcoveVideo[]
    */
   public function listVideos($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
@@ -32,6 +39,8 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
+   * Returns the amount of a searched video's result.
+   *
    * @return int|null
    */
   public function countVideos($search = NULL) {
@@ -44,6 +53,8 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
+   * Get the images for a single video.
+   *
    * @return BrightcoveVideoImages
    */
   public function getVideoImages($video_id) {
@@ -51,6 +62,8 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
+   * Get the sources for a single video.
+   *
    * @return BrightcoveVideoSource[]
    */
   public function getVideoSources($video_id) {
@@ -58,66 +71,386 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
-   * @return BrightcoveVideo
+   * Get the data for a single video by issuing a GET request.
+   *
+   * @return BrightcoveVideo $video
    */
   public function getVideo($video_id) {
     return $this->cmsRequest('GET', "/videos/{$video_id}", 'BrightcoveVideo');
   }
 
   /**
-   * @return BrightcoveVideo
+   * POST requests will create a new video object in the account.
+   *
+   * @return BrightcoveVideo $video
    */
   public function createVideo(BrightcoveVideo $video) {
     return $this->cmsRequest('POST', '/videos', 'BrightcoveVideo', FALSE, $video);
   }
 
   /**
-   * @return BrightcoveVideo
+   * HTTP PATCH request to update properties for a video object.
+   *
+   * @return BrightcoveVideo $video
    */
   public function updateVideo(BrightcoveVideo $video) {
     return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", 'BrightcoveVideo', FALSE, $video);
   }
 
+  /**
+   *You can delete a video object in your account.
+   */
   public function deleteVideo($video_id) {
     return $this->cmsRequest('DELETE', "/videos/{$video_id}", NULL);
   }
 
 }
 
+/**
+ * Class BrightcoveVideoLink
+ *
+ * Creating a link object which has two separeted string field.
+ */
+class BrightcoveVideoLink extends BrightcoveObjectBase {
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'url');
+    $this->applyProperty($json, 'text');
+  }
+
+  /**
+   * Display text for the link
+   *
+   * @var string
+   */
+  protected $text;
+
+  /**
+   * URL for the link
+   *
+   * @var string
+   */
+  protected $url;
+
+  /**
+   * @return string
+   */
+  public function getText() {
+    return $this->text;
+  }
+
+  /**
+   * @param string $text
+   * @return $this
+   */
+  public function setText($text) {
+    $this->text = $text;
+    $this->fieldChanged('text');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getUrl() {
+    return $this->url;
+  }
+
+  /**
+   * @param string $url
+   * @return $this
+   */
+  public function setUrl($url) {
+    $this->url = $url;
+    $this->fieldChanged('url');
+    return $this;
+  }
+
+}
+
+
+/**
+ * Class BrightcoveVideoSharing
+ *
+ * The instance of this Class contains the sharing informations of the video object.
+ */
+class BrightcoveVideoSharing extends BrightcoveObjectBase {
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'by_external_acct');
+    $this->applyProperty($json, 'by_id');
+    $this->applyProperty($json, 'source_id');
+    $this->applyProperty($json, 'to_external_acct');
+    $this->applyProperty($json, 'by_reference');
+  }
+
+  /**
+   * True, if the video was shared from another account.
+   *
+   * @var boolean
+   */
+  protected $by_external_acct = FALSE;
+  /**
+   * Id of the account that shared the video.
+   *
+   * @var string
+   */
+  protected $by_id;
+  /**
+   * Id of the video in its original account.
+   *
+   * @var string
+   */
+  protected $source_id;
+  /**
+   * Whether the video is shared to another account.
+   *
+   * @var boolean
+   */
+  protected $to_external_acct = FALSE;
+  /**
+   * Whether the video is shared by reference.
+   *
+   * @var boolean
+   */
+  protected $by_reference = FALSE;
+
+  /**
+   * @return boolean
+   */
+  public function getByExternalAcct() {
+    return $this->by_external_acct;
+  }
+
+  /**
+   * @param boolean $by_external_acct
+   * @return $this
+   */
+  public function setByExternalAcct($by_external_acct) {
+    $this->by_external_acct = $by_external_acct;
+    $this->fieldChanged('by_external_acct');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getById() {
+    return $this->by_id;
+  }
+
+  /**
+   * @param string $by_id
+   * @return $this
+   */
+  public function setById($by_id) {
+    $this->by_id = $by_id;
+    $this->fieldChanged('by_id');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSourceId() {
+    return $this->source_id;
+  }
+
+  /**
+   * @param string $source_id
+   * @return $this
+   */
+  public function setSourceId($source_id) {
+    $this->source_id = $source_id;
+    $this->fieldChanged('source_id');
+    return $this;
+  }
+
+  /**
+   * @return boolean
+   */
+  public function getToExternalAcct() {
+    return $this->to_external_acct;
+  }
+
+  /**
+   * @param boolean $to_external_acct
+   * @return $this
+   */
+  public function setToExternalAcct($to_external_acct) {
+    $this->to_external_acct = $to_external_acct;
+    $this->fieldChanged('to_external_acct');
+    return $this;
+  }
+
+  /**
+   * @return boolean
+   */
+  public function getByReference() {
+    return $this->by_reference;
+  }
+
+  /**
+   * @param boolean $by_reference
+   * @return $this
+   */
+  public function setByReference($by_reference) {
+    $this->by_reference = $by_reference;
+    $this->fieldChanged('by_reference');
+    return $this;
+  }
+
+}
+/**
+ * Class BrightcoveVideo
+ *
+ * Representation of all data related to a video object.
+ */
 class BrightcoveVideo extends BrightcoveObjectBase {
+  /**
+   * The video id.
+   *
+   * @var string
+   */
   protected $id;
+  /**
+   * The id of the account.
+   *
+   * @var string
+   */
   protected $account_id;
+  /**
+   * It wll be true if all processing of renditions and images is complete.
+   *
+   * @var boolean
+   */
   protected $complete;
+
+  /**
+   * ISO 8601 date-time string
+   * Date-time video was added to the account; example: "2014-12-09T06:07:11.877Z".
+   *
+   * @var string
+   */
   protected $created_at;
   /**
+   * Array of cue_point objects.
+   * Marker at a precise time point in the duration of a video.
+   * You can use cue points to trigger mid-roll ads or
+   * to separate chapters or scenes in a long-form video.
+   *
    * @var BrightcoveVideoCuePoint[]
    */
   protected $cue_points;
+  /**
+   * Object,
+   * Map of custom field name:value pairs; only fields that have values are included.
+   *
+   * @var array[]
+   */
   protected $custom_fields;
+  /**
+   * The short description of the video - 250 single-byte characters maximum.
+   *
+   * @var string
+   */
   protected $description;
+  /**
+   * Length of the video in milliseconds.
+   *
+   * @var int
+   */
   protected $duration;
+  /**
+   * Indicates whether ad requests are permitted for the video.
+   *
+   * @var string
+   */
   protected $economics;
+  /**
+   * This is a reference to folder fields.
+   *
+   * @var string
+   */
   protected $folder_id;
   /**
-   * @var BrightcoveVideoGEO
+   * If geo-restriction is enabled for the account,
+   * this array will contain geo objects which represents
+   * geo-restriction properties for the video
+   *
+   * @var array[]
    */
   protected $geo;
   /**
+   * Map of image objects
+   *
    * @var BrightcoveVideoImage[]
    */
   protected $images;
+  /**
+   * Descript a related link.
+   *
+   * @var BrightcoveVideoLink
+   */
   protected $link;
+  /**
+   * Maximum 5000 single-byte characters allowed.
+   *
+   * @var string
+   */
   protected $long_description;
+  /**
+   * Video title - required field
+   *
+   * @var string
+   */
   protected $name;
+  /**
+   * Any value that is unique within the account
+   *
+   * @var string
+   */
   protected $reference_id;
   /**
+   * Schedule object
+   * When video becomes available/unavailable.
+   *
    * @var BrightcoveVideoSchedule
    */
   protected $schedule;
+  /**
+   * Sharing object
+   * Information about the account the video was shared from or to.
+   *
+   * @var BrightcoveVideoSharing $sharing
+   */
   protected $sharing;
+  /**
+   * current status of the video: ACTIVE | INACTIVE | PENDING | DELETED.
+   *
+   * @var String.
+   */
   protected $state;
+  /**
+   * Array of tags (strings) added to the video.
+   *
+   * @var string[].
+   */
   protected $tags;
+  /**
+   * array of text_track objects.
+   *
+   * @var text_track[].
+   */
   protected $text_tracks;
+  /**
+   * ISO 8601 date-time string
+   * date-time video was last modified.
+   * Example: "2015-01-13T17:45:21.977Z"
+   *
+   * @var string
+   */
   protected $updated_at;
 
   public function applyJSON(array $json) {
@@ -134,12 +467,12 @@ class BrightcoveVideo extends BrightcoveObjectBase {
     $this->applyProperty($json, 'folder_id');
     $this->applyProperty($json, 'geo', NULL, 'BrightcoveVideoGEO');
     $this->applyProperty($json, 'images', NULL, 'BrightcoveVideoImage', TRUE);
-    $this->applyProperty($json, 'link');
+    $this->applyProperty($json, 'link', NULL, 'BrightcoveVideoLink');
     $this->applyProperty($json, 'long_description');
     $this->applyProperty($json, 'name');
     $this->applyProperty($json, 'reference_id');
     $this->applyProperty($json, 'schedule', NULL, 'BrightcoveVideoSchedule');
-    $this->applyProperty($json, 'sharing');
+    $this->applyProperty($json, 'sharing', NULL, 'BrightcoveVideoSharing');
     $this->applyProperty($json, 'state');
     $this->applyProperty($json, 'tags');
     $this->applyProperty($json, 'text_tracks');
@@ -351,17 +684,17 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   }
 
   /**
-   * @return string
+   * @return BrightcoveVideoLink $link
    */
   public function getLink() {
     return $this->link;
   }
 
   /**
-   * @param string $link
+   * @param  BrightcoveVideoLink $link
    * @return $this
    */
-  public function setLink($link) {
+  public function setLink(BrightcoveVideoLink $link = NULL) {
     $this->link = $link;
     $this->fieldChanged('link');
     return $this;
@@ -436,17 +769,17 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   }
 
   /**
-   * @return string
+   * @return BrightCoveVideoSharing
    */
   public function getSharing() {
     return $this->sharing;
   }
 
   /**
-   * @param string $sharing
+   * @param BrightcoveVideoSharing $sharing
    * @return $this
    */
-  public function setSharing($sharing) {
+  public function setSharing(BrightcoveVideoSharing $sharing = NULL) {
     $this->sharing = $sharing;
     $this->fieldChanged('sharing');
     return $this;
@@ -521,6 +854,11 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   }
 }
 
+/**
+ *Class BrightcoveVideoImage
+ *
+ *An Image what represents a video, only can be thumbnail or poster.
+ */
 class BrightcoveVideoImage extends BrightcoveObjectBase {
   protected $id;
   protected $src;
@@ -566,6 +904,11 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
   }
 }
 
+/**
+ * class BrightcoveVideoCuePoint
+ *
+ * This class creates marker objects for midroll ad requests or some other action to be created via the player API
+ */
 class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
   protected $name;
   protected $type;
@@ -668,6 +1011,13 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
   }
 }
 
+/**
+ * class BrightcoveVideoGEO
+ *
+ * If geo-restriction is enabled for the account,
+ * this class creates geo objects.
+ * This object will contain geo-restriction properties for the video
+ */
 class BrightcoveVideoGEO extends BrightcoveObjectBase {
   protected $countries = [];
   protected $exclude_countries = FALSE;
@@ -732,6 +1082,11 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
   }
 }
 
+/**
+ * class BrightcoveVideoSchedule
+ *
+ * Creates a schedule object, which represents when the video becomes available/unavailable
+ */
 class BrightcoveVideoSchedule extends BrightcoveObjectBase {
   protected $starts_at;
   protected $ends_at;
@@ -777,6 +1132,10 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
   }
 }
 
+/**
+ * class BrightcoveVideoImages
+ *
+ */
 class BrightcoveVideoImages extends BrightcoveObjectBase {
   /**
    * @var BrightcoveVideoImage
