@@ -48,7 +48,7 @@ class BrightcoveClient {
    *   A two item array. The first item is the status code, the second is the
    *   response body.
    */
-  public static function HTTPRequest($method, $url, $headers = [], $postdata = NULL, callable $extraconfig = NULL) {
+  public static function HTTPRequest($method, $url, array $headers = [], $postdata = NULL, callable $extraconfig = NULL) {
     $ch = curl_init();
 
     if ($postdata !== NULL) {

@@ -3,7 +3,7 @@
 require_once 'brightcove.php';
 
 /**
-  * This Class provides uncached read access to the data via request functions.
+  * This class provides uncached read access to the data via request functions.
  */
 class BrightcoveCMS extends BrightcoveAPI {
 
@@ -60,7 +60,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
-   * Get the sources for a single video.
+   * Gets the sources for a single video.
    *
    * @return BrightcoveVideoSource[]
    */
@@ -326,6 +326,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    * @var string
    */
   protected $created_at;
+
   /**
    * Array of cue_point objects.
    *
@@ -405,8 +406,6 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   protected $reference_id;
   /**
-   * Schedule object
-   *
    * @var BrightcoveVideoSchedule
    */
   protected $schedule;
@@ -449,20 +448,20 @@ class BrightcoveVideo extends BrightcoveObjectBase {
     $this->applyProperty($json, 'account_id');
     $this->applyProperty($json, 'complete');
     $this->applyProperty($json, 'created_at');
-    $this->applyProperty($json, 'cue_points', NULL, 'BrightcoveVideoCuePoint', TRUE);
+    $this->applyProperty($json, 'cue_points', NULL, BrightcoveVideoCuePoint::class, TRUE);
     $this->applyProperty($json, 'custom_fields');
     $this->applyProperty($json, 'description');
     $this->applyProperty($json, 'duration');
     $this->applyProperty($json, 'economics');
     $this->applyProperty($json, 'folder_id');
-    $this->applyProperty($json, 'geo', NULL, 'BrightcoveVideoGEO');
-    $this->applyProperty($json, 'images', NULL, 'BrightcoveVideoImage', TRUE);
-    $this->applyProperty($json, 'link', NULL, 'BrightcoveVideoLink');
+    $this->applyProperty($json, 'geo', NULL, BrightcoveVideoGEO::class);
+    $this->applyProperty($json, 'images', NULL, BrightcoveVideoImage::class, TRUE);
+    $this->applyProperty($json, 'link', NULL, BrightcoveVideoLink::class);
     $this->applyProperty($json, 'long_description');
     $this->applyProperty($json, 'name');
     $this->applyProperty($json, 'reference_id');
-    $this->applyProperty($json, 'schedule', NULL, 'BrightcoveVideoSchedule');
-    $this->applyProperty($json, 'sharing', NULL, 'BrightcoveVideoSharing');
+    $this->applyProperty($json, 'schedule', NULL, BrightcoveVideoSchedule::class);
+    $this->applyProperty($json, 'sharing', NULL, BrightcoveVideoSharing::class);
     $this->applyProperty($json, 'state');
     $this->applyProperty($json, 'tags');
     $this->applyProperty($json, 'text_tracks');
@@ -845,7 +844,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 }
 
 /**
- * An Image what represents a video, only can be thumbnail or poster.
+ * An image what represents a video, only can be thumbnail or poster.
  */
 class BrightcoveVideoImage extends BrightcoveObjectBase {
   protected $id;
@@ -893,7 +892,7 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
 }
 
 /**
- * This Class creates marker objects for midroll ad requests or some other action to be created via the player API
+ * This class creates marker objects for midroll ad requests or some other action to be created via the player API
  */
 class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
   protected $name;

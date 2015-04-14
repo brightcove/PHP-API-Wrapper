@@ -3,7 +3,7 @@
 require_once 'brightcovetestbase.php';
 
 /**
- * This Class is for Create, Read, Update and Delete a random video object.
+ * This class is for create, read, update and delete a random video object.
  * Call the CMS API to create a video object in the Video Cloud system and get its id back.
  */
 class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
