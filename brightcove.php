@@ -3,9 +3,7 @@
 require_once 'vendor/autoload.php';
 
 /**
- * Class BrightcoveClient
- *
- * This class handles the communication with the Brightcove APIs.
+ * This Class handles the communication with the Brightcove APIs.
  */
 class BrightcoveClient {
   /**
@@ -169,8 +167,6 @@ class BrightcoveClient {
 }
 
 /**
- * Class BrightcoveAPI
- *
  * A superclass for the Brightcove API implementations.
  */
 abstract class BrightcoveAPI {
@@ -224,8 +220,6 @@ interface BrightcoveObject {
 }
 
 /**
- * Class BrightcoveObjectBase
- *
  * Base object which implements most of a needed methods to satisfy BrightcoveObject.
  */
 class BrightcoveObjectBase implements BrightcoveObject {

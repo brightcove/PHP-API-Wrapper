@@ -3,9 +3,7 @@
 require_once 'brightcovetestbase.php';
 
 /**
- * Class BrightcoveVideoCRUDTest
- *
- * This class is for Create, Read, Update and Delete a random video object.
+ * This Class is for Create, Read, Update and Delete a random video object.
  * Call the CMS API to create a video object in the Video Cloud system and get its id back.
  */
 class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
@@ -19,7 +17,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
   }
 
   /**
-   *We add a request property to the video object.
+   * We add a request property to the video object.
    * Call the DI API to provide the URL for the video source file and specify the ingest profile to be used.
    *
    * @depends testVideoObjectCreation
@@ -35,7 +33,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
   }
 
   /**
-   *Test for the success of the vido object's URL Ingestion.
+   * Test for the success of the vido object's URL Ingestion.
    * If it fails throws an Error Message.
    *
    * @depends testVideoIngestion
@@ -54,7 +52,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
   }
 
   /**
-   * The video object's ide shall not be empty!
+   * The video object's ID shall not be empty!
    * Compares the created video object's id with the given result's id.
    * They must match.
    *

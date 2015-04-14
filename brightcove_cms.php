@@ -3,9 +3,7 @@
 require_once 'brightcove.php';
 
 /**
- * Class BrightcoveCMS
- *
- * This class provides uncached read access to the data via request functions.
+  * This Class provides uncached read access to the data via request functions.
  */
 class BrightcoveCMS extends BrightcoveAPI {
 
@@ -14,7 +12,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
-   * Create a cmsRequest with the desired parameters which we want to search for.
+   * Lists video objects with the given restrictions.
    *
    * @return BrightcoveVideo[]
    */
@@ -35,7 +33,7 @@ class BrightcoveCMS extends BrightcoveAPI {
     if (strlen($query) > 0) {
       $query = '?' . substr($query, 1);
     }
-    return $this->cmsRequest('GET', "/videos{$query}", 'BrightcoveVideo', TRUE);
+    return $this->cmsRequest('GET', "/videos{$query}", BrightcoveVideo::class, TRUE);
   }
 
   /**
@@ -53,12 +51,12 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
-   * Get the images for a single video.
+   * Gets the images for a single video.
    *
    * @return BrightcoveVideoImages
    */
   public function getVideoImages($video_id) {
-    return $this->cmsRequest('GET', "/videos/{$video_id}/images", 'BrightcoveVideoImages');
+    return $this->cmsRequest('GET', "/videos/{$video_id}/images", BrightcoveVideoImages::class);
   }
 
   /**
@@ -67,38 +65,38 @@ class BrightcoveCMS extends BrightcoveAPI {
    * @return BrightcoveVideoSource[]
    */
   public function getVideoSources($video_id) {
-    return $this->cmsRequest('GET', "/videos/{$video_id}/sources", 'BrightcoveVideoSource', TRUE);
+    return $this->cmsRequest('GET', "/videos/{$video_id}/sources", BrightcoveVideoSource::class, TRUE);
   }
 
   /**
-   * Get the data for a single video by issuing a GET request.
+   * Gets the data for a single video by issuing a GET request.
    *
    * @return BrightcoveVideo $video
    */
   public function getVideo($video_id) {
-    return $this->cmsRequest('GET', "/videos/{$video_id}", 'BrightcoveVideo');
+    return $this->cmsRequest('GET', "/videos/{$video_id}", BrightcoveVideo::class);
   }
 
   /**
-   * POST requests will create a new video object in the account.
+   * Creates a new video object.
    *
    * @return BrightcoveVideo $video
    */
   public function createVideo(BrightcoveVideo $video) {
-    return $this->cmsRequest('POST', '/videos', 'BrightcoveVideo', FALSE, $video);
+    return $this->cmsRequest('POST', '/videos', BrightcoveVideo::class, FALSE, $video);
   }
 
   /**
-   * HTTP PATCH request to update properties for a video object.
+   * Updates a video object with an HTTP PATCH request.
    *
    * @return BrightcoveVideo $video
    */
   public function updateVideo(BrightcoveVideo $video) {
-    return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", 'BrightcoveVideo', FALSE, $video);
+    return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", BrightcoveVideo::class, FALSE, $video);
   }
 
   /**
-   *You can delete a video object in your account.
+   * Deletes a video object.
    */
   public function deleteVideo($video_id) {
     return $this->cmsRequest('DELETE', "/videos/{$video_id}", NULL);
@@ -107,9 +105,7 @@ class BrightcoveCMS extends BrightcoveAPI {
 }
 
 /**
- * Class BrightcoveVideoLink
- *
- * Creating a link object which has two separeted string field.
+ * Creates a link object which has two separeted string field.
  */
 class BrightcoveVideoLink extends BrightcoveObjectBase {
   public function applyJSON(array $json) {
@@ -170,8 +166,6 @@ class BrightcoveVideoLink extends BrightcoveObjectBase {
 
 
 /**
- * Class BrightcoveVideoSharing
- *
  * The instance of this Class contains the sharing informations of the video object.
  */
 class BrightcoveVideoSharing extends BrightcoveObjectBase {
@@ -303,8 +297,6 @@ class BrightcoveVideoSharing extends BrightcoveObjectBase {
 
 }
 /**
- * Class BrightcoveVideo
- *
  * Representation of all data related to a video object.
  */
 class BrightcoveVideo extends BrightcoveObjectBase {
@@ -321,7 +313,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   protected $account_id;
   /**
-   * It wll be true if all processing of renditions and images is complete.
+   * It will be true if all processing of renditions and images is complete.
    *
    * @var boolean
    */
@@ -336,6 +328,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   protected $created_at;
   /**
    * Array of cue_point objects.
+   *
    * Marker at a precise time point in the duration of a video.
    * You can use cue points to trigger mid-roll ads or
    * to separate chapters or scenes in a long-form video.
@@ -344,7 +337,6 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   protected $cue_points;
   /**
-   * Object,
    * Map of custom field name:value pairs; only fields that have values are included.
    *
    * @var array[]
@@ -379,11 +371,11 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    * this array will contain geo objects which represents
    * geo-restriction properties for the video
    *
-   * @var array[]
+   * @var BrightcoveGEO[]
    */
   protected $geo;
   /**
-   * Map of image objects
+   * List of image objects
    *
    * @var BrightcoveVideoImage[]
    */
@@ -414,20 +406,18 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   protected $reference_id;
   /**
    * Schedule object
-   * When video becomes available/unavailable.
    *
    * @var BrightcoveVideoSchedule
    */
   protected $schedule;
   /**
    * Sharing object
-   * Information about the account the video was shared from or to.
    *
    * @var BrightcoveVideoSharing $sharing
    */
   protected $sharing;
   /**
-   * current status of the video: ACTIVE | INACTIVE | PENDING | DELETED.
+   * Current status of the video: ACTIVE | INACTIVE | PENDING | DELETED.
    *
    * @var String.
    */
@@ -439,7 +429,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
    */
   protected $tags;
   /**
-   * array of text_track objects.
+   * Array of text_track objects.
    *
    * @var text_track[].
    */
@@ -855,9 +845,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
 }
 
 /**
- *Class BrightcoveVideoImage
- *
- *An Image what represents a video, only can be thumbnail or poster.
+ * An Image what represents a video, only can be thumbnail or poster.
  */
 class BrightcoveVideoImage extends BrightcoveObjectBase {
   protected $id;
@@ -905,9 +893,7 @@ class BrightcoveVideoImage extends BrightcoveObjectBase {
 }
 
 /**
- * class BrightcoveVideoCuePoint
- *
- * This class creates marker objects for midroll ad requests or some other action to be created via the player API
+ * This Class creates marker objects for midroll ad requests or some other action to be created via the player API
  */
 class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
   protected $name;
@@ -1012,11 +998,9 @@ class BrightcoveVideoCuePoint extends BrightcoveObjectBase {
 }
 
 /**
- * class BrightcoveVideoGEO
- *
  * If geo-restriction is enabled for the account,
  * this class creates geo objects.
- * This object will contain geo-restriction properties for the video
+ * This object will contain geo-restriction properties for the video.
  */
 class BrightcoveVideoGEO extends BrightcoveObjectBase {
   protected $countries = [];
@@ -1083,8 +1067,6 @@ class BrightcoveVideoGEO extends BrightcoveObjectBase {
 }
 
 /**
- * class BrightcoveVideoSchedule
- *
  * Creates a schedule object, which represents when the video becomes available/unavailable
  */
 class BrightcoveVideoSchedule extends BrightcoveObjectBase {
@@ -1133,8 +1115,7 @@ class BrightcoveVideoSchedule extends BrightcoveObjectBase {
 }
 
 /**
- * class BrightcoveVideoImages
- *
+ * Provides a poster or a thumbnail preview.
  */
 class BrightcoveVideoImages extends BrightcoveObjectBase {
   /**

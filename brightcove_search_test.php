@@ -5,7 +5,7 @@ require_once 'brightcovetestbase.php';
 class BrightcoveVideoSearchTest extends BrightcoveTestBase {
 
   /**
-   *Creating an array[10] filling it up with random video objects.
+   * Creates an array[10] filling it up with random video objects.
    *
    * @return BrightcoveVideo[]
    */
