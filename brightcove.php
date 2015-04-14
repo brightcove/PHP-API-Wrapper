@@ -3,9 +3,7 @@
 require_once 'vendor/autoload.php';
 
 /**
- * Class BrightcoveClient
- *
- * This class handles the communication with the Brightcove APIs.
+ * This Class handles the communication with the Brightcove APIs.
  */
 class BrightcoveClient {
   /**
@@ -50,7 +48,7 @@ class BrightcoveClient {
    *   A two item array. The first item is the status code, the second is the
    *   response body.
    */
-  public static function HTTPRequest($method, $url, $headers = [], $postdata = NULL, $extraconfig = NULL) {
+  public static function HTTPRequest($method, $url, array $headers = [], $postdata = NULL, callable $extraconfig = NULL) {
     $ch = curl_init();
 
     if ($postdata !== NULL) {
@@ -169,8 +167,6 @@ class BrightcoveClient {
 }
 
 /**
- * Class BrightcoveAPI
- *
  * A superclass for the Brightcove API implementations.
  */
 abstract class BrightcoveAPI {
@@ -224,9 +220,7 @@ interface BrightcoveObject {
 }
 
 /**
- * Class BrightcoveObjectBase
- *
- * Base object which implements most methods needed to satisfy BrightcoveObject.
+ * Base object which implements most of a needed methods to satisfy BrightcoveObject.
  */
 class BrightcoveObjectBase implements BrightcoveObject {
   /**

@@ -5,8 +5,6 @@ require_once 'brightcove_cms.php';
 require_once 'brightcove_di.php';
 
 /**
- * Class BrightcoveTestBase
- *
  * Base class for all test for the Brightcove API wrapper.
  */
 class BrightcoveTestBase extends PHPUnit_Framework_TestCase {

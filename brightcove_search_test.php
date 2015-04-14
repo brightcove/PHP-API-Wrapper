@@ -4,6 +4,11 @@ require_once 'brightcovetestbase.php';
 
 class BrightcoveVideoSearchTest extends BrightcoveTestBase {
 
+  /**
+   * Creates an array[10] filling it up with random video objects.
+   *
+   * @return BrightcoveVideo[]
+   */
   public function testCreateVideos() {
     $videos = [];
     for ($i = 0; $i < 10; $i++) {
