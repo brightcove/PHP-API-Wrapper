@@ -68,6 +68,10 @@ class BrightcoveCMS extends BrightcoveAPI {
     return $this->cmsRequest('GET', "/videos/{$video_id}/sources", BrightcoveVideoSource::class, TRUE);
   }
 
+  public function getVideoFields() {
+    return $this->cmsRequest('GET', "/video_fields", BrightcoveCustomFields::class, FALSE);
+  }
+
   /**
    * Gets the data for a single video by issuing a GET request.
    *
@@ -1426,4 +1430,225 @@ class BrightcoveVideoSource extends BrightcoveObjectBase {
     $this->fieldChanged('uploaded_at');
     return $this;
   }
+}
+
+class BrightcoveCustomFields extends BrightcoveObjectBase {
+  /**
+   * @var int
+   */
+  protected $max_custom_fields;
+
+  /**
+   * @var BrightcoveCustomField[]
+   */
+  protected $custom_fields;
+
+  /**
+   * @var BrightcoveCustomField[]
+   */
+  protected $standard_fields;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'max_custom_fields');
+    $this->applyProperty($json, 'custom_fields', NULL, BrightcoveCustomField::class, TRUE);
+    $this->applyProperty($json, 'standard_fields', NULL, BrightcoveCustomField::class, TRUE);
+  }
+
+  /**
+   * @return int
+   */
+  public function getMaxCustomFields() {
+    return $this->max_custom_fields;
+  }
+
+  /**
+   * @param int $max_custom_fields
+   * @return BrightcoveCustomFields
+   */
+  public function setMaxCustomFields($max_custom_fields) {
+    $this->max_custom_fields = $max_custom_fields;
+    $this->fieldChanged('max_custom_fields');
+    return $this;
+  }
+
+  /**
+   * @return BrightcoveCustomField[]
+   */
+  public function getCustomFields() {
+    return $this->custom_fields;
+  }
+
+  /**
+   * @param BrightcoveCustomField[] $custom_fields
+   * @return BrightcoveCustomFields
+   */
+  public function setCustomFields(array $custom_fields) {
+    $this->custom_fields = $custom_fields;
+    $this->fieldChanged('custom_fields');
+    return $this;
+  }
+
+  /**
+   * @return BrightcoveCustomField[]
+   */
+  public function getStandardFields() {
+    return $this->standard_fields;
+  }
+
+  /**
+   * @param BrightcoveCustomField[] $standard_fields
+   * @return BrightcoveCustomFields
+   */
+  public function setStandardFields(array $standard_fields) {
+    $this->standard_fields = $standard_fields;
+    $this->fieldChanged('standard_fields');
+    return $this;
+  }
+
+}
+
+class BrightcoveCustomField extends BrightcoveObjectBase {
+  /**
+   * @var string
+   */
+  protected $id;
+
+  /**
+   * @var string
+   */
+  protected $display_name;
+
+  /**
+   * @var string
+   */
+  protected $description;
+
+  /**
+   * @var bool
+   */
+  protected $required;
+
+  /**
+   * @var string
+   */
+  protected $type;
+
+  /**
+   * @var array
+   */
+  protected $enum_values;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'id');
+    $this->applyProperty($json, 'display_name');
+    $this->applyProperty($json, 'description');
+    $this->applyProperty($json, 'required');
+    $this->applyProperty($json, 'type');
+    $this->applyProperty($json, 'enum_values');
+  }
+
+  /**
+   * @return string
+   */
+  public function getId() {
+    return $this->id;
+  }
+
+  /**
+   * @param string $id
+   * @return BrightcoveCustomField
+   */
+  public function setId($id) {
+    $this->id = $id;
+    $this->fieldChanged('id');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getDisplayName() {
+    return $this->display_name;
+  }
+
+  /**
+   * @param string $display_name
+   * @return BrightcoveCustomField
+   */
+  public function setDisplayName($display_name) {
+    $this->display_name = $display_name;
+    $this->fieldChanged('display_name');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getDescription() {
+    return $this->description;
+  }
+
+  /**
+   * @param string $description
+   * @return BrightcoveCustomField
+   */
+  public function setDescription($description) {
+    $this->description = $description;
+    $this->fieldChanged('description');
+    return $this;
+  }
+
+  /**
+   * @return boolean
+   */
+  public function isRequired() {
+    return $this->required;
+  }
+
+  /**
+   * @param boolean $required
+   * @return BrightcoveCustomField
+   */
+  public function setRequired($required) {
+    $this->required = $required;
+    $this->fieldChanged('required');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getType() {
+    return $this->type;
+  }
+
+  /**
+   * @param string $type
+   * @return BrightcoveCustomField
+   */
+  public function setType($type) {
+    $this->type = $type;
+    $this->fieldChanged('type');
+    return $this;
+  }
+
+  /**
+   * @return array
+   */
+  public function getEnumValues() {
+    return $this->enum_values;
+  }
+
+  /**
+   * @param array $enum_values
+   * @return BrightcoveCustomField
+   */
+  public function setEnumValues(array $enum_values) {
+    $this->enum_values = $enum_values;
+    $this->fieldChanged('enum_values');
+    return $this;
+  }
+
 }
