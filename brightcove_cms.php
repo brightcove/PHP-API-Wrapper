@@ -106,6 +106,74 @@ class BrightcoveCMS extends BrightcoveAPI {
     return $this->cmsRequest('DELETE', "/videos/{$video_id}", NULL);
   }
 
+  /**
+   * @return int
+   */
+  public function countPlaylists() {
+    $result = $this->cmsRequest('GET', "/counts/playlists", NULL);
+    if ($result && !empty($result['count'])) {
+      return $result['count'];
+    }
+    return NULL;
+  }
+
+  /**
+   * @return BrightcovePlaylist[]
+   */
+  public function listPlaylists() {
+    return $this->cmsRequest('GET', '/playlists', BrightcovePlaylist::class, TRUE);
+  }
+
+  /**
+   * @param BrightcovePlaylist $playlist
+   * @return BrightcovePlaylist
+   */
+  public function createPlaylist(BrightcovePlaylist $playlist) {
+    return $this->cmsRequest('POST', '/playlists', BrightcovePlaylist::class, FALSE, $playlist);
+  }
+
+  /**
+   * @param string $playlist_id
+   * @return BrightcovePlaylist
+   */
+  public function getPlaylist($playlist_id) {
+    return $this->cmsRequest('GET', "/playlists/{$playlist_id}", BrightcovePlaylist::class);
+  }
+
+  /**
+   * @param BrightcovePlaylist $playlist
+   * @return BrightcovePlaylist
+   */
+  public function updatePlaylist(BrightcovePlaylist $playlist) {
+    return $this->cmsRequest('PATH', "/playlists/{$playlist->getId()}", BrightcovePlaylist::class, FALSE, $playlist);
+  }
+
+  /**
+   * @param string $playlist_id
+   */
+  public function deletePlaylist($playlist_id) {
+    $this->cmsRequest('DELETE', "/playlists/{$playlist_id}", NULL);
+  }
+
+  /**
+   * @param string $playlist_id
+   * @return int
+   */
+  public function getVideoCountInPlaylist($playlist_id) {
+    $result = $this->cmsRequest('GET', "/counts/playlists/{$playlist_id}/videos", NULL);
+    if ($result && !empty($result['count'])) {
+      return $result['count'];
+    }
+    return NULL;
+  }
+
+  /**
+   * @param string $playlist_id
+   * @return BrightcoveVideo[]
+   */
+  public function getVideosInPlaylist($playlist_id) {
+    return $this->cmsRequest('GET', "/playlists/{$playlist_id}/videos", BrightcoveVideo::class, TRUE);
+  }
 }
 
 /**
@@ -1648,6 +1716,289 @@ class BrightcoveCustomField extends BrightcoveObjectBase {
   public function setEnumValues(array $enum_values) {
     $this->enum_values = $enum_values;
     $this->fieldChanged('enum_values');
+    return $this;
+  }
+
+}
+
+class BrightcovePlaylist extends BrightcoveObjectBase {
+  /**
+   * @var string
+   */
+  protected $id;
+
+  /**
+   * @var string
+   */
+  protected $account;
+
+  /**
+   * @var string
+   */
+  protected $created_at;
+
+  /**
+   * @var string
+   */
+  protected $description;
+
+  /**
+   * @var bool
+   */
+  protected $favorite;
+
+  /**
+   * @var int
+   */
+  protected $limit;
+
+  /**
+   * @var string
+   */
+  protected $name;
+
+  /**
+   * @var string
+   */
+  protected $reference_id;
+
+  /**
+   * @var string
+   */
+  protected $search;
+
+  /**
+   * @var string
+   */
+  protected $type;
+
+  /**
+   * @var string
+   */
+  protected $updated_at;
+
+  /**
+   * @var array
+   */
+  protected $video_ids;
+
+  public function applyJSON(array $json) {
+    parent::applyJSON($json);
+    $this->applyProperty($json, 'id');
+    $this->applyProperty($json, 'account');
+    $this->applyProperty($json, 'created_at');
+    $this->applyProperty($json, 'description');
+    $this->applyProperty($json, 'favorite');
+    $this->applyProperty($json, 'limit');
+    $this->applyProperty($json, 'name');
+    $this->applyProperty($json, 'reference_id');
+    $this->applyProperty($json, 'search');
+    $this->applyProperty($json, 'type');
+    $this->applyProperty($json, 'updated_at');
+    $this->applyProperty($json, 'video_ids');
+  }
+
+  /**
+   * @return string
+   */
+  public function getId() {
+    return $this->id;
+  }
+
+  /**
+   * @param string $id
+   * @return BrightcovePlaylist
+   */
+  public function setId($id) {
+    $this->id = $id;
+    $this->fieldChanged('id');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getAccount() {
+    return $this->account;
+  }
+
+  /**
+   * @param string $account
+   * @return BrightcovePlaylist
+   */
+  public function setAccount($account) {
+    $this->account = $account;
+    $this->fieldChanged('account');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getCreatedAt() {
+    return $this->created_at;
+  }
+
+  /**
+   * @param string $created_at
+   * @return BrightcovePlaylist
+   */
+  public function setCreatedAt($created_at) {
+    $this->created_at = $created_at;
+    $this->fieldChanged('created_at');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getDescription() {
+    return $this->description;
+  }
+
+  /**
+   * @param string $description
+   * @return BrightcovePlaylist
+   */
+  public function setDescription($description) {
+    $this->description = $description;
+    $this->fieldChanged('description');
+    return $this;
+  }
+
+  /**
+   * @return boolean
+   */
+  public function isFavorite() {
+    return $this->favorite;
+  }
+
+  /**
+   * @param boolean $favorite
+   * @return BrightcovePlaylist
+   */
+  public function setFavorite($favorite) {
+    $this->favorite = $favorite;
+    $this->fieldChanged('favorite');
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getLimit() {
+    return $this->limit;
+  }
+
+  /**
+   * @param int $limit
+   * @return BrightcovePlaylist
+   */
+  public function setLimit($limit) {
+    $this->limit = $limit;
+    $this->fieldChanged('limit');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getName() {
+    return $this->name;
+  }
+
+  /**
+   * @param string $name
+   * @return BrightcovePlaylist
+   */
+  public function setName($name) {
+    $this->name = $name;
+    $this->fieldChanged('name');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getReferenceId() {
+    return $this->reference_id;
+  }
+
+  /**
+   * @param string $reference_id
+   * @return BrightcovePlaylist
+   */
+  public function setReferenceId($reference_id) {
+    $this->reference_id = $reference_id;
+    $this->fieldChanged('reference_id');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSearch() {
+    return $this->search;
+  }
+
+  /**
+   * @param string $search
+   * @return BrightcovePlaylist
+   */
+  public function setSearch($search) {
+    $this->search = $search;
+    $this->fieldChanged('search');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getType() {
+    return $this->type;
+  }
+
+  /**
+   * @param string $type
+   * @return BrightcovePlaylist
+   */
+  public function setType($type) {
+    $this->type = $type;
+    $this->fieldChanged('type');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getUpdatedAt() {
+    return $this->updated_at;
+  }
+
+  /**
+   * @param string $updated_at
+   * @return BrightcovePlaylist
+   */
+  public function setUpdatedAt($updated_at) {
+    $this->updated_at = $updated_at;
+    $this->fieldChanged('updated_at');
+    return $this;
+  }
+
+  /**
+   * @return array
+   */
+  public function getVideoIds() {
+    return $this->video_ids;
+  }
+
+  /**
+   * @param array $video_ids
+   * @return BrightcovePlaylist
+   */
+  public function setVideoIds(array $video_ids) {
+    $this->video_ids = $video_ids;
+    $this->fieldChanged('video_ids');
     return $this;
   }
 
