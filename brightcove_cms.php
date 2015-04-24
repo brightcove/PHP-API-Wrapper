@@ -107,6 +107,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
+   * If there is an answer, this function returns how many playlists are.
    * @return int
    */
   public function countPlaylists() {
@@ -156,6 +157,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
+   * If there is an answer, this function returns how many elements the  current playlist has.
    * @param string $playlist_id
    * @return int
    */
@@ -168,6 +170,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
+   * This function returns with all the video what the current playlist has.
    * @param string $playlist_id
    * @return BrightcoveVideo[]
    */
@@ -1500,6 +1503,9 @@ class BrightcoveVideoSource extends BrightcoveObjectBase {
   }
 }
 
+/**
+ * This class handles the created custom fields.
+ */
 class BrightcoveCustomFields extends BrightcoveObjectBase {
   /**
    * @var int
@@ -1576,6 +1582,11 @@ class BrightcoveCustomFields extends BrightcoveObjectBase {
 
 }
 
+/**
+ * We can add a specific amount of custom fields to our video.
+ * If these fields are configured as required we have to fill it out
+ * to be the uploading successful.
+ */
 class BrightcoveCustomField extends BrightcoveObjectBase {
   /**
    * @var string
@@ -1721,6 +1732,9 @@ class BrightcoveCustomField extends BrightcoveObjectBase {
 
 }
 
+/**
+ * This class create a collection of videos that are grouped together in a particular order.
+ */
 class BrightcovePlaylist extends BrightcoveObjectBase {
   /**
    * @var string
@@ -1748,6 +1762,7 @@ class BrightcovePlaylist extends BrightcoveObjectBase {
   protected $favorite;
 
   /**
+   * Limit the number of videos included in the playlist. Max is 100.
    * @var int
    */
   protected $limit;
@@ -1758,6 +1773,7 @@ class BrightcovePlaylist extends BrightcoveObjectBase {
   protected $name;
 
   /**
+   * Simplify the process of programmatically assigning content to players.
    * @var string
    */
   protected $reference_id;
@@ -1768,6 +1784,8 @@ class BrightcovePlaylist extends BrightcoveObjectBase {
   protected $search;
 
   /**
+   * Tehere are two types: Manual or Smart.
+   * Smart playlist includess all the videos marked with one or more tags.
    * @var string
    */
   protected $type;
@@ -1850,6 +1868,7 @@ class BrightcovePlaylist extends BrightcoveObjectBase {
   }
 
   /**
+   * Add additional information about the playlist.
    * @return string
    */
   public function getDescription() {
