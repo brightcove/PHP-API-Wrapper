@@ -107,7 +107,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
-   * If there is an answer, this function returns how many playlists are.
+   * Retrieves the number of playlists.
    * @return int
    */
   public function countPlaylists() {
@@ -157,7 +157,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   }
 
   /**
-   * If there is an answer, this function returns how many elements the  current playlist has.
+   * Retrieves the count of videos in a given playlist.
    * @param string $playlist_id
    * @return int
    */
@@ -1733,7 +1733,7 @@ class BrightcoveCustomField extends BrightcoveObjectBase {
 }
 
 /**
- * This class create a collection of videos that are grouped together in a particular order.
+ * This class represents a collection of videos that are grouped together in a particular order.
  */
 class BrightcovePlaylist extends BrightcoveObjectBase {
   /**
@@ -1762,7 +1762,7 @@ class BrightcovePlaylist extends BrightcoveObjectBase {
   protected $favorite;
 
   /**
-   * Limit the number of videos included in the playlist. Max is 100.
+   * Limits the number of videos included in the playlist. Max is 100.
    * @var int
    */
   protected $limit;
@@ -1784,7 +1784,7 @@ class BrightcovePlaylist extends BrightcoveObjectBase {
   protected $search;
 
   /**
-   * Tehere are two types: Manual or Smart.
+   * There are two types: Manual or Smart.
    * Smart playlist includess all the videos marked with one or more tags.
    * @var string
    */
