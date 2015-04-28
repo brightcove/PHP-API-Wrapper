@@ -6,6 +6,12 @@ The only composer dependency for this library is PHPUnit, but it's only necessar
 
 This library requires PHP 5.5 or newer with a CURL extension.
 
+	# apt-get install php5 php5-curl curl
+
+	brightcove$ curl -sS https://getcomposer.org/installer | php
+
+	brightcove$ php composer.phar install
+
 ## Testing notes
 
 The test has a lot of command line options. It is advised that you create a shell script to run the test.
