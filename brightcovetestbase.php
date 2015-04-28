@@ -155,6 +155,17 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
   }
 
   /**
+   * Creates an empty playlist object with a random name.
+   *
+   * @return BrightcovePlaylist
+   */
+  protected function createRandomPlaylistObject() {
+    $playlist = new BrightcovePlaylist();
+    $playlist->setName(uniqid('brightcove_api_test_', TRUE));
+    return $playlist;
+  }
+
+  /**
    * Generates a random string.
    *
    * This is random enough to be used for video object properties, but not secure.
