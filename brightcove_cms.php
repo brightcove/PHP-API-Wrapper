@@ -145,7 +145,7 @@ class BrightcoveCMS extends BrightcoveAPI {
    * @return BrightcovePlaylist
    */
   public function updatePlaylist(BrightcovePlaylist $playlist) {
-    return $this->cmsRequest('PACTH', "/playlists/{$playlist->getId()}", BrightcovePlaylist::class, FALSE, $playlist);
+    return $this->cmsRequest('PATCH', "/playlists/{$playlist->getId()}", BrightcovePlaylist::class, FALSE, $playlist);
   }
 
   /**
