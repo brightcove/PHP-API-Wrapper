@@ -8,9 +8,9 @@ This library requires PHP 5.5 or newer with a CURL extension.
 
 	# apt-get install php5 php5-curl curl
 
-	brightcove$ curl -sS https://getcomposer.org/installer | php
+	PHP-API-Wrapper$ curl -sS https://getcomposer.org/installer | php
 
-	brightcove$ php composer.phar install
+	PHP-API-Wrapper$ php composer.phar install
 
 ## Testing notes
 
