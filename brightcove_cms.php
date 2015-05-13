@@ -413,7 +413,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   /**
    * Map of custom field name:value pairs; only fields that have values are included.
    *
-   * @var array[]
+   * @var array
    */
   protected $custom_fields;
   /**
@@ -627,17 +627,17 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   }
 
   /**
-   * @return string
+   * @return array
    */
   public function getCustomFields() {
     return $this->custom_fields;
   }
 
   /**
-   * @param string $custom_fields
+   * @param array $custom_fields
    * @return $this
    */
-  public function setCustomFields($custom_fields) {
+  public function setCustomFields(array $custom_fields) {
     $this->custom_fields = $custom_fields;
     $this->fieldChanged('custom_fields');
     return $this;
