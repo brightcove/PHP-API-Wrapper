@@ -121,8 +121,9 @@ class BrightcoveCMS extends BrightcoveAPI {
   /**
    * @return BrightcovePlaylist[]
    */
-  public function listPlaylists() {
-    return $this->cmsRequest('GET', '/playlists', BrightcovePlaylist::class, TRUE);
+  public function listPlaylists($limit = NULL) {
+    $limitquery = $limit === NULL ? '' : "?limit={$limit}";
+    return $this->cmsRequest('GET', "/playlists{$limitquery}", BrightcovePlaylist::class, TRUE);
   }
 
   /**
@@ -146,7 +147,7 @@ class BrightcoveCMS extends BrightcoveAPI {
    * @return BrightcovePlaylist
    */
   public function updatePlaylist(BrightcovePlaylist $playlist) {
-    return $this->cmsRequest('PATH', "/playlists/{$playlist->getId()}", BrightcovePlaylist::class, FALSE, $playlist);
+    return $this->cmsRequest('PATCH', "/playlists/{$playlist->getId()}", BrightcovePlaylist::class, FALSE, $playlist);
   }
 
   /**
@@ -415,7 +416,7 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   /**
    * Map of custom field name:value pairs; only fields that have values are included.
    *
-   * @var array[]
+   * @var array
    */
   protected $custom_fields;
   /**
@@ -629,17 +630,17 @@ class BrightcoveVideo extends BrightcoveObjectBase {
   }
 
   /**
-   * @return string
+   * @return array
    */
   public function getCustomFields() {
     return $this->custom_fields;
   }
 
   /**
-   * @param string $custom_fields
+   * @param array $custom_fields
    * @return $this
    */
-  public function setCustomFields($custom_fields) {
+  public function setCustomFields(array $custom_fields) {
     $this->custom_fields = $custom_fields;
     $this->fieldChanged('custom_fields');
     return $this;
