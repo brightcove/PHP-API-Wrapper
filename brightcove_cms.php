@@ -120,8 +120,9 @@ class BrightcoveCMS extends BrightcoveAPI {
   /**
    * @return BrightcovePlaylist[]
    */
-  public function listPlaylists() {
-    return $this->cmsRequest('GET', '/playlists', BrightcovePlaylist::class, TRUE);
+  public function listPlaylists($limit = NULL) {
+    $limitquery = $limit === NULL ? '' : "?limit={$limit}";
+    return $this->cmsRequest('GET', "/playlists{$limitquery}", BrightcovePlaylist::class, TRUE);
   }
 
   /**
