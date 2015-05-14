@@ -6,6 +6,8 @@ require_once 'vendor/autoload.php';
  * This Class handles the communication with the Brightcove APIs.
  */
 class BrightcoveClient {
+  public static $debugRequests = FALSE;
+
   /**
    * OAuth2 access token.
    *
@@ -65,14 +67,27 @@ class BrightcoveClient {
       CURLOPT_CUSTOMREQUEST => $method,
       CURLOPT_URL => $url,
       CURLOPT_HTTPHEADER => $headers,
+      CURLOPT_HEADER => TRUE,
     ]);
 
     if ($extraconfig !== NULL) {
       $extraconfig($ch);
     }
 
-    $result = curl_exec($ch);
+    $rawresult = curl_exec($ch);
+    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $res_headers = substr($rawresult, 0, $header_size);
+    $result = substr($rawresult, $header_size);
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if (self::$debugRequests) {
+      file_put_contents(self::$debugRequests, var_export([
+          'request' => "{$method} {$url}",
+          'headers' => $headers,
+          'response' => [$code, $result],
+          'response_headers' => $res_headers,
+        ], TRUE) . "\n\n", FILE_APPEND);
+    }
 
     curl_close($ch);
 
