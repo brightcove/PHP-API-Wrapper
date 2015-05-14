@@ -19,7 +19,7 @@ class BrightcoveCMS extends BrightcoveAPI {
   public function listVideos($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
     $query = '';
     if ($search) {
-      $query .= "&q={$search}";
+      $query .= '&q=' . urlencode($search);
     }
     if ($sort) {
       $query .= "&sort={$sort}";
@@ -42,7 +42,7 @@ class BrightcoveCMS extends BrightcoveAPI {
    * @return int|null
    */
   public function countVideos($search = NULL) {
-    $query = $search === NULL ? '' : "?q={$search}";
+    $query = $search === NULL ? '' : "?q=" . urlencode($search);
     $result = $this->cmsRequest('GET', "/counts/videos{$query}", NULL);
     if ($result && !empty($result['count'])) {
       return $result['count'];
