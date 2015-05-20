@@ -161,7 +161,7 @@ class BrightcoveClient {
     list($code, $res) = self::HTTPRequest($method, "https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}",
       ["Authorization: Bearer {$this->access_token}"], $body);
     if ($code < 200 || $code >= 300) {
-      throw new BrightcoveAPIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}");
+      throw new BrightcoveAPIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}", $code, NULL, $res);
     }
 
     $json = json_decode($res, TRUE);
@@ -377,5 +377,34 @@ class BrightcoveObjectBase implements BrightcoveObject {
   }
 }
 
-class BrightcoveAPIException extends Exception {}
+class BrightcoveAPIException extends Exception {
+  protected $responseBody;
+
+  /**
+   * @return string
+   */
+  public function getResponseBody() {
+    return $this->responseBody;
+  }
+
+  /**
+   * @param string $responseBody
+   * @return BrightcoveAPIException
+   */
+  public function setResponseBody($responseBody) {
+    $this->responseBody = $responseBody;
+    return $this;
+  }
+
+  /**
+   * @param string $message
+   * @param int $code
+   * @param Exception $previous
+   * @param string $responseBody
+   */
+  public function __construct($message = "", $code = 0, Exception $previous = NULL, $responseBody = '') {
+    parent::__construct($message, $code, $previous);
+    $this->setResponseBody($responseBody);
+  }
+}
 class BrightcoveAuthenticationException extends Exception {}
