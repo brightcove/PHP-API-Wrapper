@@ -3,6 +3,7 @@
 require_once 'brightcove.php';
 require_once 'brightcove_cms.php';
 require_once 'brightcove_di.php';
+require_once 'brightcove_pm.php';
 
 /**
  * Base class for all test for the Brightcove API wrapper.
@@ -71,6 +72,13 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
   protected $di;
 
   /**
+   * A wrapper instance on the PM API.
+   *
+   * @var BrightcovePM
+   */
+  protected $pm;
+
+  /**
    * Creates a new authorized client instance.
    *
    * @return BrightcoveClient
@@ -113,6 +121,7 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
     $this->client = $this->getClient();
     $this->cms = $this->createCMSObject($this->client);
     $this->di = $this->createDIObject($this->client);
+    $this->pm = $this->createPMObject($this->client);
   }
 
   /**
@@ -141,6 +150,20 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
       $client = $this->getClient();
     }
     return new BrightcoveDI($client, $this->account);
+  }
+
+  /**
+   * Creates a new PM object instance.
+   *
+   * @param BrightcoveClient $client
+   *   The $client instance to use. If NULL, then the client of this class will be used.
+   * @return BrightcovePM
+   */
+  protected function createPMObject(BrightcoveClient $client = NULL) {
+    if ($client === NULL) {
+      $client = $this->getClient();
+    }
+    return new BrightcovePM($client, $this->account);
   }
 
   /**

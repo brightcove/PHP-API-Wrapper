@@ -22,6 +22,12 @@ Example script:
     
     ssh -nNT -R 8888::8888 example.com &>ssh_tunnel_logfile.txt &
     PID=$!
+
+	TESTFILES="brightcove_test.php brightcove_pm_test.php brightcove_crud_test.php brightcove_search_test.php"
+
+	if [ "$1" != "" ]; then
+		TESTFILES=$1
+	fi
     
     cleanup () {
         kill ${PID}
@@ -34,7 +40,7 @@ Example script:
         exit 1
     }
     
-    for i in brightcove_test.php brightcove_crud_test.php brightcove_search_test.php; do
+    for i in ${TESTFILES}; do
         ./vendor/bin/phpunit ${i} \
             --client-id="xxx" \
             --client-secret="xxx" \
