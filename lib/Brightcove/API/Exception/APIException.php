@@ -2,7 +2,7 @@
 
 namespace Brightcove\API\Exception;
 
-class APIException extends Exception {
+class APIException extends \Exception {
   protected $responseBody;
 
   /**

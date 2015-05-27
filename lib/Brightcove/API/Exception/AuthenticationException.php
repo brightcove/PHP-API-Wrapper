@@ -2,4 +2,4 @@
 
 namespace Brightcove\API\Exception;
 
-class AuthenticationException extends Exception {}
+class AuthenticationException extends \Exception {}
