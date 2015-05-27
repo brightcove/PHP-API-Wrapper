@@ -2,7 +2,7 @@
 
 namespace Brighcove\CMS\Object\Video;
 
-use Brighcove\API\Object\ObjectBase;
+use Brighcove\Object\ObjectBase;
 use Brighcove\CMS\Object\Video\CuePoint;
 use Brighcove\CMS\Object\Video\GEO;
 use Brighcove\CMS\Object\Video\Image;
