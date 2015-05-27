@@ -1,13 +1,13 @@
 <?php
 
-namespace Brighcove\Object\Video;
+namespace Brightcove\Object\Video;
 
-use Brighcove\Object\ObjectBase;
-use Brighcove\Object\Video\CuePoint;
-use Brighcove\Object\Video\GEO;
-use Brighcove\Object\Video\Image;
-use Brighcove\Object\Video\Schedule;
-use Brighcove\Object\Video\Sharing;
+use Brightcove\Object\ObjectBase;
+use Brightcove\Object\Video\CuePoint;
+use Brightcove\Object\Video\GEO;
+use Brightcove\Object\Video\Image;
+use Brightcove\Object\Video\Schedule;
+use Brightcove\Object\Video\Sharing;
 
 /**
  * Representation of all data related to a video object.
