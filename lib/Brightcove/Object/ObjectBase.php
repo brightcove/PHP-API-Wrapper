@@ -5,7 +5,7 @@ namespace Brightcove\Object;
 use Brightcove\Object\ObjectInterface;
 
 /**
- * Base object which implements most of a needed methods to satisfy BrightcoveObject.
+ * Base object which implements most of a needed methods to satisfy ObjectInterface.
  */
 class ObjectBase implements ObjectInterface {
   /**
@@ -34,13 +34,13 @@ class ObjectBase implements ObjectInterface {
       if ($field === 'changedFields' || $val === NULL) {
         continue;
       }
-      if ($val instanceof BrightcoveObject) {
+      if ($val instanceof ObjectInterface) {
         $data[$field] = $val->postJSON();
       }
       else if (is_array($val)) {
         $data[$field] = [];
         foreach ($val as $k => $v) {
-          if ($v instanceof BrightcoveObject) {
+          if ($v instanceof ObjectInterface) {
             $data[$field][$k] = $v->postJSON();
           }
           else {
@@ -62,12 +62,12 @@ class ObjectBase implements ObjectInterface {
         continue;
       }
 
-      if ($val instanceof BrightcoveObject) {
+      if ($val instanceof ObjectInterface) {
         $data[$field] = $val->patchJSON();
       } else if (is_array($val)) {
         $data[$field] = [];
         foreach ($val as $k => $v) {
-          if ($v instanceof BrightcoveObject) {
+          if ($v instanceof ObjectInterface) {
             $data[$field][$k] = $v->patchJSON();
           } else {
             $data[$field][$k] = $v;
@@ -100,7 +100,7 @@ class ObjectBase implements ObjectInterface {
    * @param null|string $classname
    *   The type of the property. If null, the JSON data will be
    *   copied as it is. If it's a string, it will be instantiated
-   *   as a class, which implements BrightcoveObject.
+   *   as a class, which implements ObjectInterface.
    * @param bool $is_array
    *   If the property is an array. This will be only used
    *   when $classname is not null.

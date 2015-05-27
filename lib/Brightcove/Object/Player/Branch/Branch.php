@@ -3,7 +3,7 @@
 namespace Brightcove\Object\Player\Branch;
 
 use Brightcove\Object\ObjectBase;
-use Brightcove\Object\Player\Branch\Configuration;
+use Brightcove\Object\Player\Branch\Configuration\Configuration;
 
 class Branch extends ObjectBase {
   /**

@@ -2,6 +2,12 @@
 
 namespace Brightcove\API;
 
+
+use Brightcove\API\Exception\AuthenticationException;
+use Brightcove\API\Exception\APIException;
+use Brightcove\API\Client;
+use Brightcove\Object\ObjectInterface;
+
 /**
  * This Class handles the communication with the Brightcove APIs.
  */
@@ -96,15 +102,15 @@ class Client {
   }
 
   /**
-   * A factory method to create an authorized BrightcoveClient instance.
+   * A factory method to create an authorized Client instance.
    *
    * @param string $client_id
    *   OAuth2 client ID.
    * @param string $client_secret
    *   OAuth2 client secret.
-   * @return BrightcoveClient
+   * @return Client
    *   An authorized client.
-   * @throws BrightcoveAuthenticationException
+   * @throws AuthenticationException
    */
   public static function authorize($client_id, $client_secret) {
     list($code, $response) = self::HTTPRequest('POST', 'https://oauth.brightcove.com/v3/access_token',
@@ -115,15 +121,15 @@ class Client {
       });
 
     if ($code !== 200) {
-      throw new BrightcoveAuthenticationException();
+      throw new AuthenticationException();
     }
 
     $json = json_decode($response, TRUE);
     if ($json['token_type'] !== 'Bearer') {
-      throw new BrightcoveAuthenticationException('Unsupported token type: ' . $json['token_type']);
+      throw new AuthenticationException('Unsupported token type: ' . $json['token_type']);
     }
 
-    return new BrightcoveClient($json['access_token']);
+    return new Client($json['access_token']);
   }
 
   /**
@@ -139,16 +145,16 @@ class Client {
    *   API endpoint.
    * @param string|null $result
    *   NULL to return the unmarshalled JSON, or a class name to deserialize into.
-   *   This class must implement BrightcoveObject.
+   *   This class must implement ObjectInterface.
    * @param bool $is_array
    *   TRUE if the result is an array of objects. Not used when $result is NULL.
-   * @param BrightcoveObject $post
-   *   A BrightcoveObject to post.
-   * @return BrightcoveObject|BrightcoveObject[]|null
+   * @param ObjectInterface $post
+   *   A ObjectInterface to post.
+   * @return ObjectInterface|ObjectInterface[]|null
    *   The endpoint result.
-   * @throws BrightcoveAPIException
+   * @throws APIException
    */
-  public function request($method, $api_type, $account, $endpoint, $result, $is_array = FALSE, BrightcoveObject $post = NULL) {
+  public function request($method, $api_type, $account, $endpoint, $result, $is_array = FALSE, ObjectInterface $post = NULL) {
     $body = NULL;
     if ($post) {
       if ($method === 'PATCH') {
@@ -161,7 +167,7 @@ class Client {
     list($code, $res) = self::HTTPRequest($method, "https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}",
       ["Authorization: Bearer {$this->access_token}"], $body);
     if ($code < 200 || $code >= 300) {
-      throw new BrightcoveAPIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}", $code, NULL, $res);
+      throw new APIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}", $code, NULL, $res);
     }
 
     $json = json_decode($res, TRUE);

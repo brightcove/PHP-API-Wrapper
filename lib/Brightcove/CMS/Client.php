@@ -3,6 +3,11 @@ namespace Brightcove\CMS;
 
 use Brightcove\API\API;
 use Brightcove\Object\Video\Video;
+use Brightcove\Object\Video\Source;
+use Brightcove\Object\Video\Images;
+use Brightcove\Object\Playlist;
+use Brightcove\Object\CustomFields;
+
 /**
   * This class provides uncached read access to the data via request functions.
  */
@@ -54,50 +59,50 @@ class Client extends API {
   /**
    * Gets the images for a single video.
    *
-   * @return BrightcoveVideoImages
+   * @return Images
    */
   public function getVideoImages($video_id) {
-    return $this->cmsRequest('GET', "/videos/{$video_id}/images", BrightcoveVideoImages::class);
+    return $this->cmsRequest('GET', "/videos/{$video_id}/images", Images::class);
   }
 
   /**
    * Gets the sources for a single video.
    *
-   * @return BrightcoveVideoSource[]
+   * @return Source[]
    */
   public function getVideoSources($video_id) {
-    return $this->cmsRequest('GET', "/videos/{$video_id}/sources", BrightcoveVideoSource::class, TRUE);
+    return $this->cmsRequest('GET', "/videos/{$video_id}/sources", Source::class, TRUE);
   }
 
   public function getVideoFields() {
-    return $this->cmsRequest('GET', "/video_fields", BrightcoveCustomFields::class, FALSE);
+    return $this->cmsRequest('GET', "/video_fields", CustomFields::class, FALSE);
   }
 
   /**
    * Gets the data for a single video by issuing a GET request.
    *
-   * @return BrightcoveVideo $video
+   * @return Video $video
    */
   public function getVideo($video_id) {
-    return $this->cmsRequest('GET', "/videos/{$video_id}", BrightcoveVideo::class);
+    return $this->cmsRequest('GET', "/videos/{$video_id}", Video::class);
   }
 
   /**
    * Creates a new video object.
    *
-   * @return BrightcoveVideo $video
+   * @return Video $video
    */
-  public function createVideo(BrightcoveVideo $video) {
-    return $this->cmsRequest('POST', '/videos', BrightcoveVideo::class, FALSE, $video);
+  public function createVideo(Video $video) {
+    return $this->cmsRequest('POST', '/videos', Video::class, FALSE, $video);
   }
 
   /**
    * Updates a video object with an HTTP PATCH request.
    *
-   * @return BrightcoveVideo $video
+   * @return Video $video
    */
-  public function updateVideo(BrightcoveVideo $video) {
-    return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", BrightcoveVideo::class, FALSE, $video);
+  public function updateVideo(Video $video) {
+    return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", Video::class, FALSE, $video);
   }
 
   /**
@@ -119,35 +124,35 @@ class Client extends API {
   }
 
   /**
-   * @return BrightcovePlaylist[]
+   * @return Playlist[]
    */
   public function listPlaylists($limit = NULL) {
     $limitquery = $limit === NULL ? '' : "?limit={$limit}";
-    return $this->cmsRequest('GET', "/playlists{$limitquery}", BrightcovePlaylist::class, TRUE);
+    return $this->cmsRequest('GET', "/playlists{$limitquery}", Playlist::class, TRUE);
   }
 
   /**
-   * @param BrightcovePlaylist $playlist
-   * @return BrightcovePlaylist
+   * @param Playlist $playlist
+   * @return Playlist
    */
-  public function createPlaylist(BrightcovePlaylist $playlist) {
-    return $this->cmsRequest('POST', '/playlists', BrightcovePlaylist::class, FALSE, $playlist);
+  public function createPlaylist(Playlist $playlist) {
+    return $this->cmsRequest('POST', '/playlists', Playlist::class, FALSE, $playlist);
   }
 
   /**
    * @param string $playlist_id
-   * @return BrightcovePlaylist
+   * @return Playlist
    */
   public function getPlaylist($playlist_id) {
-    return $this->cmsRequest('GET', "/playlists/{$playlist_id}", BrightcovePlaylist::class);
+    return $this->cmsRequest('GET', "/playlists/{$playlist_id}", Playlist::class);
   }
 
   /**
-   * @param BrightcovePlaylist $playlist
-   * @return BrightcovePlaylist
+   * @param Playlist $playlist
+   * @return Playlist
    */
-  public function updatePlaylist(BrightcovePlaylist $playlist) {
-    return $this->cmsRequest('PATCH', "/playlists/{$playlist->getId()}", BrightcovePlaylist::class, FALSE, $playlist);
+  public function updatePlaylist(Playlist $playlist) {
+    return $this->cmsRequest('PATCH', "/playlists/{$playlist->getId()}", Playlist::class, FALSE, $playlist);
   }
 
   /**
@@ -171,9 +176,9 @@ class Client extends API {
 
   /**
    * @param string $playlist_id
-   * @return BrightcoveVideo[]
+   * @return Video[]
    */
   public function getVideosInPlaylist($playlist_id) {
-    return $this->cmsRequest('GET', "/playlists/{$playlist_id}/videos", BrightcoveVideo::class, TRUE);
+    return $this->cmsRequest('GET', "/playlists/{$playlist_id}/videos", Video::class, TRUE);
   }
 }

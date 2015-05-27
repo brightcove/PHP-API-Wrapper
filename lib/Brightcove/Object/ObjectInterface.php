@@ -3,7 +3,7 @@
 namespace Brightcove\Object;
 
 /**
- * Interface BrightcoveObject
+ * Interface ObjectInterface
  *
  * All communication between the wrapper and the API endpoints
  * must use classes that implements ObjectInterface.
