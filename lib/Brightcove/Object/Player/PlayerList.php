@@ -5,7 +5,7 @@ namespace Brightcove\Object\Player;
 use Brightcove\Object\Player\Player;
 use Brightcove\Object\ObjectBase;
 
-class List extends ObjectBase {
+class PlayerList extends ObjectBase {
   /**
    * @var array
    */

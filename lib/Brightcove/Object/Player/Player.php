@@ -3,7 +3,7 @@
 namespace Brightcove\Object\Player;
 
 use Brightcove\Object\ObjectBase;
-use Brightcove\Object\Player\Branch\List;
+use Brightcove\Object\Player\Branch\BranchList;
 
 class Player extends ObjectBase {
   /**
@@ -12,7 +12,7 @@ class Player extends ObjectBase {
   protected $accountId;
 
   /**
-   * @var PlayerList
+   * @var BranchList
    */
   protected $branches;
 
@@ -50,7 +50,7 @@ class Player extends ObjectBase {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'accountId');
-    $this->applyProperty($json, 'branches', NULL, List::class);
+    $this->applyProperty($json, 'branches', NULL, BranchList::class);
     $this->applyProperty($json, 'description');
     $this->applyProperty($json, 'id');
     $this->applyProperty($json, 'name');
@@ -77,17 +77,17 @@ class Player extends ObjectBase {
   }
 
   /**
-   * @return PlayerList
+   * @return BranchList
    */
   public function getBranches() {
     return $this->branches;
   }
 
   /**
-   * @param PlayerList $branches
+   * @param BranchList $branches
    * @return Player
    */
-  public function setBranches(List $branches) {
+  public function setBranches(BranchList $branches) {
     $this->branches = $branches;
     $this->fieldChanged('branches');
     return $this;

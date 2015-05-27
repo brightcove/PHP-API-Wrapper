@@ -5,7 +5,7 @@ namespace Brightcove\Object\Player\Branch;
 use Brightcove\Object\ObjectBase;
 use Brightcove\Object\Player\Branch\Branch;
 
-class List extends ObjectBase {
+class BranchList extends ObjectBase {
   /**
    * @var Branch
    */

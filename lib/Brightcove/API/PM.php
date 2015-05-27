@@ -3,7 +3,7 @@
 namespace Brightcove\API;
 
 use Brightcove\API\API;
-use Brightcove\Object\Player\List;
+use Brightcove\Object\Player\PlayerList;
 use Brightcove\Object\Player\CreateResult;
 use Brightcove\Object\Player\PublishComment;
 use Brightcove\Object\Player\Player;
@@ -16,10 +16,10 @@ class PM extends API {
   }
 
   /**
-   * @return List|null
+   * @return PlayerList|null
    */
   public function listPlayers() {
-    return $this->pmRequest('GET', '/players', List::class, FALSE);
+    return $this->pmRequest('GET', '/players', PlayerList::class, FALSE);
   }
 
   /**
