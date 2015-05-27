@@ -11,7 +11,7 @@ use Brightcove\Object\CustomFields;
 /**
   * This class provides uncached read access to the data via request functions.
  */
-class Client extends API {
+class CMS extends API {
 
   protected function cmsRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
     return $this->client->request($method, 'cms', $this->account, $endpoint, $result, $is_array, $post);
