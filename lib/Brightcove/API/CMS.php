@@ -1,5 +1,5 @@
 <?php
-namespace Brightcove\CMS;
+namespace Brightcove\API;
 
 use Brightcove\API\API;
 use Brightcove\Object\Video\Video;
