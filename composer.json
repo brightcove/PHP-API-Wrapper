@@ -1,5 +1,35 @@
 {
+  "name": "brightcove/api",
+  "description": "Brightcove PHP API Wrapper",
+  "keywords": ["brightcove","api"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tamás Demeter-Haludka",
+      "homepage": "https://github.com/tamasd"
+    },
+    {
+      "name": "KonczGabor",
+      "homepage": "https://github.com/KonczGabor"
+    },
+    {
+      "name": "janmashat",
+      "homepage": "https://github.com/janmashat"
+    }
+  ],
   "require-dev": {
     "phpunit/phpunit": "4.5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Brightcove\\": "lib/Brightcove/",
+      "Brightcove\\Test\\": "test/lib/Brightcove/Test/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }
