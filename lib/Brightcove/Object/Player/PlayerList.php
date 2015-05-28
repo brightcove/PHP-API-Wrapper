@@ -2,7 +2,6 @@
 
 namespace Brightcove\Object\Player;
 
-use Brightcove\Object\Player\Player;
 use Brightcove\Object\ObjectBase;
 
 class PlayerList extends ObjectBase {
@@ -32,7 +31,7 @@ class PlayerList extends ObjectBase {
 
   /**
    * @param Player[] $items
-   * @return List
+   * @return PlayerList
    */
   public function setItems(array $items) {
     $this->items = $items;
@@ -49,7 +48,7 @@ class PlayerList extends ObjectBase {
 
   /**
    * @param int $item_count
-   * @return List
+   * @return PlayerList
    */
   public function setItemCount($item_count) {
     $this->item_count = $item_count;

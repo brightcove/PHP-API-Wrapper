@@ -3,13 +3,12 @@
 namespace Brightcove\Object\Video;
 
 use Brightcove\Object\ObjectBase;
-use Brightcove\Object\Video\Image;
 
 /**
  * Provides a poster or a thumbnail preview.
  */
 class Images extends ObjectBase {
-  
+
   /**
    * @var Image
    */

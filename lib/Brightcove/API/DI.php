@@ -13,7 +13,7 @@ class DI extends API {
   }
 
   /**
-   * @return BrightcoveIngestResponse
+   * @return IngestResponse
    */
   public function createIngest($video_id, IngestRequest $request) {
     return $this->diRequest('POST', "/videos/{$video_id}/ingest-requests", IngestResponse::class, FALSE, $request);

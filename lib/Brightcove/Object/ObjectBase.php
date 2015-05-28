@@ -2,8 +2,6 @@
 
 namespace Brightcove\Object;
 
-use Brightcove\Object\ObjectInterface;
-
 /**
  * Base object which implements most of a needed methods to satisfy ObjectInterface.
  */

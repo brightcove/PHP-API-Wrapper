@@ -38,7 +38,7 @@ class Branch extends ObjectBase {
 
   /**
    * @param Configuration $configuration
-   * @return BrightcovePlayerBranch
+   * @return Branch
    */
   public function setConfiguration(Configuration $configuration) {
     $this->configuration = $configuration;
@@ -55,7 +55,7 @@ class Branch extends ObjectBase {
 
   /**
    * @param string $updated_at
-   * @return BrightcovePlayerBranch
+   * @return Branch
    */
   public function setUpdatedAt($updated_at) {
     $this->updated_at = $updated_at;
@@ -71,7 +71,7 @@ class Branch extends ObjectBase {
 
   /**
    * @param string $preview_url
-   * @return BrightcovePlayerBranch
+   * @return Branch
    */
   public function setPreviewUrl($preview_url) {
     $this->preview_url = $preview_url;

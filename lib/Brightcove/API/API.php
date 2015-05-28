@@ -2,8 +2,6 @@
 
 namespace Brightcove\API;
 
-use Brightcove\API\Client;
-
 /**
  * A superclass for the Brightcove API implementations.
  */

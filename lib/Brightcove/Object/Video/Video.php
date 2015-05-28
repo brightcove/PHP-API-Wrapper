@@ -3,11 +3,6 @@
 namespace Brightcove\Object\Video;
 
 use Brightcove\Object\ObjectBase;
-use Brightcove\Object\Video\CuePoint;
-use Brightcove\Object\Video\GEO;
-use Brightcove\Object\Video\Image;
-use Brightcove\Object\Video\Schedule;
-use Brightcove\Object\Video\Sharing;
 
 /**
  * Representation of all data related to a video object.
@@ -85,7 +80,7 @@ class Video extends ObjectBase {
    * this array will contain geo objects which represents
    * geo-restriction properties for the video
    *
-   * @var BrightcoveGEO[]
+   * @var GEO[]
    */
   protected $geo;
   /**
@@ -143,7 +138,7 @@ class Video extends ObjectBase {
   /**
    * Array of text_track objects.
    *
-   * @var text_track[].
+   * @var array.
    */
   protected $text_tracks;
   /**
@@ -471,7 +466,7 @@ class Video extends ObjectBase {
   }
 
   /**
-   * @return BrightCoveVideoSharing
+   * @return Sharing
    */
   public function getSharing() {
     return $this->sharing;

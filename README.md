@@ -6,15 +6,18 @@ The only composer dependency for this library is PHPUnit, but it's only necessar
 
 This library requires PHP 5.5 or newer with a CURL extension.
 
-	# apt-get install php5 php5-curl curl
+    # apt-get install php5 php5-curl curl
 
-	PHP-API-Wrapper$ curl -sS https://getcomposer.org/installer | php
+    PHP-API-Wrapper$ curl -sS https://getcomposer.org/installer | php
 
-	PHP-API-Wrapper$ php composer.phar install
+    PHP-API-Wrapper$ php composer.phar install
 
 ## Testing notes
 
-The test has a lot of command line options. It is advised that you create a shell script to run the test.
+Running the tests requires a `config.json` file. There's a sample file included in the repository.
+
+A reverse SSH tunnel is needed for the DI API test. When you set it up, make sure that the port is open on the remote
+server too.
 
 Example script:
 
@@ -22,12 +25,6 @@ Example script:
     
     ssh -nNT -R 8888::8888 example.com &>ssh_tunnel_logfile.txt &
     PID=$!
-
-	TESTFILES="brightcove_test.php brightcove_pm_test.php brightcove_crud_test.php brightcove_search_test.php"
-
-	if [ "$1" != "" ]; then
-		TESTFILES=$1
-	fi
     
     cleanup () {
         kill ${PID}
@@ -40,17 +37,6 @@ Example script:
         exit 1
     }
     
-    for i in ${TESTFILES}; do
-        ./vendor/bin/phpunit ${i} \
-            --client-id="xxx" \
-            --client-secret="xxx" \
-            --account="nnn" \
-            --callback-host="localhost:8888" \
-            --callback-addr-remote="http://example.com:8888" \
-            || handle_error
-    done
+    ./vendor/bin/phpunit
     
     cleanup
-
-The reverse SSH tunnel is needed for the DI API test. When you set it up, make sure that the port is open on the remote
-server too.

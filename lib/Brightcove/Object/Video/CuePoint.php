@@ -4,7 +4,6 @@ namespace Brightcove\Object\Video;
 
 use Brightcove\Object\ObjectBase;
 
-
 /**
  * This class creates marker objects for midroll ad requests or some other action to be created via the player API
  */

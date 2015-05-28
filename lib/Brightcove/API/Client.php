@@ -5,7 +5,6 @@ namespace Brightcove\API;
 
 use Brightcove\API\Exception\AuthenticationException;
 use Brightcove\API\Exception\APIException;
-use Brightcove\API\Client;
 use Brightcove\Object\ObjectInterface;
 
 /**

@@ -1,7 +1,6 @@
 <?php
 namespace Brightcove\API;
 
-use Brightcove\API\API;
 use Brightcove\Object\Video\Video;
 use Brightcove\Object\Video\Source;
 use Brightcove\Object\Video\Images;

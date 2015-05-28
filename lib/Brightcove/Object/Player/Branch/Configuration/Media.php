@@ -3,7 +3,6 @@
 namespace Brightcove\Object\Player\Branch\Configuration;
 
 use Brightcove\Object\ObjectBase;
-use Brightcove\Object\Player\Branch\Configuration\MediaSource;
 
 class Media extends ObjectBase {
   /**

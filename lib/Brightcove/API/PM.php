@@ -2,7 +2,6 @@
 
 namespace Brightcove\API;
 
-use Brightcove\API\API;
 use Brightcove\Object\Player\PlayerList;
 use Brightcove\Object\Player\CreateResult;
 use Brightcove\Object\Player\PublishComment;

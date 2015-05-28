@@ -2,9 +2,6 @@
 
 namespace Brightcove\Object;
 
-use Brightcove\Object\ObjectBase;
-use Brightcove\Object\CustomField;
-
 class CustomFields extends ObjectBase {
   /**
    * @var int

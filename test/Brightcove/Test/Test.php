@@ -1,9 +1,8 @@
 <?php
 
-require_once 'brightcove.php';
-require_once 'brightcovetestbase.php';
+namespace Brightcove\Test;
 
-class BrightcoveTest extends BrightcoveTestBase {
+class Test extends TestBase {
   public function testHasClientData() {
     $this->assertTrue((bool) $this->client_id, 'Client ID exists');
     $this->assertTrue((bool) $this->client_secret, 'Client secret exists');

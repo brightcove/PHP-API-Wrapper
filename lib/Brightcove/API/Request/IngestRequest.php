@@ -2,7 +2,6 @@
 
 namespace Brightcove\API\Request;
 
-use Brightcove\API\Request\IngestRequestMaster;
 use Brightcove\Object\ObjectBase;
 
 class IngestRequest extends ObjectBase {

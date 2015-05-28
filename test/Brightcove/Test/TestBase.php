@@ -1,14 +1,18 @@
 <?php
 
-require_once 'brightcove.php';
-require_once 'brightcove_cms.php';
-require_once 'brightcove_di.php';
-require_once 'brightcove_pm.php';
+namespace Brightcove\Test;
+
+use Brightcove\API\Client;
+use Brightcove\API\CMS;
+use Brightcove\API\DI;
+use Brightcove\API\Exception\AuthenticationException;
+use Brightcove\API\PM;
+use Brightcove\Object\Video\Video;
 
 /**
  * Base class for all test for the Brightcove API wrapper.
  */
-class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
+class TestBase extends \PHPUnit_Framework_TestCase {
 
   /**
    * OAuth2 client id.
@@ -53,39 +57,39 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
   /**
    * A Brightcove client to be used with the endpoint wrapper classes.
    *
-   * @var BrightcoveClient
+   * @var Client
    */
   protected $client;
 
   /**
    * A wrapper instance on the CMS API.
    *
-   * @var BrightcoveCMS
+   * @var CMS
    */
   protected $cms;
 
   /**
    * A wrapper instance on the DI API.
    *
-   * @var BrightcoveDI
+   * @var DI
    */
   protected $di;
 
   /**
    * A wrapper instance on the PM API.
    *
-   * @var BrightcovePM
+   * @var PM
    */
   protected $pm;
 
   /**
    * Creates a new authorized client instance.
    *
-   * @return BrightcoveClient
-   * @throws BrightcoveAuthenticationException
+   * @return Client
+   * @throws AuthenticationException
    */
   protected function getClient() {
-    return BrightcoveClient::authorize($this->client_id, $this->client_secret);
+    return Client::authorize($this->client_id, $this->client_secret);
   }
 
   /**
@@ -94,26 +98,12 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
    * Currently it reads the command line arguments and sets up the client and the wrapper objects.
    */
   public function setUp() {
-    foreach ($_SERVER['argv'] as $arg) {
-      if (substr($arg, 0, 2) === '--') {
-        $arg = substr($arg, 2);
-        list($key, $value) = explode('=', $arg, 2);
-        switch ($key) {
-          case 'client-id':
-            $this->client_id = $value;
-            break;
-          case 'client-secret':
-            $this->client_secret = $value;
-            break;
-          case 'account':
-            $this->account = $value;
-            break;
-          case 'callback-host':
-            $this->callback_host = $value;
-            break;
-          case 'callback-addr-remote':
-            $this->callback_addr_remote = $value;
-            break;
+    $json = file_get_contents("config.json");
+    if ($json) {
+      $config = json_decode($json, TRUE);
+      if (is_array($config)) {
+        foreach ($config as $k => $v) {
+          $this->{$k} = $v;
         }
       }
     }
@@ -127,52 +117,52 @@ class BrightcoveTestBase extends PHPUnit_Framework_TestCase {
   /**
    * Creates a new CMS object instance.
    *
-   * @param BrightcoveClient $client
+   * @param Client $client
    *   The $client instance to use. If NULL, then the client of this class will be used.
-   * @return BrightcoveCMS
+   * @return CMS
    */
-  protected function createCMSObject(BrightcoveClient $client = NULL) {
+  protected function createCMSObject(Client $client = NULL) {
     if ($client === NULL) {
       $client = $this->getClient();
     }
-    return new BrightcoveCMS($client, $this->account);
+    return new CMS($client, $this->account);
   }
 
   /**
    * Creates a new DI object instance.
    *
-   * @param BrightcoveClient $client
+   * @param Client $client
    *   The $client instance to use. If NULL, then the client of this class will be used.
-   * @return BrightcoveDI
+   * @return DI
    */
-  protected function createDIObject(BrightcoveClient $client = NULL) {
+  protected function createDIObject(Client $client = NULL) {
     if ($client === NULL) {
       $client = $this->getClient();
     }
-    return new BrightcoveDI($client, $this->account);
+    return new DI($client, $this->account);
   }
 
   /**
    * Creates a new PM object instance.
    *
-   * @param BrightcoveClient $client
+   * @param Client $client
    *   The $client instance to use. If NULL, then the client of this class will be used.
-   * @return BrightcovePM
+   * @return PM
    */
-  protected function createPMObject(BrightcoveClient $client = NULL) {
+  protected function createPMObject(Client $client = NULL) {
     if ($client === NULL) {
       $client = $this->getClient();
     }
-    return new BrightcovePM($client, $this->account);
+    return new PM($client, $this->account);
   }
 
   /**
    * Creates an empty video object with a random name.
    *
-   * @return BrightcoveVideo
+   * @return Video
    */
   protected function createRandomVideoObject() {
-    $video = new BrightcoveVideo();
+    $video = new Video();
     $video->setName(uniqid('brightcove_api_test_', TRUE));
     return $video;
   }

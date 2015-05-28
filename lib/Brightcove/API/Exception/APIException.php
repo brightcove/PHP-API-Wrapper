@@ -14,7 +14,7 @@ class APIException extends \Exception {
 
   /**
    * @param string $responseBody
-   * @return BrightcoveAPIException
+   * @return APIException
    */
   public function setResponseBody($responseBody) {
     $this->responseBody = $responseBody;
@@ -24,10 +24,10 @@ class APIException extends \Exception {
   /**
    * @param string $message
    * @param int $code
-   * @param Exception $previous
+   * @param \Exception $previous
    * @param string $responseBody
    */
-  public function __construct($message = "", $code = 0, Exception $previous = NULL, $responseBody = '') {
+  public function __construct($message = "", $code = 0, \Exception $previous = NULL, $responseBody = '') {
     parent::__construct($message, $code, $previous);
     $this->setResponseBody($responseBody);
   }

@@ -3,9 +3,6 @@
 namespace Brightcove\Object\Player\Branch\Configuration;
 
 use Brightcove\Object\ObjectBase;
-use Brightcove\Object\Player\Branch\Configuration\Media;
-use Brightcove\Object\Player\Branch\Configuration\Player;
-use Brightcove\Object\Player\Branch\Configuration\Plugin;
 
 class Configuration extends ObjectBase {
   /**
@@ -52,7 +49,7 @@ class Configuration extends ObjectBase {
 
   /**
    * @param Media $media
-   * @return BranchConfiguration
+   * @return Configuration
    */
   public function setMedia(Media $media) {
     $this->media = $media;
@@ -69,7 +66,7 @@ class Configuration extends ObjectBase {
 
   /**
    * @param Player $player
-   * @return BranchConfiguration
+   * @return Configuration
    */
   public function setPlayer(Player $player) {
     $this->player = $player;
@@ -86,7 +83,7 @@ class Configuration extends ObjectBase {
 
   /**
    * @param string[] $scripts
-   * @return BranchConfiguration
+   * @return Configuration
    */
   public function setScripts(array $scripts) {
     $this->scripts = $scripts;
@@ -103,7 +100,7 @@ class Configuration extends ObjectBase {
 
   /**
    * @param string[] $stylesheets
-   * @return BranchConfiguration
+   * @return Configuration
    */
   public function setStylesheets(array $stylesheets) {
     $this->stylesheets = $stylesheets;
@@ -120,7 +117,7 @@ class Configuration extends ObjectBase {
 
   /**
    * @param Plugin[] $plugins
-   * @return BranchConfiguration
+   * @return Configuration
    */
   public function setPlugins(array $plugins) {
     $this->plugins = $plugins;

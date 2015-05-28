@@ -3,7 +3,6 @@
 namespace Brightcove\Object\Player\Branch;
 
 use Brightcove\Object\ObjectBase;
-use Brightcove\Object\Player\Branch\Branch;
 
 class BranchList extends ObjectBase {
   /**
@@ -32,7 +31,7 @@ class BranchList extends ObjectBase {
 
   /**
    * @param Branch $master
-   * @return List
+   * @return BranchList
    */
   public function setMaster(Branch $master) {
     $this->master = $master;
@@ -49,7 +48,7 @@ class BranchList extends ObjectBase {
 
   /**
    * @param Branch $preview
-   * @return List
+   * @return BranchList
    */
   public function setPreview(Branch $preview) {
     $this->preview = $preview;
