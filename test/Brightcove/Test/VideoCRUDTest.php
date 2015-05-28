@@ -1,12 +1,15 @@
 <?php
-
-require_once 'brightcovetestbase.php';
+use Brightcove\API\Request\IngestRequest;
+use Brightcove\Object\Video\CuePoint;
+use Brightcove\Object\Video\Link;
+use Brightcove\Object\Video\Sharing;
+use Brightcove\Test\TestBase;
 
 /**
  * This class is for create, read, update and delete a random video object.
  * Call the CMS API to create a video object in the Video Cloud system and get its id back.
  */
-class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
+class VideoCRUDTest extends TestBase {
 
   public function testVideoObjectCreation() {
     $video = $this->createRandomVideoObject();
@@ -23,7 +26,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
    * @depends testVideoObjectCreation
    */
   public function testVideoIngestion($video_id) {
-    $request = BrightcoveIngestRequest::createRequest('http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi', 'high-bandwidth-devices');
+    $request = IngestRequest::createRequest('http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi', 'high-bandwidth-devices');
     if (!empty($this->callback_addr_remote)) {
       $request->setCallbacks([$this->callback_addr_remote]);
     }
@@ -83,7 +86,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
     $long_description = self::generateRandomString();
     $video->setLongDescription($long_description);
 
-    $cue_point = new BrightcoveVideoCuePoint();
+    $cue_point = new CuePoint();
 
     $cue_name = self::generateRandomString();
     $cue_point->setName($cue_name);
@@ -112,7 +115,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
 
     $url = self::generateRandomString();
     $text = self::generateRandomString();
-    $link = new BrightcoveVideoLink();
+    $link = new Link();
     $link->setText($text);
     $link->setUrl($url);
 
@@ -123,7 +126,7 @@ class BrightcoveVideoCRUDTest extends BrightcoveTestBase {
     $to_external_acct = true;
     $by_reference = true;
 
-    $sharing = new BrightcoveVideoSharing();
+    $sharing = new Sharing();
 
     $sharing->setByExternalAcct($by_external_acct);
     $sharing->setById($by_id);

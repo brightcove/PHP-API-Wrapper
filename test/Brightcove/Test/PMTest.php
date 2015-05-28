@@ -1,13 +1,15 @@
 <?php
 
-require_once 'brightcovetestbase.php';
+use Brightcove\Object\Player\Branch\Configuration\Media;
+use Brightcove\Object\Player\Player;
+use Brightcove\Test\TestBase;
 
 define('BRIGHTCOVE_PLAYER_TEST_POSTER', 'http://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png');
 
-class BrightcovePMTest extends BrightcoveTestBase {
+class PMTest extends TestBase {
 
   public function testPlayerCreation() {
-    $player = new BrightcovePlayer();
+    $player = new Player();
     $player->setName($this->generateRandomString());
 
     $result = $this->pm->createPlayer($player);
@@ -20,10 +22,10 @@ class BrightcovePMTest extends BrightcoveTestBase {
 
   /**
    * @depends testPlayerCreation
-   * @param BrightcovePlayer $player
-   * @return BrightcovePlayer
+   * @param Player $player
+   * @return Player
    */
-  public function testCheckPlayer(BrightcovePlayer $player) {
+  public function testCheckPlayer(Player $player) {
     $playerID = $player->getId();
     $playerList = $this->pm->listPlayers();
 
@@ -41,10 +43,10 @@ class BrightcovePMTest extends BrightcoveTestBase {
 
   /**
    * @depends testCheckPlayer
-   * @param BrightcovePlayer $player
-   * @return BrightcovePlayer
+   * @param Player $player
+   * @return Player
    */
-  public function testUpdatePlayer(BrightcovePlayer $player) {
+  public function testUpdatePlayer(Player $player) {
     $desc = $this->generateRandomString(64);
     $player->setDescription($desc);
     $this->pm->updatePlayer($player);
@@ -57,13 +59,13 @@ class BrightcovePMTest extends BrightcoveTestBase {
 
   /**
    * @depends testUpdatePlayer
-   * @param BrightcovePlayer $player
-   * @return BrightcovePlayer
+   * @param Player $player
+   * @return Player
    */
-  public function testUpdateAndPublishConfiguration(BrightcovePlayer $player) {
+  public function testUpdateAndPublishConfiguration(Player $player) {
     $master = $player->getBranches()->getMaster()->getConfiguration();
     $posterconf = ['highres' => BRIGHTCOVE_PLAYER_TEST_POSTER];
-    $master->setMedia((new BrightcovePlayerBranchConfigurationMedia())->setPoster($posterconf));
+    $master->setMedia((new Media())->setPoster($posterconf));
     $this->pm->updatePlayerConfigurationBranch($player->getId(), $master);
     $player = $this->pm->getPlayer($player->getId());
     $this->assertEquals($posterconf, $player->getBranches()->getPreview()->getConfiguration()->getMedia()->getPoster());
@@ -77,9 +79,9 @@ class BrightcovePMTest extends BrightcoveTestBase {
 
   /**
    * @depends testUpdateAndPublishConfiguration
-   * @param BrightcovePlayer $player
+   * @param Player $player
    */
-  public function testDeletePlayer(BrightcovePlayer $player) {
+  public function testDeletePlayer(Player $player) {
     $player_id = $player->getId();
     $this->pm->deletePlayer($player_id);
 

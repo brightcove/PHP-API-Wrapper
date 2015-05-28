@@ -1,13 +1,14 @@
 <?php
 
-require_once 'brightcovetestbase.php';
+use Brightcove\Object\Video\Video;
+use Brightcove\Test\TestBase;
 
-class BrightcoveVideoSearchTest extends BrightcoveTestBase {
+class VideoSearchTest extends TestBase {
 
   /**
    * Creates an array[10] filling it up with random video objects.
    *
-   * @return BrightcoveVideo[]
+   * @return Video[]
    */
   public function testCreateVideos() {
     $videos = [];
@@ -23,9 +24,9 @@ class BrightcoveVideoSearchTest extends BrightcoveTestBase {
   }
 
   /**
-   * @param BrightcoveVideo[] $videos
+   * @param Video[] $videos
    * @depends testCreateVideos
-   * @return BrightcoveVideo[]
+   * @return Video[]
    */
   public function testSearchVideos($videos) {
     sleep(1);
@@ -44,7 +45,7 @@ class BrightcoveVideoSearchTest extends BrightcoveTestBase {
   }
 
   /**
-   * @param BrightcoveVideo[] $videos
+   * @param Video[] $videos
    * @depends testSearchVideos
    */
   public function testCleanupVideos($videos) {
