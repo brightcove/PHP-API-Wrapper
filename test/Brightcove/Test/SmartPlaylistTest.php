@@ -41,9 +41,10 @@ class SmartPlaylistTest extends TestBase {
     $name = $playlist->getName();
     $playlist = $this->cms->createPlaylist($playlist);
     $returnedName = $playlist->getName();
-    if (strcmp($name, $returnedName) === 0) {
-      return $input = [$playlist, $videos];
-    }
+
+    $this->assertEquals($name, $returnedName);
+
+    return [$playlist, $videos];
   }
 
   /**
@@ -63,9 +64,10 @@ class SmartPlaylistTest extends TestBase {
     $search = $playlist->getSearch();
     $playlist = $this->cms->updatePlaylist($playlist);
     $returnedSearch = $playlist->getSearch();
-    if (strcmp($search, $returnedSearch) === 0) {
-      return $input = [$playlist, $videos];
-    }
+
+    $this->assertEquals($search, $returnedSearch);
+
+    return [$playlist, $videos];
   }
 
   /**
@@ -98,9 +100,10 @@ class SmartPlaylistTest extends TestBase {
     $description = $playlist->getDescription();
     $playlist = $this->cms->updatePlaylist($playlist);
     $returnedDescription = $playlist->getDescription();
-    if (strcmp($description, $returnedDescription) === 0) {
-      return $playlist;
-    }
+
+    $this->assertEquals($description, $returnedDescription);
+
+    return $playlist;
   }
 
   /**

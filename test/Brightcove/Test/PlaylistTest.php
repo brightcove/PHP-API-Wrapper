@@ -4,10 +4,10 @@ namespace Brightcove\Test;
 
 use Brightcove\Object\Playlist;
 use Brightcove\Object\Video\Video;
-
+/**
+ * Creating test for the Brightcove ManualPlaylist.
+ */
 class PlaylistTest extends TestBase {
-
-
   /**
    * Creates an array[10] filling it up with random video objects.
    *
@@ -37,9 +37,10 @@ class PlaylistTest extends TestBase {
     $name = $playlist->getName();
     $playlist = $this->cms->createPlaylist($playlist);
     $returnedName = $playlist->getName();
-    if (strcmp($name, $returnedName) === 0) {
-      return $tomb = [$playlist, $videos];
-    }
+
+    $this->assertEquals($name, $returnedName);
+
+    return [$playlist, $videos];
   }
 
   /**
@@ -58,17 +59,10 @@ class PlaylistTest extends TestBase {
     $playlist->setVideoIds($videoIds);
     $playlist = $this->cms->updatePlaylist($playlist);
     $createdVideoIds = $playlist->getVideoIds();
-    if(count($videoIds) === count($createdVideoIds)) {
-      $idsEquals = 0;
-      for ($i = 0; $i < count($videoIds); $i++) {
-        if ($videoIds[$i] === $createdVideoIds[$i]) {
-          $idsEquals++;
-        }
-      }
-      if ($idsEquals === count($videoIds)) {
-        return $input = array ($playlist, $videos);
-      }
-    }
+
+    $this->assertEquals($videoIds, $createdVideoIds);
+
+    return [$playlist, $videos];
   }
 
   /**
@@ -87,6 +81,7 @@ class PlaylistTest extends TestBase {
     $description = $playlist->getDescription();
     $playlist = $this->cms->updatePlaylist($playlist);
     $createdDescription = $playlist->getDescription();
+
     $this->assertEquals($description, $createdDescription);
 
     return [$playlist, $videos];
