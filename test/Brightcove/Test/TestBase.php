@@ -7,6 +7,7 @@ use Brightcove\API\CMS;
 use Brightcove\API\DI;
 use Brightcove\API\Exception\AuthenticationException;
 use Brightcove\API\PM;
+use Brightcove\Object\Playlist;
 use Brightcove\Object\Video\Video;
 
 /**
@@ -165,6 +166,17 @@ class TestBase extends \PHPUnit_Framework_TestCase {
     $video = new Video();
     $video->setName(uniqid('brightcove_api_test_', TRUE));
     return $video;
+  }
+
+  /**
+   * Creates an empty playlist object with a random name.
+   *
+   * @return Playlist
+   */
+  protected function createRandomPlaylistObject() {
+    $playlist = new Playlist();
+    $playlist->setName(uniqid('brightcove_api_test_', TRUE));
+    return $playlist;
   }
 
   /**
