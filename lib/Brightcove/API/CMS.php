@@ -125,9 +125,21 @@ class CMS extends API {
   /**
    * @return Playlist[]
    */
-  public function listPlaylists($limit = NULL) {
-    $limitquery = $limit === NULL ? '' : "?limit={$limit}";
-    return $this->cmsRequest('GET', "/playlists{$limitquery}", Playlist::class, TRUE);
+  public function listPlaylists($sort = NULL, $limit = NULL, $offset = NULL) {
+    $query = '';
+    if ($sort) {
+      $query .= "&sort={$sort}";
+    }
+    if ($limit) {
+      $query .= "&limit={$limit}";
+    }
+    if ($offset) {
+      $query .= "&offset={$offset}";
+    }
+    if (strlen($query) > 0) {
+      $query = '?' . substr($query, 1);
+    }
+    return $this->cmsRequest('GET', "/playlists{$query}", Playlist::class, TRUE);
   }
 
   /**
