@@ -2,9 +2,7 @@
 
 ## Installation notes
 
-The only composer dependency for this library is PHPUnit, but it's only necessary if you intend to run tests.
-
-This library requires PHP 5.5 or newer with a CURL extension.
+This library requires PHP 5.5 or newer with a CURL extension. You have to run `composer install` before using the library.
 
     # apt-get install php5 php5-curl curl
 
