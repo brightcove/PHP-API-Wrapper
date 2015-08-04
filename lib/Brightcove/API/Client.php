@@ -89,6 +89,7 @@ class Client {
     if (self::$debugRequests) {
       file_put_contents(self::$debugRequests, var_export([
           'request' => "{$method} {$url}",
+          'request_body' => $postdata,
           'headers' => $headers,
           'response' => [$code, $result],
           'response_headers' => $res_headers,
