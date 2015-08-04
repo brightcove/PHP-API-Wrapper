@@ -3,7 +3,6 @@
 namespace Brightcove\API\Request;
 
 use Brightcove\Object\ObjectBase;
-use IngestImage;
 
 class IngestRequest extends ObjectBase {
   /**
@@ -20,11 +19,6 @@ class IngestRequest extends ObjectBase {
    * @var array
    */
   protected $callbacks;
-
-  /**
-   * @var bool
-   */
-  protected $capture_images;
 
   /**
    * @var IngestImage
@@ -50,7 +44,6 @@ class IngestRequest extends ObjectBase {
     $this->applyProperty($json, 'master');
     $this->applyProperty($json, 'profile');
     $this->applyProperty($json, 'callbacks');
-    $this->applyProperty($json, 'capture_images');
     $this->applyProperty($json, 'poster');
     $this->applyProperty($json, 'thumbnail');
   }
@@ -107,23 +100,6 @@ class IngestRequest extends ObjectBase {
   }
 
   /**
-   * @return boolean
-   */
-  public function isCaptureImages() {
-    return $this->capture_images;
-  }
-
-  /**
-   * @param boolean $capture_images
-   * @return IngestRequest
-   */
-  public function setCaptureImages(IngestRequest $capture_images) {
-    $this->capture_images = $capture_images;
-    $this->fieldChanged('capture_images');
-    return $this;
-  }
-
-  /**
    * @return IngestImage
    */
   public function getPoster() {
@@ -134,7 +110,7 @@ class IngestRequest extends ObjectBase {
    * @param IngestImage $poster
    * @return IngestRequest
    */
-  public function setPoster(IngestRequest $poster) {
+  public function setPoster(IngestImage $poster) {
     $this->poster = $poster;
     $this->fieldChanged('poster');
     return $this;
@@ -151,7 +127,7 @@ class IngestRequest extends ObjectBase {
    * @param IngestImage $thumbnail
    * @return IngestRequest
    */
-  public function setThumbnail(IngestRequest $thumbnail) {
+  public function setThumbnail(IngestImage $thumbnail) {
     $this->thumbnail = $thumbnail;
     $this->fieldChanged('thumbnail');
     return $this;
