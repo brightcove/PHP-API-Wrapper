@@ -8,6 +8,10 @@ class IngestRequestMaster extends ObjectBase {
   protected $url;
   protected $capture_images;
 
+  public function __construct() {
+    $this->fieldAliases["capure_images"] = "capture-images";
+  }
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
     $this->applyProperty($json, 'url');
