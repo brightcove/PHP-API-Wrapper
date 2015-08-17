@@ -9,7 +9,7 @@ class IngestRequestMaster extends ObjectBase {
   protected $capture_images;
 
   public function __construct() {
-    $this->fieldAliases["capure_images"] = "capture-images";
+    $this->fieldAliases["capture_images"] = "capture-images";
   }
 
   public function applyJSON(array $json) {
