@@ -30,6 +30,15 @@ class IngestRequest extends ObjectBase {
    */
   protected $thumbnail;
 
+  /**
+   * @var bool
+   */
+  protected $capture_images;
+
+  public function __construct() {
+    $this->fieldAliases["capture_images"] = "capture-images";
+  }
+
   public static function createRequest($url, $profile) {
     $request = new self();
     $request->setMaster(new IngestRequestMaster());
@@ -46,6 +55,7 @@ class IngestRequest extends ObjectBase {
     $this->applyProperty($json, 'callbacks');
     $this->applyProperty($json, 'poster');
     $this->applyProperty($json, 'thumbnail');
+    $this->applyProperty($json, 'capture_images');
   }
 
   /**
@@ -130,6 +140,23 @@ class IngestRequest extends ObjectBase {
   public function setThumbnail(IngestImage $thumbnail) {
     $this->thumbnail = $thumbnail;
     $this->fieldChanged('thumbnail');
+    return $this;
+  }
+
+  /**
+   * @return bool
+   */
+  public function getCaptureImages() {
+    return $this->capture_images;
+  }
+
+  /**
+   * @param bool $capture_images
+   * @return IngestRequestMaster
+   */
+  public function setCaptureImages($capture_images) {
+    $this->capture_images = $capture_images;
+    $this->fieldChanged('capture_images');
     return $this;
   }
 }
