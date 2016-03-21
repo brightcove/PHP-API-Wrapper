@@ -101,6 +101,7 @@ class CMS extends API {
    * @return Video $video
    */
   public function updateVideo(Video $video) {
+    $video->fieldUnchanged('account_id', 'id');
     return $this->cmsRequest('PATCH', "/videos/{$video->getId()}", Video::class, FALSE, $video);
   }
 
@@ -163,6 +164,7 @@ class CMS extends API {
    * @return Playlist
    */
   public function updatePlaylist(Playlist $playlist) {
+    $playlist->fieldUnchanged('id');
     return $this->cmsRequest('PATCH', "/playlists/{$playlist->getId()}", Playlist::class, FALSE, $playlist);
   }
 

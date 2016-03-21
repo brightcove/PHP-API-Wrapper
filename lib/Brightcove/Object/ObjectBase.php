@@ -29,8 +29,18 @@ class ObjectBase implements ObjectInterface {
    *
    * @param string $field_name
    */
-  protected function fieldChanged($field_name) {
+  public function fieldChanged($field_name) {
     $this->changedFields[] = $field_name;
+  }
+
+  /**
+   * Marks a field or fields unchanged.
+   *
+   * @param $field_name
+   */
+  public function fieldUnchanged($field_name) {
+    $fields = func_get_args();
+    $this->changedFields = array_diff($this->changedFields, $fields);
   }
 
   /**
