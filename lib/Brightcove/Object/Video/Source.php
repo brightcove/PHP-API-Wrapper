@@ -60,6 +60,11 @@ class Source extends ObjectBase {
    */
   protected $uploaded_at;
 
+  /**
+   * @var string
+   */
+  protected $src;
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
@@ -73,6 +78,24 @@ class Source extends ObjectBase {
     $this->applyProperty($json, 'width');
     $this->applyProperty($json, 'size');
     $this->applyProperty($json, 'uploaded_at');
+    $this->applyProperty($json, 'src');
+  }
+
+  /**
+   * @return string
+   */
+  public function getSrc() {
+    return $this->src;
+  }
+
+  /**
+   * @param string $src
+   * @return Source
+   */
+  public function setSrc($src) {
+    $this->src = $src;
+    $this->fieldChanged('src');
+    return $this;
   }
 
   /**
