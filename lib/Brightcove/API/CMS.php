@@ -1,6 +1,8 @@
 <?php
 namespace Brightcove\API;
 
+use Brightcove\API\Request\SubscriptionRequest;
+use Brightcove\Object\Video\Subscription;
 use Brightcove\Object\Video\Video;
 use Brightcove\Object\Video\Source;
 use Brightcove\Object\Video\Images;
@@ -193,5 +195,20 @@ class CMS extends API {
    */
   public function getVideosInPlaylist($playlist_id) {
     return $this->cmsRequest('GET', "/playlists/{$playlist_id}/videos", Video::class, TRUE);
+  }
+
+  /**
+   * @return Subscription[]|null
+   */
+  public function getSubscriptions() {
+    return $this->cmsRequest('GET', '/subscriptions', Subscription::class, TRUE);
+  }
+
+  /**
+   * @param SubscriptionRequest $request
+   * @return Subscription|null
+   */
+  public function createSubscription(SubscriptionRequest $request) {
+    return $this->cmsRequest('POST', '/subscriptions', Subscription::class, FALSE, $request);
   }
 }
