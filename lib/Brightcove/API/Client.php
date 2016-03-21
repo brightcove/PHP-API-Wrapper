@@ -20,8 +20,37 @@ class Client {
    */
   protected $access_token;
 
-  public function __construct($access_token) {
+  /**
+   * Token expiration
+   *
+   * @var int
+   */
+  protected $expires_in;
+
+  public function __construct($access_token, $expires_in = 0) {
     $this->access_token = $access_token;
+    $this->expires_in = $expires_in;
+  }
+
+  /**
+   * Returns the OAuth2 access token.
+   *
+   * @return string
+   */
+  public function getAccessToken() {
+    return $this->access_token;
+  }
+
+  /**
+   * Returns the access token expiration.
+   *
+   * This value might not be correct. The object stores the response
+   * from Brightcove, but it does not adjust it as the time passes.
+   *
+   * @return int
+   */
+  public function getExpiresIn() {
+    return $this->expires_in;
   }
 
   /**
@@ -32,7 +61,7 @@ class Client {
    * @return bool
    */
   public function isAuthorized() {
-    return (bool) $this->access_token;
+    return (bool) $this->getAccessToken();
   }
 
   /**
@@ -129,7 +158,7 @@ class Client {
       throw new AuthenticationException('Unsupported token type: ' . $json['token_type']);
     }
 
-    return new Client($json['access_token']);
+    return new Client($json['access_token'], $json['expires_in']);
   }
 
   /**
