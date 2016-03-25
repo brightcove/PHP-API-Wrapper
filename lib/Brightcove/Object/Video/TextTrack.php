@@ -24,6 +24,11 @@ class TextTrack extends ObjectBase {
   /**
    * @var string
    */
+  protected $label;
+
+  /**
+   * @var string
+   */
   protected $kind;
 
   /**
@@ -51,6 +56,7 @@ class TextTrack extends ObjectBase {
     $this->applyProperty($json, 'id');
     $this->applyProperty($json, 'src');
     $this->applyProperty($json, 'srclang');
+    $this->applyProperty($json, 'label');
     $this->applyProperty($json, 'kind');
     $this->applyProperty($json, 'mime_type');
     $this->applyProperty($json, 'asset_id');
@@ -106,6 +112,23 @@ class TextTrack extends ObjectBase {
   public function setSrclang($srclang) {
     $this->srclang = $srclang;
     $this->fieldChanged('srclang');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getLabel() {
+    return $this->label;
+  }
+
+  /**
+   * @param string $label
+   * @return TextTrack
+   */
+  public function setLabel($label) {
+    $this->label = $label;
+    $this->fieldChanged('label');
     return $this;
   }
 
