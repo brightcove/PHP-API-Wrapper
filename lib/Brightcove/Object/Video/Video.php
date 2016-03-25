@@ -138,7 +138,7 @@ class Video extends ObjectBase {
   /**
    * Array of text_track objects.
    *
-   * @var array.
+   * @var TextTrack[]
    */
   protected $text_tracks;
   /**
@@ -172,7 +172,7 @@ class Video extends ObjectBase {
     $this->applyProperty($json, 'sharing', NULL, Sharing::class);
     $this->applyProperty($json, 'state');
     $this->applyProperty($json, 'tags');
-    $this->applyProperty($json, 'text_tracks');
+    $this->applyProperty($json, 'text_tracks', NULL, TextTrack::class, TRUE);
     $this->applyProperty($json, 'updated_at');
   }
 
@@ -517,17 +517,17 @@ class Video extends ObjectBase {
   }
 
   /**
-   * @return string
+   * @return TextTrack[]
    */
   public function getTextTracks() {
     return $this->text_tracks;
   }
 
   /**
-   * @param string $text_tracks
+   * @param TextTrack[] $text_tracks
    * @return $this
    */
-  public function setTextTracks($text_tracks) {
+  public function setTextTracks(array $text_tracks) {
     $this->text_tracks = $text_tracks;
     $this->fieldChanged('text_tracks');
     return $this;
