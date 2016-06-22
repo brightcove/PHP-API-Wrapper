@@ -10,11 +10,13 @@ use Brightcove\Object\ObjectBase;
 class Image extends ObjectBase {
   protected $id;
   protected $src;
+  protected $sources;
 
   public function applyJSON(array $json) {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
     $this->applyProperty($json, 'src');
+    $this->applyProperty($json, 'sources');
   }
 
   /**
@@ -48,6 +50,23 @@ class Image extends ObjectBase {
   public function setSrc($src) {
     $this->src = $src;
     $this->fieldChanged('src');
+    return $this;
+  }
+
+  /**
+   * @return array
+   */
+  public function getSources() {
+    return $this->sources;
+  }
+
+  /**
+   * @param array $sources
+   * @return $this
+   */
+  public function setSources(array $sources) {
+    $this->sources = $sources;
+    $this->fieldChanged('sources');
     return $this;
   }
 }
