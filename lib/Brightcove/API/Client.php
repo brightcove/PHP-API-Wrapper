@@ -11,7 +11,55 @@ use Brightcove\Object\ObjectInterface;
  * This Class handles the communication with the Brightcove APIs.
  */
 class Client {
-  public static $debugRequests = FALSE;
+
+  /**
+   * A filename for a verbose request log.
+   *
+   * @var string
+   */
+  public static $debugRequests = NULL;
+
+  /**
+   * CURLOPT_HTTPPROXYTUNNEL
+   *
+   * @var bool
+   */
+  public static $httpProxyTunnel = NULL;
+
+  /**
+   * CURLOPT_PROXYAUTH
+   *
+   * @var int
+   */
+  public static $proxyAuth = NULL;
+
+  /**
+   * CURLOPT_PROXYPORT
+   *
+   * @var int
+   */
+  public static $proxyPort = NULL;
+
+  /**
+   * CURLOPT_PROXYTYPE
+   *
+   * @var int
+   */
+  public static $proxyType = NULL;
+
+  /**
+   * CURLOPT_PROXY
+   *
+   * @var string
+   */
+  public static $proxy = NULL;
+
+  /**
+   * CURLOPT_PROXYUSERPWD
+   *
+   * @var string
+   */
+  public static $proxyUserPassword = NULL;
 
   /**
    * OAuth2 access token.
@@ -105,6 +153,8 @@ class Client {
       CURLOPT_HEADER => TRUE,
     ]);
 
+    self::configureProxy($ch);
+
     if ($extraconfig !== NULL) {
       $extraconfig($ch);
     }
@@ -128,6 +178,32 @@ class Client {
     curl_close($ch);
 
     return [$code, $result];
+  }
+
+  /**
+   * Configures the proxy settings on a curl resource.
+   *
+   * @param resource $ch Curl resource
+   */
+  protected static function configureProxy($ch) {
+    if (self::$httpProxyTunnel) {
+      curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, self::$httpProxyTunnel);
+    }
+    if (self::$proxyAuth) {
+      curl_setopt($ch, CURLOPT_PROXYAUTH, self::$proxyAuth);
+    }
+    if (self::$proxyPort) {
+      curl_setopt($ch, CURLOPT_PROXYPORT, self::$proxyPort);
+    }
+    if (self::$proxyType) {
+      curl_setopt($ch, CURLOPT_PROXYTYPE, self::$proxyType);
+    }
+    if (self::$proxy) {
+      curl_setopt($ch, CURLOPT_PROXY, self::$proxy);
+    }
+    if (self::$proxyUserPassword) {
+      curl_setopt($ch, CURLOPT_PROXYUSERPWD, self::$proxyUserPassword);
+    }
   }
 
   /**
