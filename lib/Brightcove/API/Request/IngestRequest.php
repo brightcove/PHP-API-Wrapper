@@ -44,7 +44,7 @@ class IngestRequest extends ObjectBase {
     $this->fieldAliases["capture_images"] = "capture-images";
   }
 
-  public static function createRequest($url, $profile) {
+  public static function createRequest($profile, $url = null) {
     $request = new self();
     if ($url !== null) {
       $request->setMaster(new IngestRequestMaster());
