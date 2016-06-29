@@ -10,7 +10,7 @@ class IngestRequestRetranscode extends ObjectBase {
     public function applyJSON(array $json)
     {
         parent::applyJSON($json);
-        $this->applyProperty($json, 'url');
+        $this->applyProperty($json, 'use_archived_master');
     }
 
     /**

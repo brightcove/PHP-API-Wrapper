@@ -6,7 +6,7 @@ use Brightcove\Object\ObjectBase;
 
 class IngestRequest extends ObjectBase {
   /**
-   * @var IngestRequestMaster
+   * @var IngestRequestMaster|IngestRequestRetranscode
    */
   protected $master;
 
@@ -70,17 +70,17 @@ class IngestRequest extends ObjectBase {
   }
 
   /**
-   * @return IngestRequestMaster
+   * @return IngestRequestMaster|IngestRequestRetranscode
    */
   public function getMaster() {
     return $this->master;
   }
 
   /**
-   * @param IngestRequestMaster $master
+   * @param IngestRequestMaster|IngestRequestRetranscode $master
    * @return $this
    */
-  public function setMaster(IngestRequestMaster $master = NULL) {
+  public function setMaster(ObjectBase $master = NULL) {
     $this->master = $master;
     $this->fieldChanged('master');
     return $this;
