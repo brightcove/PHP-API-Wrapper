@@ -46,8 +46,13 @@ class IngestRequest extends ObjectBase {
 
   public static function createRequest($url, $profile) {
     $request = new self();
-    $request->setMaster(new IngestRequestMaster());
-    $request->getMaster()->setUrl($url);
+    if ($url !== null) {
+      $request->setMaster(new IngestRequestMaster());
+      $request->getMaster()->setUrl($url);
+    } else {
+      $request->setMaster(new IngestRequestRetranscode());
+      $request->getMaster()->setUseArchivedMaster(true);
+    }
     $request->setProfile($profile);
 
     return $request;
