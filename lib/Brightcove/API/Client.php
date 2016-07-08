@@ -137,7 +137,6 @@ class Client {
 
     if ($postdata !== NULL) {
       curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-      $headers[] = 'Content-Length: ' . strlen($postdata);
       $headers[] = 'Content-Type: application/json';
     }
 
