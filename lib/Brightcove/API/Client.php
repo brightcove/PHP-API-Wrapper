@@ -290,4 +290,76 @@ class Client {
 
     return call_user_func([$result, 'fromJSON'], $json);
   }
+  
+  
+  
+  /**
+   * Sends an authorized request to the Brightcove Analytics API endpoint.
+   *
+   * @param string $method
+   *   HTTP method.
+   * @param string $api_type
+   *   API type, e.g. cms, di etc.
+   * @param string $account
+   *   Brightcove account ID.
+   * @param string $dimensions
+   *   Dimensions for API request.
+   * @param string|null $result
+   *   NULL to return the unmarshalled JSON, or a class name to deserialize into.
+   *   This class must implement ObjectInterface.
+   * @param date $from
+   *   Start date for API request.
+   * @param date $to
+   *   End date for API request.
+   * @param array $fields
+   *   Array of fields to include in request.
+   * @param int $limit
+   *   Limit for API request.
+   * @param string $sort
+   *   Sort for API request.
+   * @param bool $is_array
+   *   TRUE if the result is an array of objects. Not used when $result is NULL.
+   * @param ObjectInterface $post
+   *   A ObjectInterface to post.
+   * @return ObjectInterface|ObjectInterface[]|null
+   *   The endpoint result.
+   * @throws APIException
+   */
+  public function requestAnalytics($method, $api_type, $account, $dimensions, $result, $from, $to, $fields, $limit = 10, $sort = '-video_view', $is_array = FALSE, ObjectInterface $post = NULL) {
+    $body = NULL;
+    $fields_str = implode(',', $fields);
+    
+    if ($post) {
+      if ($method === 'PATCH') {
+        $body = $post->patchJSON();
+      } else {
+        $body = $post->postJSON();
+      }
+      $body = json_encode($body);
+    }												
+    list($code, $res) = self::HTTPRequest($method, 
+      "https://{$api_type}.api.brightcove.com/v1/data?accounts={$account}&dimensions={$dimensions}&limit={$limit}&sort={$sort}&from={$from}&to={$to}&fields={$fields_str}",
+      ["Authorization: Bearer {$this->access_token}"], $body);
+    if ($code < 200 || $code >= 300) {
+      throw new APIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}", $code, NULL, $res);
+    }
+
+    $json = json_decode($res, TRUE);
+	
+    if (is_null($result)) {
+      return $json;
+    }
+
+    if ($is_array) {
+      $ret = [];
+      foreach ($json as $item) {
+        $ret[] = call_user_func([$result, 'fromJSON'], $item);
+      }
+      return $ret;
+    }
+
+    return call_user_func([$result, 'fromJSON'], $json);
+  }
+  
+  
 }
