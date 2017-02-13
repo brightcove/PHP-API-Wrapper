@@ -205,10 +205,26 @@ class CMS extends API {
   }
 
   /**
+   * @param string $subscription_id
+   * @return Subscription
+   */
+  public function getSubscription($subscription_id)  {
+    return $this->cmsRequest('GET', "/subscriptions/{$subscription_id}", Subscription::class);
+  }
+
+  /**
    * @param SubscriptionRequest $request
    * @return Subscription|null
    */
   public function createSubscription(SubscriptionRequest $request) {
     return $this->cmsRequest('POST', '/subscriptions', Subscription::class, FALSE, $request);
   }
+
+  /**
+   * @param string $subscription_id
+   */
+  public function deleteSubscription($subscription_id) {
+    $this->cmsRequest('DELETE', "/subscritpions/{$subscription_id}", NULL);
+  }
+
 }
