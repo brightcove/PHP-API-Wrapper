@@ -268,8 +268,17 @@ class Client {
       }
       $body = json_encode($body);
     }
-    list($code, $res) = self::HTTPRequest($method, "https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}",
-      ["Authorization: Bearer {$this->access_token}"], $body);
+
+    do {
+      list($code, $res) = self::HTTPRequest($method,
+        "https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}",
+        ["Authorization: Bearer {$this->access_token}"], $body);
+    }
+    // Automatically request again, if we hit the rate limit. In between though
+    // wait for 2 seconds, just to be 100% sure.
+    // Read on https://docs.brightcove.com/en/video-cloud/cms-api/getting-started/overview-cms.html
+    // for more information about the rate limiting.
+    while ($code == 429 && sleep(2));
     if ($code < 200 || $code >= 300) {
       throw new APIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}", $code, NULL, $res);
     }
