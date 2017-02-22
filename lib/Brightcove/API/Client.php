@@ -269,6 +269,7 @@ class Client {
       $body = json_encode($body);
     }
 
+    $total_requests = 0;
     do {
       list($code, $res) = self::HTTPRequest($method,
         "https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}",
@@ -278,7 +279,8 @@ class Client {
     // wait for 2 seconds, just to be 100% sure.
     // Read on https://docs.brightcove.com/en/video-cloud/cms-api/getting-started/overview-cms.html
     // for more information about the rate limiting.
-    while ($code == 429 && sleep(2));
+    // We also provide a check to not run into an infinite loop.
+    while ($total_requests++ < 10 && $code == 429 && sleep(2));
     if ($code < 200 || $code >= 300) {
       throw new APIException("Invalid status code: expected 200-299, got {$code}.\n\n{$res}", $code, NULL, $res);
     }
