@@ -5,6 +5,7 @@ namespace Brightcove\API;
 
 use Brightcove\API\Exception\AuthenticationException;
 use Brightcove\API\Exception\APIException;
+use Brightcove\Constants;
 use Brightcove\Object\ObjectInterface;
 
 /**
@@ -67,6 +68,15 @@ class Client {
    * @var string
    */
   public static $proxyUserPassword = NULL;
+
+  /**
+   * Consumer name and version.
+   *
+   * Setting this to not NULL will enable overriding the user agent.
+   *
+   * @var string|NULL
+   */
+  public static $consumer = NULL;
 
   /**
    * OAuth2 access token.
@@ -157,9 +167,14 @@ class Client {
       CURLOPT_URL => $url,
       CURLOPT_HTTPHEADER => $headers,
       CURLOPT_HEADER => TRUE,
+      CURLINFO_HEADER_OUT => (bool) self::$debugRequests,
     ]);
 
     self::configureProxy($ch);
+
+    if (static::$consumer) {
+      curl_setopt($ch, CURLOPT_USERAGENT, static::getUserAgent());
+    }
 
     if ($extraconfig !== NULL) {
       $extraconfig($ch);
@@ -173,9 +188,8 @@ class Client {
 
     if (self::$debugRequests) {
       file_put_contents(self::$debugRequests, var_export([
-          'request' => "{$method} {$url}",
+          'request' => curl_getinfo($ch, CURLINFO_HEADER_OUT),
           'request_body' => $postdata,
-          'headers' => $headers,
           'response' => [$code, $result],
           'response_headers' => $res_headers,
         ], TRUE) . "\n\n", FILE_APPEND);
@@ -210,6 +224,20 @@ class Client {
     if (self::$proxyUserPassword) {
       curl_setopt($ch, CURLOPT_PROXYUSERPWD, self::$proxyUserPassword);
     }
+  }
+
+  /**
+   * Constructs the user agent string.
+   *
+   * @return string
+   */
+  protected static function getUserAgent() {
+    $api_wrapper_version = Constants::VERSION;
+    $consumer = static::$consumer;
+    $host = $_SERVER['HTTP_HOST'] ?: gethostname();
+    $software = $_SERVER['SERVER_SOFTWARE'];
+    $curl_version = curl_version()['version'];
+    return "PHP-API-Wrapper/{$api_wrapper_version} ({$host}; {$software} curl/{$curl_version}) {$consumer}";
   }
 
   /**
