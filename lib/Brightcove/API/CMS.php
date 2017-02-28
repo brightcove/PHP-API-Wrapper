@@ -224,7 +224,7 @@ class CMS extends API {
    * @param string $subscription_id
    */
   public function deleteSubscription($subscription_id) {
-    $this->cmsRequest('DELETE', "/subscritpions/{$subscription_id}", NULL);
+    $this->cmsRequest('DELETE', "/subscriptions/{$subscription_id}", NULL);
   }
 
 }
