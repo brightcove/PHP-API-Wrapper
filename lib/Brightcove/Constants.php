@@ -3,5 +3,5 @@
 namespace Brightcove;
 
 class Constants {
-  const VERSION = 'dev';
+  const VERSION = '0.9';
 }
