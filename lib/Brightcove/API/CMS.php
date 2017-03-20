@@ -2,7 +2,7 @@
 namespace Brightcove\API;
 
 use Brightcove\API\Request\SubscriptionRequest;
-use Brightcove\Object\Video\Subscription;
+use Brightcove\Object\Subscription;
 use Brightcove\Object\Video\Video;
 use Brightcove\Object\Video\Source;
 use Brightcove\Object\Video\Images;
