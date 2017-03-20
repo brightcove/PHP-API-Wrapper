@@ -1,6 +1,6 @@
 <?php
 
-namespace Brightcove\Object\Video;
+namespace Brightcove\Object;
 
 use Brightcove\API\Request\SubscriptionRequest;
 
@@ -21,7 +21,6 @@ class Subscription extends SubscriptionRequest {
     $this->applyProperty($json, 'id');
     $this->applyProperty($json, 'service_account');
   }
-
 
   /**
    * @return string
