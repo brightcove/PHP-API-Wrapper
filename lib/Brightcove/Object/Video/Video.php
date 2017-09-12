@@ -34,7 +34,6 @@ class Video extends ObjectBase {
    * @var string
    */
   protected $created_at;
-
   /**
    * Array of cue_point objects.
    *
@@ -149,6 +148,13 @@ class Video extends ObjectBase {
    * @var string
    */
   protected $updated_at;
+  /**
+   * ISO 8601 date-time string
+   * Date-time video was published, can differ from created_at; example: "2014-12-09T06:07:11.877Z".
+   *
+   * @var string
+   */
+  protected $published_at;
 
   public function applyJSON(array $json) {
     parent::applyJSON($json);
@@ -174,6 +180,7 @@ class Video extends ObjectBase {
     $this->applyProperty($json, 'tags');
     $this->applyProperty($json, 'text_tracks', NULL, TextTrack::class, TRUE);
     $this->applyProperty($json, 'updated_at');
+    $this->applyProperty($json, 'published_at');
   }
 
   /**
@@ -547,6 +554,23 @@ class Video extends ObjectBase {
   public function setUpdatedAt($updated_at) {
     $this->updated_at = $updated_at;
     $this->fieldChanged('updated_at');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getPublishedAt() {
+    return $this->published_at;
+  }
+
+  /**
+   * @param string $published_at
+   * @return $this
+   */
+  public function setPublishedAt($published_at) {
+    $this->published_at = $published_at;
+    $this->fieldChanged('published_at');
     return $this;
   }
 }
