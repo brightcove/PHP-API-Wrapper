@@ -7,6 +7,16 @@ use Brightcove\Object\ObjectBase;
 class Configuration extends ObjectBase {
 
   /**
+   * @var bool
+   */
+  protected $autoadvance;
+
+  /**
+   * @var bool
+   */
+  protected $autoplay;
+
+  /**
    * @var CSS
    */
   protected $css;
@@ -20,6 +30,16 @@ class Configuration extends ObjectBase {
    * @var Player
    */
   protected $player;
+
+  /**
+   * @var bool
+   */
+  protected $playlist;
+
+  /**
+   * @var bool
+   */
+  protected $playOnSelect;
 
   /**
    * @var string[]
@@ -62,7 +82,7 @@ class Configuration extends ObjectBase {
   protected $preload;
 
   /**
-   * @var bool
+   * @var bool|string
    */
   protected $skin;
 
@@ -84,9 +104,13 @@ class Configuration extends ObjectBase {
   public function applyJSON(array $json) {
     parent::applyJSON($json);
 
+    $this->applyProperty($json, 'autoadvance');
+    $this->applyProperty($json, 'autoplay');
     $this->applyProperty($json, 'css', NULL, CSS::class);
     $this->applyProperty($json, 'media', NULL, Media::class);
     $this->applyProperty($json, 'player', NULL, Player::class);
+    $this->applyProperty($json, 'playlist');
+    $this->applyProperty($json, 'playOnSelect');
     $this->applyProperty($json, 'scripts');
     $this->applyProperty($json, 'stylesheets');
     $this->applyProperty($json, 'plugins', NULL, Plugin::class, TRUE);
@@ -289,14 +313,14 @@ class Configuration extends ObjectBase {
   }
 
   /**
-   * @return boolean
+   * @return boolean|string
    */
-  public function isSkin() {
+  public function getSkin() {
     return $this->skin;
   }
 
   /**
-   * @param boolean $skin
+   * @param boolean|string $skin
    * @return Configuration
    */
   public function setSkin($skin) {
@@ -355,4 +379,77 @@ class Configuration extends ObjectBase {
     $this->fieldChanged('studio_configuration');
     return $this;
   }
+
+  /**
+   * @return bool
+   */
+  public function isAutoadvance() {
+    return $this->autoadvance;
+  }
+
+  /**
+   * @param bool $autoadvance
+   *
+   * @return Configuration
+   */
+  public function setAutoadvance($autoadvance) {
+    $this->autoadvance = $autoadvance;
+    $this->fieldChanged('autoadvance');
+    return $this;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isAutoplay() {
+    return $this->autoplay;
+  }
+
+  /**
+   * @param bool $autoplay
+   *
+   * @return Configuration
+   */
+  public function setAutoplay($autoplay) {
+    $this->autoplay = $autoplay;
+    $this->fieldChanged('autoadvance');
+    return $this;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isPlaylist() {
+    return $this->playlist;
+  }
+
+  /**
+   * @param bool $playlist
+   *
+   * @return Configuration
+   */
+  public function setPlaylist($playlist) {
+    $this->playlist = $playlist;
+    $this->fieldChanged('autoadvance');
+    return $this;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isPlayOnSelect() {
+    return $this->playOnSelect;
+  }
+
+  /**
+   * @param bool $playOnSelect
+   *
+   * @return Configuration
+   */
+  public function setPlayOnSelect($playOnSelect) {
+    $this->playOnSelect = $playOnSelect;
+    $this->fieldChanged('autoadvance');
+    return $this;
+  }
+
 }

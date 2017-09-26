@@ -13,7 +13,7 @@ class Player extends ObjectBase {
   /**
    * @var bool
    */
-  protected $autoplay;
+  protected $inactive;
 
   public function applyJSON(array $json) {
     parent::applyJSON($json);
@@ -42,16 +42,17 @@ class Player extends ObjectBase {
   /**
    * @return boolean
    */
-  public function isAutoplay() {
-    return $this->autoplay;
+  public function isInactive() {
+    return $this->inactive;
   }
 
   /**
-   * @param boolean $autoplay
+   * @param boolean $inactive
+   *
    * @return Player
    */
-  public function setAutoplay($autoplay) {
-    $this->autoplay = $autoplay;
+  public function setInactive($inactive) {
+    $this->inactive = $inactive;
     $this->fieldChanged('autoplay');
     return $this;
   }

@@ -5,10 +5,11 @@ namespace Brightcove\Object\Player\Branch\Configuration;
 use Brightcove\Object\ObjectBase;
 
 class Media extends ObjectBase {
+
   /**
    * @var string
    */
-  protected $name;
+  protected $src;
 
   /**
    * @var string[]
@@ -20,27 +21,34 @@ class Media extends ObjectBase {
    */
   protected $sources;
 
+  /**
+   * @var Track[]
+   */
+  protected $tracks;
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
 
-    $this->applyProperty($json, 'name');
+    $this->applyProperty($json, 'src');
     $this->applyProperty($json, 'poster');
     $this->applyProperty($json, 'sources', NULL, MediaSource::class, TRUE);
+    $this->applyProperty($json, 'tracks', NULL, Track::class, TRUE);
   }
 
   /**
    * @return string
    */
-  public function getName() {
-    return $this->name;
+  public function getSrc() {
+    return $this->src;
   }
 
   /**
-   * @param string $name
+   * @param string $src
+   *
    * @return Media
    */
-  public function setName($name) {
-    $this->name = $name;
+  public function setSrc($src) {
+    $this->src = $src;
     $this->fieldChanged('name');
     return $this;
   }
@@ -78,4 +86,22 @@ class Media extends ObjectBase {
     $this->fieldChanged('sources');
     return $this;
   }
+
+  /**
+   * @return Track[]
+   */
+  public function getTracks() {
+    return $this->tracks;
+  }
+
+  /**
+   * @param Track[] $tracks
+   *
+   * @return Media
+   */
+  public function setTracks($tracks) {
+    $this->tracks = $tracks;
+    return $this;
+  }
+
 }
