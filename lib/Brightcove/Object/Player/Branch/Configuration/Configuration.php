@@ -101,6 +101,8 @@ class Configuration extends ObjectBase {
    */
   protected $studio_configuration;
 
+  protected $embed_name;
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
 
@@ -123,6 +125,18 @@ class Configuration extends ObjectBase {
     $this->applyProperty($json, 'techOrder');
     $this->applyProperty($json, 'video_cloud', NULL, VideoCloud::class);
     $this->applyProperty($json, 'studio_configuration', NULL, StudioConfiguration::class);
+
+    $this->applyProperty($json, 'embed_name');
+  }
+
+  public function getEmbedName() {
+    return $this->embed_name;
+  }
+
+  public function setEmbedName($embed_name) {
+    $this->embed_name = $embed_name;
+    $this->fieldChanged('embed_name');
+    return $this;
   }
 
   /**
@@ -412,7 +426,7 @@ class Configuration extends ObjectBase {
    */
   public function setAutoplay($autoplay) {
     $this->autoplay = $autoplay;
-    $this->fieldChanged('autoadvance');
+    $this->fieldChanged('autoplay');
     return $this;
   }
 
@@ -430,7 +444,7 @@ class Configuration extends ObjectBase {
    */
   public function setPlaylist($playlist) {
     $this->playlist = $playlist;
-    $this->fieldChanged('autoadvance');
+    $this->fieldChanged('playlist');
     return $this;
   }
 
@@ -448,7 +462,7 @@ class Configuration extends ObjectBase {
    */
   public function setPlayOnSelect($playOnSelect) {
     $this->playOnSelect = $playOnSelect;
-    $this->fieldChanged('autoadvance');
+    $this->fieldChanged('playOnSelect');
     return $this;
   }
 

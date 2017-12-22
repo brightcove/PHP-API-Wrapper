@@ -53,7 +53,7 @@ class Player extends ObjectBase {
    */
   public function setInactive($inactive) {
     $this->inactive = $inactive;
-    $this->fieldChanged('autoplay');
+    $this->fieldChanged('inactive');
     return $this;
   }
 }
