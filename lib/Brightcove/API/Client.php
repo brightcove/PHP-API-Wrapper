@@ -293,7 +293,7 @@ class Client {
    *   The endpoint result.
    * @throws APIException
    */
-  public function request($method, $api_type, $account, $endpoint, $result, $is_array = FALSE, ObjectInterface $post = NULL) {
+  public function request($method, $api_version, $api_type, $account, $endpoint, $result, $is_array = FALSE, ObjectInterface $post = NULL) {
     $body = NULL;
     if ($post) {
       if ($method === 'PATCH') {
@@ -307,7 +307,7 @@ class Client {
     $total_requests = 0;
     do {
       list($code, $res) = self::HTTPRequest($method,
-        "https://{$api_type}.api.brightcove.com/v1/accounts/{$account}{$endpoint}",
+        "https://{$api_type}.api.brightcove.com/v{$api_version}/accounts/{$account}{$endpoint}",
         ["Authorization: Bearer {$this->access_token}"], $body);
     }
     // Automatically request again, if we hit the rate limit. In between though

@@ -15,7 +15,7 @@ use Brightcove\Object\Player\UpdateData;
 class PM extends API {
 
   protected function pmRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
-    return $this->client->request($method, 'players', $this->account, $endpoint, $result, $is_array, $post);
+    return $this->client->request($method, '2','players', $this->account, $endpoint, $result, $is_array, $post);
   }
 
   /**
@@ -114,7 +114,7 @@ class PM extends API {
    *
    * @return Embed
    */
-  public function createEmbed($player_id, CreateData $data) {
+  public function createEmbed($player_id, Configuration $data) {
     return $this->pmRequest('POST', "/players/{$player_id}/embeds", Embed::class, FALSE, $data);
   }
 
@@ -158,7 +158,7 @@ class PM extends API {
    * @return Configuration
    */
   public function updateEmbedConfigurationBranch($player_id, $embed_id, Configuration $configuration) {
-    return $this->pmRequest('PATCH', "/players/{$player_id}/players/{$embed_id}/configuration", Configuration::class, FALSE, $configuration);
+    return $this->pmRequest('PATCH', "/players/{$player_id}/embeds/{$embed_id}/configuration", Configuration::class, FALSE, $configuration);
   }
 
 }

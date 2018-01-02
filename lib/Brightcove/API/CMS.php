@@ -15,7 +15,7 @@ use Brightcove\Object\CustomFields;
 class CMS extends API {
 
   protected function cmsRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
-    return $this->client->request($method, 'cms', $this->account, $endpoint, $result, $is_array, $post);
+    return $this->client->request($method, '1','cms', $this->account, $endpoint, $result, $is_array, $post);
   }
 
   /**

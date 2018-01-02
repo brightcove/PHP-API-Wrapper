@@ -76,7 +76,7 @@ class CreateResult extends ObjectBase {
    */
   public function setUrl($url) {
     $this->url = $url;
-    $this->fieldChanged('id');
+    $this->fieldChanged('url');
     return $this;
   }
 
