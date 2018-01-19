@@ -4,6 +4,12 @@ namespace Brightcove\API\Request;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class IngestTextTrack
+ *
+ * @package Brightcove\API\Request
+ * @api
+ */
 class IngestTextTrack extends ObjectBase {
 
   /**

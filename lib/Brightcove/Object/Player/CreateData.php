@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player;
 
 use Brightcove\Object\Player\Branch\Configuration\Configuration;
 
+/**
+ * Class CreateData
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class CreateData extends UpdateData {
 
   /**

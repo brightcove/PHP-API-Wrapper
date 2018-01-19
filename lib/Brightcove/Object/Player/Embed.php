@@ -6,6 +6,12 @@ use Brightcove\Object\ObjectBase;
 use Brightcove\Object\Player\Branch\BranchList;
 use Brightcove\Object\Player\Embed\PublishRequest;
 
+/**
+ * Class Embed
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class Embed extends ObjectBase {
 
   /**

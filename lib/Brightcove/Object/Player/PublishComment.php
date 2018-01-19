@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class PublishComment
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class PublishComment extends ObjectBase {
   /**
    * @var string

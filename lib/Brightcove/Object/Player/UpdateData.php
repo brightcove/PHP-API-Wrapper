@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class UpdateData
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class UpdateData extends ObjectBase {
 
   /**

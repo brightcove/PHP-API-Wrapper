@@ -4,6 +4,12 @@ namespace Brightcove\Object\Video;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class Source
+ *
+ * @package Brightcove\Object\Video
+ * @api
+ */
 class Source extends ObjectBase {
   /**
    * @var string

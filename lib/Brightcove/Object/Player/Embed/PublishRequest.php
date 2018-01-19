@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player\Embed;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class PublishRequest
+ *
+ * @package Brightcove\Object\Player\Embed
+ * @api
+ */
 class PublishRequest extends ObjectBase {
 
   /**

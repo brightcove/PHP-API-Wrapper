@@ -11,6 +11,8 @@ use Brightcove\Object\CustomFields;
 
 /**
   * This class provides uncached read access to the data via request functions.
+ *
+ * @api
  */
 class CMS extends API {
 

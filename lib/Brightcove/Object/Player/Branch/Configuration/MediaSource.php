@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player\Branch\Configuration;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class MediaSource
+ *
+ * @package Brightcove\Object\Player\Branch\Configuration
+ * @api
+ */
 class MediaSource extends ObjectBase {
   /**
    * @var string

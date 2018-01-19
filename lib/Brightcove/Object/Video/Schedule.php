@@ -6,6 +6,8 @@ use Brightcove\Object\ObjectBase;
 
 /**
  * Creates a schedule object, which represents when the video becomes available/unavailable
+ *
+ * @api
  */
 class Schedule extends ObjectBase {
   protected $starts_at;

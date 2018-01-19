@@ -12,6 +12,12 @@ use Brightcove\Object\Player\Player;
 use Brightcove\Object\Player\Branch\Configuration\Configuration;
 use Brightcove\Object\Player\UpdateData;
 
+/**
+ * Class PM
+ *
+ * @package Brightcove\API
+ * @api
+ */
 class PM extends API {
 
   protected function pmRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {

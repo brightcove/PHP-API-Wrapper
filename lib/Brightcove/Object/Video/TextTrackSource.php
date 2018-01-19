@@ -4,6 +4,12 @@ namespace Brightcove\Object\Video;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class TextTrackSource
+ *
+ * @package Brightcove\Object\Video
+ * @api
+ */
 class TextTrackSource extends ObjectBase {
 
   /**

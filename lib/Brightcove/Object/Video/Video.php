@@ -6,6 +6,8 @@ use Brightcove\Object\ObjectBase;
 
 /**
  * Representation of all data related to a video object.
+ *
+ * @api
  */
 class Video extends ObjectBase {
   /**

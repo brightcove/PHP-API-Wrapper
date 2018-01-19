@@ -6,6 +6,12 @@ use Brightcove\API\API;
 use Brightcove\API\Request\IngestRequest;
 use Brightcove\API\Response\IngestResponse;
 
+/**
+ * Class DI
+ *
+ * @package Brightcove\API
+ * @api
+ */
 class DI extends API {
 
   protected function diRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {

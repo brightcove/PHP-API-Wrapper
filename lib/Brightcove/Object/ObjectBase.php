@@ -4,6 +4,8 @@ namespace Brightcove\Object;
 
 /**
  * Base object which implements most of a needed methods to satisfy ObjectInterface.
+ *
+ * @internal
  */
 class ObjectBase implements ObjectInterface {
   /**

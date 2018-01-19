@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class CreateResult
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class CreateResult extends ObjectBase {
   /**
    * @var string

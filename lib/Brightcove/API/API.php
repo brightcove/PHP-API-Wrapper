@@ -4,6 +4,8 @@ namespace Brightcove\API;
 
 /**
  * A superclass for the Brightcove API implementations.
+ *
+ * @internal
  */
 abstract class API {
   protected $account;

@@ -6,6 +6,8 @@ use Brightcove\Object\ObjectBase;
 
 /**
  * Creates a link object which has two separeted string field.
+ *
+ * @api
  */
 class Link extends ObjectBase {
   public function applyJSON(array $json) {

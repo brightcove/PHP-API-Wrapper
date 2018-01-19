@@ -5,6 +5,12 @@ namespace Brightcove\Object\Player\Branch;
 use Brightcove\Object\ObjectBase;
 use Brightcove\Object\Player\Branch\Configuration\Configuration;
 
+/**
+ * Class Branch
+ *
+ * @package Brightcove\Object\Player\Branch
+ * @api
+ */
 class Branch extends ObjectBase {
 
   /**

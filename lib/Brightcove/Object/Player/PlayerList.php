@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class PlayerList
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class PlayerList extends ObjectBase {
   /**
    * @var array

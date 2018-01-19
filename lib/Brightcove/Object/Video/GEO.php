@@ -8,6 +8,8 @@ use Brightcove\Object\ObjectBase;
  * If geo-restriction is enabled for the account,
  * this class creates geo objects.
  * This object will contain geo-restriction properties for the video.
+ *
+ * @api
  */
 class GEO extends ObjectBase {
   protected $countries = [];

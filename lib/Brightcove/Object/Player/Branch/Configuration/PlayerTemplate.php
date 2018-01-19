@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player\Branch\Configuration;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class PlayerTemplate
+ *
+ * @package Brightcove\Object\Player\Branch\Configuration
+ * @api
+ */
 class PlayerTemplate extends ObjectBase {
   /**
    * @var string
