@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player\Branch\Configuration;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class CSS
+ *
+ * @package Brightcove\Object\Player\Branch\Configuration
+ * @api
+ */
 class CSS extends ObjectBase {
 
   /**

@@ -6,6 +6,7 @@ use Brightcove\Object\ObjectBase;
 
 /**
  * An image what represents a video, only can be thumbnail or poster.
+ * @api
  */
 class Image extends ObjectBase {
   protected $id;

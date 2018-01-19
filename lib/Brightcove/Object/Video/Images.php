@@ -6,6 +6,8 @@ use Brightcove\Object\ObjectBase;
 
 /**
  * Provides a poster or a thumbnail preview.
+ *
+ * @api
  */
 class Images extends ObjectBase {
 

@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class EmbedList
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class EmbedList extends ObjectBase {
 
   /**

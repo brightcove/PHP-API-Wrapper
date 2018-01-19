@@ -4,6 +4,12 @@ namespace Brightcove\API\Request;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class IngestRequest
+ *
+ * @package Brightcove\API\Request
+ * @api
+ */
 class IngestRequest extends ObjectBase {
   /**
    * @var IngestRequestMaster

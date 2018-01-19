@@ -4,6 +4,12 @@ namespace Brightcove\Object;
 
 use Brightcove\API\Request\SubscriptionRequest;
 
+/**
+ * Class Subscription
+ *
+ * @package Brightcove\Object
+ * @api
+ */
 class Subscription extends SubscriptionRequest {
 
   /**

@@ -2,6 +2,12 @@
 
 namespace Brightcove\Object;
 
+/**
+ * Class Playlist
+ *
+ * @package Brightcove\Object
+ * @api
+ */
 class Playlist extends ObjectBase {
   /**
    * @var string

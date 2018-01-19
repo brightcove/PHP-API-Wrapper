@@ -10,6 +10,8 @@ use Brightcove\Object\ObjectInterface;
 
 /**
  * This Class handles the communication with the Brightcove APIs.
+ *
+ * @internal
  */
 class Client {
 

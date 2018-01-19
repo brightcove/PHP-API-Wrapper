@@ -6,6 +6,8 @@ use Brightcove\Object\ObjectBase;
 
 /**
  * This class creates marker objects for midroll ad requests or some other action to be created via the player API
+ *
+ * @api
  */
 class CuePoint extends ObjectBase {
   protected $name;

@@ -2,6 +2,12 @@
 
 namespace Brightcove\Object;
 
+/**
+ * Class CustomFields
+ *
+ * @package Brightcove\Object
+ * @api
+ */
 class CustomFields extends ObjectBase {
   /**
    * @var int

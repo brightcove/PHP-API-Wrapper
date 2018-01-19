@@ -5,6 +5,12 @@ namespace Brightcove\Object\Player;
 use Brightcove\Object\ObjectBase;
 use Brightcove\Object\Player\Branch\BranchList;
 
+/**
+ * Class Player
+ *
+ * @package Brightcove\Object\Player
+ * @api
+ */
 class Player extends ObjectBase {
   /**
    * @var string

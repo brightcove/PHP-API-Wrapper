@@ -4,6 +4,12 @@ namespace Brightcove\Object\Player\Branch\Configuration;
 
 use Brightcove\Object\ObjectBase;
 
+/**
+ * Class VideoCloud
+ *
+ * @package Brightcove\Object\Player\Branch\Configuration
+ * @api
+ */
 class VideoCloud extends ObjectBase {
 
   /**

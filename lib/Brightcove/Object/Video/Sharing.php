@@ -6,6 +6,8 @@ use Brightcove\Object\ObjectBase;
 
 /**
  * The instance of this Class contains the sharing informations of the video object.
+ *
+ * @api
  */
 class Sharing extends ObjectBase {
 
