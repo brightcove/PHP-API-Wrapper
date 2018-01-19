@@ -9,5 +9,5 @@ namespace Brightcove;
  * @api
  */
 class Constants {
-  const VERSION = 'dev';
+  const VERSION = '1.1';
 }
