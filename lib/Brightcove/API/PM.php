@@ -2,15 +2,15 @@
 
 namespace Brightcove\API;
 
-use Brightcove\Object\Player\CreateData;
-use Brightcove\Object\Player\Embed;
-use Brightcove\Object\Player\EmbedList;
-use Brightcove\Object\Player\PlayerList;
-use Brightcove\Object\Player\CreateResult;
-use Brightcove\Object\Player\PublishComment;
-use Brightcove\Object\Player\Player;
-use Brightcove\Object\Player\Branch\Configuration\Configuration;
-use Brightcove\Object\Player\UpdateData;
+use Brightcove\Item\Player\CreateData;
+use Brightcove\Item\Player\Embed;
+use Brightcove\Item\Player\EmbedList;
+use Brightcove\Item\Player\PlayerList;
+use Brightcove\Item\Player\CreateResult;
+use Brightcove\Item\Player\PublishComment;
+use Brightcove\Item\Player\Player;
+use Brightcove\Item\Player\Branch\Configuration\Configuration;
+use Brightcove\Item\Player\UpdateData;
 
 /**
  * Class PM

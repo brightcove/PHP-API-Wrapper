@@ -2,7 +2,7 @@
 
 namespace Brightcove\API\Request;
 
-use Brightcove\Object\ObjectBase;
+use Brightcove\Item\ObjectBase;
 
 /**
  * Class IngestRequest

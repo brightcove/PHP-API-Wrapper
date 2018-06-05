@@ -1,8 +1,8 @@
 <?php
 use Brightcove\API\Request\IngestRequest;
-use Brightcove\Object\Video\CuePoint;
-use Brightcove\Object\Video\Link;
-use Brightcove\Object\Video\Sharing;
+use Brightcove\Item\Video\CuePoint;
+use Brightcove\Item\Video\Link;
+use Brightcove\Item\Video\Sharing;
 use Brightcove\Test\TestBase;
 
 /**

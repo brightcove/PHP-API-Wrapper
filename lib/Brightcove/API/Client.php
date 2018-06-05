@@ -6,7 +6,7 @@ namespace Brightcove\API;
 use Brightcove\API\Exception\AuthenticationException;
 use Brightcove\API\Exception\APIException;
 use Brightcove\Constants;
-use Brightcove\Object\ObjectInterface;
+use Brightcove\Item\ObjectInterface;
 
 /**
  * This Class handles the communication with the Brightcove APIs.
