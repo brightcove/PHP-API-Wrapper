@@ -151,6 +151,12 @@ class Video extends ObjectBase {
    * @var string
    */
   protected $updated_at;
+  /**
+   * The mapping projection for 360° videos, e.g. "equirectangular"
+   *
+   * @var string
+   */
+  protected $projection;
 
   public function applyJSON(array $json) {
     parent::applyJSON($json);
@@ -176,6 +182,7 @@ class Video extends ObjectBase {
     $this->applyProperty($json, 'tags');
     $this->applyProperty($json, 'text_tracks', NULL, TextTrack::class, TRUE);
     $this->applyProperty($json, 'updated_at');
+    $this->applyProperty($json, 'projection');
   }
 
   /**
@@ -550,5 +557,22 @@ class Video extends ObjectBase {
     $this->updated_at = $updated_at;
     $this->fieldChanged('updated_at');
     return $this;
+  }
+  
+  /**
+   * @return string
+   */
+  public function getProjection() {
+      return $this->projection;
+  }
+  
+  /**
+   * @param string $projection
+   * @return $this
+   */
+  public function setProjection($projection) {
+      $this->projection = $projection;
+      $this->fieldChanged('projection');
+      return $this;
   }
 }
