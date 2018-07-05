@@ -69,7 +69,7 @@ class ObjectBase implements ObjectInterface {
   public function postJSON() {
     $data = [];
     foreach ($this as $field => $val) {
-      if ($field === 'changedFields' || $field === 'fieldAliases' || $val === NULL) {
+      if ($field === 'changedFields' || $field === 'fieldAliases') {
         continue;
       }
       $field = $this->canonicalFieldName($field);
@@ -102,9 +102,6 @@ class ObjectBase implements ObjectInterface {
     $data = [];
     foreach ($this->changedFields as $field) {
       $val = $this->{$field};
-      if ($val === NULL) {
-        continue;
-      }
 
       $field = $this->canonicalFieldName($field);
 

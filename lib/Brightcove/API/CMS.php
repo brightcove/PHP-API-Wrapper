@@ -6,6 +6,8 @@ use Brightcove\Object\Subscription;
 use Brightcove\Object\Video\Video;
 use Brightcove\Object\Video\Source;
 use Brightcove\Object\Video\Images;
+use Brightcove\Object\Video\Poster;
+use Brightcove\Object\Video\Thumbnail;
 use Brightcove\Object\Playlist;
 use Brightcove\Object\CustomFields;
 
@@ -114,6 +116,76 @@ class CMS extends API {
    */
   public function deleteVideo($video_id) {
     return $this->cmsRequest('DELETE', "/videos/{$video_id}", NULL);
+  }
+
+  /**
+   * Gets the data for a single poster by issuing a GET request.
+   *
+   * @return Video $video
+   */
+  public function getPoster($video_id) {
+    return $this->cmsRequest('GET', "/videos/{$video_id}/assets/poster", Poster::class);
+  }
+
+  /**
+   * Creates a new poster object.
+   *
+   * @return Poster $poster
+   */
+  public function createPoster($video_id, Poster $poster) {
+    return $this->cmsRequest('POST', "/videos/{$video_id}/assets/poster", Poster::class, FALSE, $poster);
+  }
+
+  /**
+   * Updates a poster object with an HTTP PATCH request.
+   *
+   * @return Poster $poster
+   */
+  public function updatePoster($video_id, Poster $poster) {
+    $poster->fieldUnchanged('id');
+    return $this->cmsRequest('PATCH', "/videos/{$video_id}/assets/poster/{$poster->getId()}", Poster::class, FALSE, $poster);
+  }
+
+  /**
+   * Deletes a poster object.
+   */
+  public function deletePoster($video_id, $poster_id) {
+    return $this->cmsRequest('DELETE', "/videos/{$video_id}/assets/poster/{$poster_id}", NULL);
+  }
+
+  /**
+   * Gets the data for a single thumbnail by issuing a GET request.
+   *
+   * @return Video $video
+   */
+  public function getThumbnail($video_id) {
+    return $this->cmsRequest('GET', "/videos/{$video_id}/assets/thumbnail", Thumbnail::class);
+  }
+
+  /**
+   * Creates a new thumbnail object.
+   *
+   * @return Poster $thumbnail
+   */
+  public function createThumbnail($video_id, Thumbnail $thumbnail) {
+    return $this->cmsRequest('POST', "/videos/{$video_id}/assets/thumbnail", Thumbnail::class, FALSE, $thumbnail);
+  }
+
+  /**
+   * Updates a thumbnail object with an HTTP PATCH request.
+   *
+   * @return Poster $thumbnail
+   */
+  public function updateThumbnail($video_id, Thumbnail $thumbnail) {
+    $poster->fieldUnchanged('id');
+    return $this->cmsRequest('PATCH', "/videos/{$video_id}/assets/thumbnail/{$thumbnail->getId()}", Thumbnail::class, FALSE, $thumbnail);
+  }
+
+  /**
+   * Deletes a thumbnail object.
+   */
+  public function deleteThumbnail($video_id, $thumbnail_id) {
+    return $this->cmsRequest('DELETE', "/videos/{$video_id}/assets/thumbnail/{$thumbnail_id}", NULL);
   }
 
   /**
