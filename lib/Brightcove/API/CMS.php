@@ -151,7 +151,7 @@ class CMS extends API {
     // separately.
     $smart_playlists = [];
     foreach ($playlists as $key => $playlist) {
-      /* @var \Drupal\brightcove\Playlist $playlist */
+      /* @var \Brightcove\Object\Playlist $playlist */
       if ($playlist->getType() !== 'EXPLICIT') {
         $smart_playlists[$key] = $playlist->getId();
       }
@@ -162,11 +162,10 @@ class CMS extends API {
         $video_ids = getSmartPlaylistVideos("/playlists/{$smart_playlist_id}/videos");
 
         if (!empty($video_ids)) {
-          /* @var \Drupal\brightcove\Playlist $playlist */
+          /* @var \Brightcove\Object\Playlist $playlist */
           $playlist = $playlists[$playlist_key];
           $playlist->setVideoIds($video_ids);
         }
-
       }
     }
     return $playlists;
