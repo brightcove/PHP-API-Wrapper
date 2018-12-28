@@ -159,7 +159,7 @@ class CMS extends API {
 
     if (!empty($smart_playlists)) {
       foreach ($smart_playlists as $playlist_key => $smart_playlist_id) {
-        $video_ids = getSmartPlaylistVideos("/playlists/{$smart_playlist_id}/videos");
+        $video_ids = $this->getSmartPlaylistVideos("/playlists/{$smart_playlist_id}/videos");
 
         if (!empty($video_ids)) {
           /* @var \Brightcove\Object\Playlist $playlist */
