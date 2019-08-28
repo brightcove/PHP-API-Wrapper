@@ -2,12 +2,12 @@
 namespace Brightcove\API;
 
 use Brightcove\API\Request\SubscriptionRequest;
-use Brightcove\Object\Subscription;
-use Brightcove\Object\Video\Video;
-use Brightcove\Object\Video\Source;
-use Brightcove\Object\Video\Images;
-use Brightcove\Object\Playlist;
-use Brightcove\Object\CustomFields;
+use Brightcove\Item\Subscription;
+use Brightcove\Item\Video\Video;
+use Brightcove\Item\Video\Source;
+use Brightcove\Item\Video\Images;
+use Brightcove\Item\Playlist;
+use Brightcove\Item\CustomFields;
 
 /**
   * This class provides uncached read access to the data via request functions.
@@ -21,7 +21,7 @@ class CMS extends API {
   }
 
   /**
-   * Lists video objects with the given restrictions.
+   * Lists video Items with the given restrictions.
    *
    * @return Video[]
    */
@@ -91,7 +91,7 @@ class CMS extends API {
   }
 
   /**
-   * Creates a new video object.
+   * Creates a new video Item.
    *
    * @return Video $video
    */
@@ -100,7 +100,7 @@ class CMS extends API {
   }
 
   /**
-   * Updates a video object with an HTTP PATCH request.
+   * Updates a video Item with an HTTP PATCH request.
    *
    * @return Video $video
    */
@@ -110,7 +110,7 @@ class CMS extends API {
   }
 
   /**
-   * Deletes a video object.
+   * Deletes a video Item.
    */
   public function deleteVideo($video_id) {
     return $this->cmsRequest('DELETE', "/videos/{$video_id}", NULL);

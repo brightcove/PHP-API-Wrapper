@@ -2,7 +2,7 @@
 
 namespace Brightcove\API\Request;
 
-use Brightcove\Object\ObjectBase;
+use Brightcove\Item\ItemBase;
 
 /**
  * Class IngestTextTrack
@@ -10,7 +10,7 @@ use Brightcove\Object\ObjectBase;
  * @package Brightcove\API\Request
  * @api
  */
-class IngestTextTrack extends ObjectBase {
+class IngestTextTrack extends ItemBase {
 
   /**
    * @var string

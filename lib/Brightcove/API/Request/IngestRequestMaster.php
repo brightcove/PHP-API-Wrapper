@@ -2,7 +2,7 @@
 
 namespace Brightcove\API\Request;
 
-use Brightcove\Object\ObjectBase;
+use Brightcove\Item\ItemBase;
 
 /**
  * Class IngestRequestMaster
@@ -10,7 +10,7 @@ use Brightcove\Object\ObjectBase;
  * @package Brightcove\API\Request
  * @api
  */
-class IngestRequestMaster extends ObjectBase {
+class IngestRequestMaster extends ItemBase {
   protected $url;
 
   public function applyJSON(array $json) {

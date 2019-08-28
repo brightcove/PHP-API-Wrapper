@@ -2,7 +2,7 @@
 
 namespace Brightcove\API\Request;
 
-use Brightcove\Object\ObjectBase;
+use Brightcove\Item\ItemBase;
 
 /**
  * Class SubscriptionRequest
@@ -10,7 +10,7 @@ use Brightcove\Object\ObjectBase;
  * @package Brightcove\API\Request
  * @api
  */
-class SubscriptionRequest extends ObjectBase {
+class SubscriptionRequest extends ItemBase {
 
   /**
    * @var string

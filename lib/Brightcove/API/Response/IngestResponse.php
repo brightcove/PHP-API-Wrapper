@@ -2,7 +2,7 @@
 
 namespace Brightcove\API\Response;
 
-use Brightcove\Object\ObjectBase;
+use Brightcove\Item\ItemBase;
 
 /**
  * Class IngestResponse
@@ -10,7 +10,7 @@ use Brightcove\Object\ObjectBase;
  * @package Brightcove\API\Response
  * @api
  */
-class IngestResponse extends ObjectBase {
+class IngestResponse extends ItemBase {
   protected $id;
 
   public function applyJSON(array $json) {
