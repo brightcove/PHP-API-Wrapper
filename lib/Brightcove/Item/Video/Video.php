@@ -572,6 +572,7 @@ class Video extends ItemBase {
   public function getProjection() {
     return $this->projection;
   }
+
   /**
    * @param string $projection
    * @return $this
@@ -581,12 +582,14 @@ class Video extends ItemBase {
     $this->fieldChanged('projection');
     return $this;
   }
+
   /**
    * @return string
    */
   public function getPublishedAt() {
     return $this->published_at;
   }
+  
   /**
    * @param string $published_at
    * @return $this
