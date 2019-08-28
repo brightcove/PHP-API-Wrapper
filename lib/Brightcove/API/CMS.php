@@ -2,12 +2,12 @@
 namespace Brightcove\API;
 
 use Brightcove\API\Request\SubscriptionRequest;
-use Brightcove\Object\Subscription;
-use Brightcove\Object\Video\Video;
-use Brightcove\Object\Video\Source;
-use Brightcove\Object\Video\Images;
-use Brightcove\Object\Playlist;
-use Brightcove\Object\CustomFields;
+use Brightcove\Item\Subscription;
+use Brightcove\Item\Video\Video;
+use Brightcove\Item\Video\Source;
+use Brightcove\Item\Video\Images;
+use Brightcove\Item\Playlist;
+use Brightcove\Item\CustomFields;
 
 /**
   * This class provides uncached read access to the data via request functions.

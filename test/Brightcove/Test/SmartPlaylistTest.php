@@ -2,8 +2,8 @@
 
 namespace Brightcove\Test;
 
-use Brightcove\Object\Playlist;
-use Brightcove\Object\Video\Video;
+use Brightcove\Item\Playlist;
+use Brightcove\Item\Video\Video;
 /**
  * Creating test for the Brightcove SmartPlaylist.
  */

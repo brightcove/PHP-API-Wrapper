@@ -1,7 +1,7 @@
 <?php
 
-use Brightcove\Object\Player\Branch\Configuration\Media;
-use Brightcove\Object\Player\Player;
+use Brightcove\Item\Player\Branch\Configuration\Media;
+use Brightcove\Item\Player\Player;
 use Brightcove\Test\TestBase;
 
 define('BRIGHTCOVE_PLAYER_TEST_POSTER', 'http://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png');

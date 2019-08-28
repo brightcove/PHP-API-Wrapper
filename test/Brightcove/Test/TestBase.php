@@ -2,18 +2,19 @@
 
 namespace Brightcove\Test;
 
+use PHPUnit\Framework\TestCase;
 use Brightcove\API\Client;
 use Brightcove\API\CMS;
 use Brightcove\API\DI;
 use Brightcove\API\Exception\AuthenticationException;
 use Brightcove\API\PM;
-use Brightcove\Object\Playlist;
-use Brightcove\Object\Video\Video;
+use Brightcove\Item\Playlist;
+use Brightcove\Item\Video\Video;
 
 /**
  * Base class for all test for the Brightcove API wrapper.
  */
-class TestBase extends \PHPUnit_Framework_TestCase {
+class TestBase extends TestCase {
 
   /**
    * OAuth2 client id.

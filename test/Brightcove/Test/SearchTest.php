@@ -1,6 +1,6 @@
 <?php
 
-use Brightcove\Object\Video\Video;
+use Brightcove\Item\Video\Video;
 use Brightcove\Test\TestBase;
 
 class VideoSearchTest extends TestBase {
