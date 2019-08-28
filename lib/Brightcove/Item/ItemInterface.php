@@ -15,6 +15,8 @@ interface ItemInterface {
    * Creates an associative array from the class properties and values.
    *
    * @return array
+   *
+   * @internal
    */
   public function postJSON();
 
@@ -25,6 +27,8 @@ interface ItemInterface {
    * last call of patchJSON() or the creation of the class.
    *
    * @return array
+   *
+   * @internal
    */
   public function patchJSON();
 
@@ -32,6 +36,8 @@ interface ItemInterface {
    * Applies a JSON associative array on this class overwriting the values of the properties.
    *
    * @param array $json
+   *
+   * @internal
    */
   public function applyJSON(array $json);
 
@@ -40,6 +46,8 @@ interface ItemInterface {
    *
    * @param string|array $json
    * @return $this
+   *
+   * @internal
    */
   public static function fromJSON($json);
 }

@@ -94,6 +94,14 @@ class Client {
    */
   protected $expires_in;
 
+  /**
+   * Client constructor.
+   *
+   * @param $access_token
+   * @param int $expires_in
+   *
+   * @internal
+   */
   public function __construct($access_token, $expires_in = 0) {
     $this->access_token = $access_token;
     $this->expires_in = $expires_in;
@@ -103,6 +111,8 @@ class Client {
    * Returns the OAuth2 access token.
    *
    * @return string
+   *
+   * @internal
    */
   public function getAccessToken() {
     return $this->access_token;
@@ -115,6 +125,8 @@ class Client {
    * from Brightcove, but it does not adjust it as the time passes.
    *
    * @return int
+   *
+   * @internal
    */
   public function getExpiresIn() {
     return $this->expires_in;
@@ -126,6 +138,8 @@ class Client {
    * This usually means that the client is authorized, but not necessarily.
    *
    * @return bool
+   *
+   * @internal
    */
   public function isAuthorized() {
     return (bool) $this->getAccessToken();
@@ -150,6 +164,8 @@ class Client {
    * @return array
    *   A two item array. The first item is the status code, the second is the
    *   response body.
+   *
+   * @internal
    */
   public static function HTTPRequest($method, $url, array $headers = [], $postdata = NULL, callable $extraconfig = NULL) {
     $ch = curl_init();
@@ -206,6 +222,8 @@ class Client {
    * Configures the proxy settings on a curl resource.
    *
    * @param resource $ch Curl resource
+   *
+   * @internal
    */
   protected static function configureProxy($ch) {
     if (self::$httpProxyTunnel) {
@@ -232,6 +250,8 @@ class Client {
    * Constructs the user agent string.
    *
    * @return string
+   *
+   * @internal
    */
   protected static function getUserAgent() {
     $api_wrapper_version = Constants::VERSION;
@@ -252,6 +272,8 @@ class Client {
    * @return Client
    *   An authorized client.
    * @throws AuthenticationException
+   *
+   * @internal
    */
   public static function authorize($client_id, $client_secret) {
     list($code, $response) = self::HTTPRequest('POST', 'https://oauth.brightcove.com/v3/access_token',
@@ -294,6 +316,8 @@ class Client {
    * @return ItemInterface|ItemInterface[]|null
    *   The endpoint result.
    * @throws APIException
+   *
+   * @internal
    */
   public function request($method, $api_version, $api_type, $account, $endpoint, $result, $is_array = FALSE, ItemInterface $post = NULL) {
     $body = NULL;
