@@ -2,7 +2,7 @@
 
 ## Installation notes
 
-This library requires PHP 5.5 or newer with a CURL extension. You have to run `composer install` before using the library.
+This library requires PHP 7.1 or newer with a CURL extension. You have to run `composer install` before using the library.
 
     # apt-get install php5 php5-curl curl
 
