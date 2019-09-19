@@ -27,12 +27,18 @@ class StudioConfigurationPlayer extends ObjectBase {
    */
   protected $width;
 
+  /**
+   * @var string
+   */
+  protected $units;
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'adjusted');
     $this->applyProperty($json, 'height');
     $this->applyProperty($json, 'width');
+    $this->applyProperty($json, 'units');
   }
 
   /**
@@ -83,6 +89,23 @@ class StudioConfigurationPlayer extends ObjectBase {
   public function setWidth($width) {
     $this->width = $width;
     $this->fieldChanged('width');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getUnits() {
+    return $this->units;
+  }
+
+  /**
+   * @param $units
+   * @return StudioConfigurationPlayer
+   */
+  public function setUnits($units) {
+    $this->units = $units;
+    $this->fieldChanged('units');
     return $this;
   }
 
