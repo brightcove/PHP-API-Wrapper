@@ -28,6 +28,11 @@ class StudioConfigurationPlayer extends ObjectBase {
   protected $width;
 
   /**
+   * @var bool
+   */
+  protected $responsive;
+
+  /**
    * @var string
    */
   protected $units;
@@ -39,17 +44,18 @@ class StudioConfigurationPlayer extends ObjectBase {
     $this->applyProperty($json, 'height');
     $this->applyProperty($json, 'width');
     $this->applyProperty($json, 'units');
+    $this->applyProperty($json, 'responsive');
   }
 
   /**
-   * @return boolean
+   * @return bool
    */
   public function isAdjusted() {
     return $this->adjusted;
   }
 
   /**
-   * @param boolean $adjusted
+   * @param bool $adjusted
    * @return StudioConfigurationPlayer
    */
   public function setAdjusted($adjusted) {
@@ -107,6 +113,23 @@ class StudioConfigurationPlayer extends ObjectBase {
     $this->units = $units;
     $this->fieldChanged('units');
     return $this;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isResponsive() {
+      return $this->responsive;
+  }
+
+  /**
+   * @param bool $is_response
+   * @return StudioConfigurationPlayer
+   */
+  public function setResponse($is_response) {
+      $this->responsive = $is_response;
+      $this->fieldChanged('responsive');
+      return $this;
   }
 
 }
