@@ -71,6 +71,11 @@ class Source extends ObjectBase {
    */
   protected $src;
 
+/**
+   * @var string
+   */
+  protected $type;
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
@@ -85,6 +90,7 @@ class Source extends ObjectBase {
     $this->applyProperty($json, 'size');
     $this->applyProperty($json, 'uploaded_at');
     $this->applyProperty($json, 'src');
+    $this->applyProperty($json, 'type');
   }
 
   /**
@@ -289,5 +295,24 @@ class Source extends ObjectBase {
     $this->uploaded_at = $uploaded_at;
     $this->fieldChanged('uploaded_at');
     return $this;
+  }
+
+  /**
+  * @return mixed
+  */
+  public function getType()
+  {
+    return $this->type;
+  }
+
+  /**
+   * @param mixed $type
+   * @return Source
+   */
+  public function setType($type)
+  {
+    $this->type = $type;
+	$this->fieldChanged('type');
+	return $this;
   }
 }
