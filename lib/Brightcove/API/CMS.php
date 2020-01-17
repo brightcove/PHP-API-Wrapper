@@ -144,7 +144,49 @@ class CMS extends API {
     if (strlen($query) > 0) {
       $query = '?' . substr($query, 1);
     }
-    return $this->cmsRequest('GET', "/playlists{$query}", Playlist::class, TRUE);
+
+    $playlists = $this->cmsRequest('GET', "/playlists{$query}", Playlist::class, TRUE);
+
+    // Check if there are smart playlists as we need to build their videos
+    // separately.
+    $smart_playlists = [];
+    foreach ($playlists as $key => $playlist) {
+      /* @var \Brightcove\Object\Playlist $playlist */
+      if ($playlist->getType() !== 'EXPLICIT') {
+        $smart_playlists[$key] = $playlist->getId();
+      }
+    }
+
+    if (!empty($smart_playlists)) {
+      foreach ($smart_playlists as $playlist_key => $smart_playlist_id) {
+        $video_ids = $this->getSmartPlaylistVideos("/playlists/{$smart_playlist_id}/videos");
+
+        if (!empty($video_ids)) {
+          /* @var \Brightcove\Object\Playlist $playlist */
+          $playlist = $playlists[$playlist_key];
+          $playlist->setVideoIds($video_ids);
+        }
+      }
+    }
+    return $playlists;
+  }
+
+  /**
+   * Get smart playlist videos to add to the Playlist objects.
+   *
+   * @param string $endpoint
+   *   Endpoint to get smart playlist videos.
+   *
+   * @return array
+   *   Video ids.
+   */
+  protected function getSmartPlaylistVideos($endpoint) {
+    $video_results = $this->cmsRequest('GET', $endpoint, NULL);
+    $video_ids = [];
+    foreach ($video_results as $video) {
+      $video_ids[] = $video['id'];
+    }
+    return $video_ids;
   }
 
   /**
