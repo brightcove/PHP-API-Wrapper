@@ -26,7 +26,7 @@ class VideoCRUDTest extends TestBase {
    * @depends testVideoObjectCreation
    */
   public function testVideoIngestion($video_id) {
-    $request = IngestRequest::createRequest('http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi', 'high-bandwidth-devices');
+    $request = IngestRequest::createRequest('high-bandwidth-devices', 'http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi');
     if (!empty($this->callback_addr_remote)) {
       $request->setCallbacks([$this->callback_addr_remote]);
     }

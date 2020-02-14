@@ -12,7 +12,7 @@ use Brightcove\Item\ObjectBase;
  */
 class IngestRequest extends ObjectBase {
   /**
-   * @var IngestRequestMaster
+   * @var IngestRequestMaster|IngestRequestRetranscode
    */
   protected $master;
 
@@ -50,10 +50,15 @@ class IngestRequest extends ObjectBase {
     $this->fieldAliases["capture_images"] = "capture-images";
   }
 
-  public static function createRequest($url, $profile) {
+  public static function createRequest($profile, $url = null) {
     $request = new self();
-    $request->setMaster(new IngestRequestMaster());
-    $request->getMaster()->setUrl($url);
+    if ($url !== null) {
+      $request->setMaster(new IngestRequestMaster());
+      $request->getMaster()->setUrl($url);
+    } else {
+      $request->setMaster(new IngestRequestRetranscode());
+      $request->getMaster()->setUseArchivedMaster(true);
+    }
     $request->setProfile($profile);
 
     return $request;
@@ -71,17 +76,17 @@ class IngestRequest extends ObjectBase {
   }
 
   /**
-   * @return IngestRequestMaster
+   * @return IngestRequestMaster|IngestRequestRetranscode
    */
   public function getMaster() {
     return $this->master;
   }
 
   /**
-   * @param IngestRequestMaster $master
+   * @param IngestRequestMaster|IngestRequestRetranscode $master
    * @return $this
    */
-  public function setMaster(IngestRequestMaster $master = NULL) {
+  public function setMaster(ObjectBase $master = NULL) {
     $this->master = $master;
     $this->fieldChanged('master');
     return $this;
