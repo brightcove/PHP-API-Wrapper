@@ -23,25 +23,11 @@ class CMS extends API {
   /**
    * Lists video objects with the given restrictions.
    *
-   * @return Video[]
+   * @return Brightcove\Object\Video[]
+   *   Video objects.
    */
   public function listVideos($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
-    $query = '';
-    if ($search) {
-      $query .= '&q=' . urlencode($search);
-    }
-    if ($sort) {
-      $query .= "&sort={$sort}";
-    }
-    if ($limit) {
-      $query .= "&limit={$limit}";
-    }
-    if ($offset) {
-      $query .= "&offset={$offset}";
-    }
-    if (strlen($query) > 0) {
-      $query = '?' . substr($query, 1);
-    }
+    $query = $this->formatSearchTerms($search, $sort, $limit, $offset);
     return $this->cmsRequest('GET', "/videos{$query}", Video::class, TRUE);
   }
 
@@ -55,6 +41,34 @@ class CMS extends API {
     $result = $this->cmsRequest('GET', "/counts/videos{$query}", NULL);
     if ($result && !empty($result['count'])) {
       return $result['count'];
+    }
+    return NULL;
+  }
+
+  /**
+   * Lists video objects in a folder with the given restrictions.
+   *
+   * @return Brightcove\Object\Video[]
+   *   Video objects in a folder.
+   */
+  public function listVideosInFolder($folder_id, $search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
+    $query = $this->formatSearchTerms($search, $sort, $limit, $offset);
+    return $this->cmsRequest('GET', "/folders/{$folder_id}/videos{$query}", Video::class, TRUE);
+  }
+
+  /**
+   * Returns the amount of a searched folder video's result.
+   *
+   * @param int $folder_id
+   *   Folder ID.
+   *
+   * @return int|null
+   *   Amount of a searched folder video's result.
+   */
+  public function countVideosInFolder($folder_id) {
+    $result = $this->cmsRequest('GET', "/folders/{$folder_id}", NULL);
+    if ($result && !empty($result['video_count'])) {
+      return $result['video_count'];
     }
     return NULL;
   }
