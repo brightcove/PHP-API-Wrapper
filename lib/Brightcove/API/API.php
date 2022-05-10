@@ -8,7 +8,11 @@ namespace Brightcove\API;
  * @internal
  */
 abstract class API {
+
+  protected const API_VERSION = '1';
+
   protected $account;
+
   protected $client;
 
   /**

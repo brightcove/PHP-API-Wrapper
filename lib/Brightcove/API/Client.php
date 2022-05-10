@@ -311,8 +311,8 @@ class Client {
    *   This class must implement ObjectInterface.
    * @param bool $is_array
    *   TRUE if the result is an array of objects. Not used when $result is NULL.
-   * @param ObjectInterface $post
-   *   A ObjectInterface to post.
+   * @param ObjectInterface|null $post
+   *   An ObjectInterface to post.
    * @return ObjectInterface|ObjectInterface[]|null
    *   The endpoint result.
    * @throws APIException
