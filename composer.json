@@ -22,6 +22,8 @@
     "phpunit/phpunit": "7.2.*"
   },
   "require": {
+    "ext-curl": "*",
+    "ext-json": "*",
     "php": ">=7.1"
   },
   "autoload": {
