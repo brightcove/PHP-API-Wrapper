@@ -27,4 +27,32 @@ abstract class API {
     $this->client = $client;
     $this->account = $account;
   }
+
+  /**
+   * Formats search terms.
+   *
+   * @return string
+   *   Basic search tearms formatted (e.g ?q=tag:example)
+   */
+  protected function formatSearchTerms($search = NULL, $sort = NULL, $limit = NULL, $offset = NULL) {
+    $query = '';
+    if ($search) {
+      $query .= '&q=' . urlencode($search);
+    }
+    if ($sort) {
+      $query .= "&sort={$sort}";
+    }
+    if ($limit) {
+      $query .= "&limit={$limit}";
+    }
+    if ($offset) {
+      $query .= "&offset={$offset}";
+    }
+    if (strlen($query) > 0) {
+      $query = '?' . substr($query, 1);
+    }
+
+    return $query;
+  }
+
 }
