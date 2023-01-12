@@ -46,6 +46,11 @@ class IngestRequest extends ObjectBase {
    */
   protected $text_tracks;
 
+  /**
+   * @var IngestTranscriptions[]
+   */
+  protected $transcriptions;
+
   public function __construct() {
     $this->fieldAliases["capture_images"] = "capture-images";
   }
@@ -68,6 +73,7 @@ class IngestRequest extends ObjectBase {
     $this->applyProperty($json, 'thumbnail');
     $this->applyProperty($json, 'capture_images');
     $this->applyProperty($json, 'text_tracks', NULL, IngestTextTrack::class, TRUE);
+    $this->applyProperty($json, 'transcriptions', NULL, IngestTranscriptions::class, TRUE);
   }
 
   /**
@@ -186,6 +192,23 @@ class IngestRequest extends ObjectBase {
   public function setTextTracks(array $text_tracks) {
     $this->text_tracks = $text_tracks;
     $this->fieldChanged('text_tracks');
+    return $this;
+  }
+
+  /**
+   * @return IngestTranscriptions[]
+   */
+  public function getTranscriptions() {
+    return $this->transcriptions;
+  }
+
+  /**
+   * @param IngestTranscriptions[] $transcriptions
+   * @return IngestRequest
+   */
+  public function setTranscriptions(array $transcriptions) {
+    $this->transcriptions = $transcriptions;
+    $this->fieldChanged('transcriptions');
     return $this;
   }
 }
