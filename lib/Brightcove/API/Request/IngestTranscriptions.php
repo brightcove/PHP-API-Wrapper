@@ -44,6 +44,11 @@ class IngestTranscriptions extends ObjectBase {
    */
   protected $autodetect;
 
+  /**
+   * @var boolean
+   */
+  protected $status;
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
     $this->applyProperty($json, 'url');
@@ -52,6 +57,7 @@ class IngestTranscriptions extends ObjectBase {
     $this->applyProperty($json, 'kind');
     $this->applyProperty($json, 'default');
     $this->applyProperty($json, 'autodetect');
+    $this->applyProperty($json, 'status');
   }
 
   /**
@@ -153,6 +159,23 @@ class IngestTranscriptions extends ObjectBase {
   public function setAutoDetect($autodetect) {
     $this->autodetect = $autodetect;
     $this->fieldChanged('autodetect');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getStatus() {
+    return $this->status;
+  }
+
+  /**
+   * @param string $status
+   * @return IngestTranscriptions
+   */
+  public function setStatus($status) {
+    $this->status = $status;
+    $this->fieldChanged('status');
     return $this;
   }
 
