@@ -143,6 +143,12 @@ class Video extends ObjectBase {
    */
   protected $text_tracks;
   /**
+   * Array of transcriptions objects.
+   *
+   * @var Transcription[]
+   */
+  protected $transcriptions;
+  /**
    * ISO 8601 date-time string
    * date-time video was last modified.
    * Example: "2015-01-13T17:45:21.977Z"
@@ -187,6 +193,7 @@ class Video extends ObjectBase {
     $this->applyProperty($json, 'state');
     $this->applyProperty($json, 'tags');
     $this->applyProperty($json, 'text_tracks', NULL, TextTrack::class, TRUE);
+    $this->applyProperty($json, 'transcriptions', NULL, Transcription::class, TRUE);
     $this->applyProperty($json, 'updated_at');
     $this->applyProperty($json, 'projection');
     $this->applyProperty($json, 'published_at');
@@ -546,6 +553,23 @@ class Video extends ObjectBase {
   public function setTextTracks(array $text_tracks) {
     $this->text_tracks = $text_tracks;
     $this->fieldChanged('text_tracks');
+    return $this;
+  }
+
+  /**
+   * @return Transcription[]
+   */
+  public function getTranscriptions() {
+    return $this->transcriptions;
+  }
+
+  /**
+   * @param Transcription[] $transcriptions
+   * @return $this
+   */
+  public function setTranscriptions(array $transcriptions) {
+    $this->transcriptions = $transcriptions;
+    $this->fieldChanged('transcriptions');
     return $this;
   }
 

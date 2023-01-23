@@ -57,6 +57,11 @@ class TextTrack extends ObjectBase {
    */
   protected $default;
 
+  /**
+   * @var string
+   */
+  protected $status;
+
   public function applyJSON(array $json) {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
@@ -68,6 +73,7 @@ class TextTrack extends ObjectBase {
     $this->applyProperty($json, 'asset_id');
     $this->applyProperty($json, 'sources', NULL, TextTrackSource::class, TRUE);
     $this->applyProperty($json, 'default');
+    $this->applyProperty($json, 'status');
   }
 
   /**
@@ -220,6 +226,23 @@ class TextTrack extends ObjectBase {
   public function setDefault($default) {
     $this->default = $default;
     $this->fieldChanged('default');
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getStatus() {
+    return $this->status;
+  }
+
+  /**
+   * @param string $status
+   * @return TextTrack
+   */
+  public function setStatus($status) {
+    $this->status = $status;
+    $this->fieldChanged('status');
     return $this;
   }
 }
