@@ -39,7 +39,7 @@ interface ObjectInterface {
    *
    * @internal
    */
-  public function applyJSON(array $json);
+  public function applyJSON(array $json): void;
 
   /**
    * Creates an instance of the class, prefilled with values from $json.

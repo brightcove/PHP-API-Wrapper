@@ -9,44 +9,25 @@ namespace Brightcove\Type;
  */
 final class Sort implements SortInterface
 {
-    /**
-     * The name of the field to order by.
-     *
-     * @var string
-     */
-    private $fieldName;
-
-    /**
-     * The order of the field.
-     *
-     * @var string
-     */
-    private $order;
 
     /**
      * Initializes a sort type.
      *
-     * @param  string  $field_name
+     * @param string $fieldName
      *   The name of the field to order by.
-     * @param  string  $order
+     * @param SortOrder $order
      *   The order of the field.
      */
-    public function __construct(string $field_name, string $order = self::ORDER_DEFAULT)
-    {
-        // Validate order.
-        if (!in_array($order, [self::ORDER_DEFAULT, self::ORDER_REVERSE])) {
-            throw new \InvalidArgumentException('Invalid order.');
-        }
-
-        $this->fieldName = $field_name;
-        $this->order = $order;
-    }
+    public function __construct(
+        private readonly string $fieldName,
+        private readonly SortOrder $order = SortOrder::default
+    ) {}
 
     /**
      * {@inheritdoc}
      */
     public function __toString(): string
     {
-        return $this->order . $this->fieldName;
+        return $this->order->value . $this->fieldName;
     }
 }

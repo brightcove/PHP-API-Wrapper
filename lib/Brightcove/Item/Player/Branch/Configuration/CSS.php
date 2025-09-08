@@ -27,7 +27,7 @@ class CSS extends ObjectBase {
    */
   protected $progressColor;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'controlBarColor');

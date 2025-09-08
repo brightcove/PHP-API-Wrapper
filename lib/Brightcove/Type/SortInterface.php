@@ -9,15 +9,6 @@ namespace Brightcove\Type;
  */
 interface SortInterface
 {
-    /**
-     * Default sort order.
-     */
-    public const ORDER_DEFAULT = '';
-
-    /**
-     * Reverse sort order.
-     */
-    public const ORDER_REVERSE = '-';
 
     /**
      * Returns the field that needs to be sorted.

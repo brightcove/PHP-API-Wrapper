@@ -20,7 +20,7 @@ class CreateData extends UpdateData {
   /**
    * {@inheritdoc}
    */
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'configuration', NULL, Configuration::class);
   }

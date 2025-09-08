@@ -19,7 +19,7 @@ interface InPageExperienceInterface extends ObjectInterface
     /**
      * Gets the ISO-8601 date when the entity was created.
      */
-    public function getCreatedAt(): string;
+    public function getCreatedAt(): ?string;
 
     /**
      * Gets the description.
@@ -39,7 +39,7 @@ interface InPageExperienceInterface extends ObjectInterface
     /**
      * Gets the current published status.
      */
-    public function getPublishedStatus(): string;
+    public function getPublishedStatus(): ?string;
 
     /**
      * Gets the ISO-8601 date when the entity was last updated.

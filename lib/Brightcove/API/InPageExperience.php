@@ -9,6 +9,8 @@ use Brightcove\Item\InPageExperience\InPageExperienceInterface as InPageExperien
 use Brightcove\Item\InPageExperience\InPageExperienceList;
 use Brightcove\Item\InPageExperience\InPageExperienceListInterface;
 use Brightcove\Item\ObjectInterface;
+use Brightcove\Type\ApiType;
+use Brightcove\Type\HttpMethod;
 use Brightcove\Type\SortInterface;
 
 /**
@@ -16,13 +18,12 @@ use Brightcove\Type\SortInterface;
  */
 final class InPageExperience extends API implements InPageExperienceInterface
 {
-    private const API_TYPE = 'experiences';
     private const API_BASE_PATH = '/experiences';
 
     /**
      * API request callback.
      *
-     * @param string $method
+     * @param HttpMethod $method
      *   HTTP method.
      * @param string $endpoint
      *   API endpoint
@@ -36,14 +37,14 @@ final class InPageExperience extends API implements InPageExperienceInterface
      * @return ObjectInterface|ObjectInterface[]|null
      *   The given result based on $result.
      *
-     * @throws \Brightcove\API\Exception\APIException
+     * @throws \Brightcove\API\Exception\ApiException
      */
-    private function request(string $method, string $endpoint, ?string $result, $post = null)
+    private function request(HttpMethod $method, string $endpoint, ?string $result, $post = null)
     {
-        return $this->client->request(
+        return $this->client->sendRequest(
             $method,
-            static::API_VERSION,
-            static::API_TYPE,
+            self::API_VERSION,
+            ApiType::InPageExperience,
             $this->account,
             $endpoint,
             $result,
@@ -57,7 +58,7 @@ final class InPageExperience extends API implements InPageExperienceInterface
      */
     public function delete(string $id): void
     {
-        $this->request('DELETE', static::API_BASE_PATH . '/' . $id, null);
+        $this->request(HttpMethod::Delete, self::API_BASE_PATH . '/' . $id, null);
     }
 
     /**
@@ -65,7 +66,7 @@ final class InPageExperience extends API implements InPageExperienceInterface
      */
     public function get(string $id): InPageExperienceItemInterface
     {
-        return $this->request('GET', static::API_BASE_PATH . '/' . $id, InPageExperienceItem::class);
+        return $this->request(HttpMethod::Get, self::API_BASE_PATH . '/' . $id, InPageExperienceItem::class);
     }
 
     /**
@@ -83,7 +84,7 @@ final class InPageExperience extends API implements InPageExperienceInterface
         $http_query = http_build_query($http_query);
 
         return $this->request(
-            'GET',
+            HttpMethod::Get,
             static::API_BASE_PATH . (!empty($http_query) ? "?{$http_query}" : ''),
             InPageExperienceList::class
         );

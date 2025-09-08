@@ -59,7 +59,7 @@ class IngestRequest extends ObjectBase {
     return $request;
   }
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'master');
     $this->applyProperty($json, 'profile');

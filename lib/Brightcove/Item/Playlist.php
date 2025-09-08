@@ -65,11 +65,11 @@ class Playlist extends ObjectBase {
   protected $updated_at;
 
   /**
-   * @var array
+   * Video IDs.
    */
-  protected $video_ids;
+  protected array $video_ids = [];
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
     $this->applyProperty($json, 'account');
@@ -273,9 +273,12 @@ class Playlist extends ObjectBase {
   }
 
   /**
+   * Gets video IDs.
+   *
    * @return array
+   *   Video IDs.
    */
-  public function getVideoIds() {
+  public function getVideoIds(): array {
     return $this->video_ids;
   }
 

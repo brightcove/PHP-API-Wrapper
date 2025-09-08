@@ -13,7 +13,7 @@ class Schedule extends ObjectBase {
   protected $starts_at;
   protected $ends_at;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'starts_at');
     $this->applyProperty($json, 'ends_at');

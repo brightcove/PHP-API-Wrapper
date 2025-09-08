@@ -16,7 +16,7 @@ class PublishComment extends ObjectBase {
    */
   protected $comment;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'comment');

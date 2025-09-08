@@ -22,7 +22,7 @@ class SubscriptionRequest extends ObjectBase {
    */
   protected $events;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'endpoint');
     $this->applyProperty($json, 'events');

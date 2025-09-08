@@ -39,7 +39,7 @@ class CustomField extends ObjectBase {
    */
   protected $enum_values;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
     $this->applyProperty($json, 'display_name');

@@ -22,7 +22,7 @@ class EmbedList extends ObjectBase {
    */
   protected $item_count;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'items', NULL, Embed::class, TRUE);

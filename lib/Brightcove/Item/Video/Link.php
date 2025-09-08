@@ -10,7 +10,7 @@ use Brightcove\Item\ObjectBase;
  * @api
  */
 class Link extends ObjectBase {
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'url');
     $this->applyProperty($json, 'text');

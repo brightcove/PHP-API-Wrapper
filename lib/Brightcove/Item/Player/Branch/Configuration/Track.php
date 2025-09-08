@@ -27,7 +27,7 @@ class Track extends ObjectBase {
    */
   protected $srclang;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'label');

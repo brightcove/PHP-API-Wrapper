@@ -39,7 +39,7 @@ class IngestTextTrack extends ObjectBase {
    */
   protected $default;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'url');
     $this->applyProperty($json, 'srclang');

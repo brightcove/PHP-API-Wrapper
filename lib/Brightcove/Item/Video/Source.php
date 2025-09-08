@@ -76,7 +76,7 @@ class Source extends ObjectBase {
    */
   protected $type;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
     $this->applyProperty($json, 'app_name');

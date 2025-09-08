@@ -32,7 +32,7 @@ class Media extends ObjectBase {
    */
   protected $tracks;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'src');

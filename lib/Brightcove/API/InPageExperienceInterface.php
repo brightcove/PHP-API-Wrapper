@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Brightcove\API;
 
-use Brightcove\API\Exception\APIException;
+use Brightcove\API\Exception\ApiException;
 use Brightcove\Item\InPageExperience\InPageExperienceInterface as InPageExperienceItemInterface;
 use Brightcove\Item\InPageExperience\InPageExperienceListInterface;
 use Brightcove\Type\SortInterface;
@@ -17,14 +17,14 @@ interface InPageExperienceInterface
     /**
     * Deletes an entity with the given ID.
     *
-    * @throws APIException
+    * @throws ApiException
     */
     public function delete(string $id): void;
 
     /**
     * Gets an entity with the given ID.
     *
-    * @throws APIException
+    * @throws ApiException
     */
     public function get(string $id): InPageExperienceItemInterface;
 
@@ -36,7 +36,7 @@ interface InPageExperienceInterface
     * @param SortInterface|null $sort
     *   To sort the results by a specific field.
     *
-    * @throws APIException
+    * @throws ApiException
     */
     public function getAll(string $search = null, SortInterface $sort = null): InPageExperienceListInterface;
 }

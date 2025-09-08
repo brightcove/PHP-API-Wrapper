@@ -3,7 +3,7 @@
 namespace Brightcove\Test;
 
 use PHPUnit\Framework\TestCase;
-use Brightcove\API\Client;
+use Brightcove\API\ApiClient;
 use Brightcove\API\CMS;
 use Brightcove\API\DI;
 use Brightcove\API\Exception\AuthenticationException;
@@ -59,7 +59,7 @@ class TestBase extends TestCase {
   /**
    * A Brightcove client to be used with the endpoint wrapper classes.
    *
-   * @var Client
+   * @var ApiClient
    */
   protected $client;
 
@@ -87,11 +87,11 @@ class TestBase extends TestCase {
   /**
    * Creates a new authorized client instance.
    *
-   * @return Client
+   * @return ApiClient
    * @throws AuthenticationException
    */
   protected function getClient() {
-    return Client::authorize($this->client_id, $this->client_secret);
+    return ApiClient::authorize($this->client_id, $this->client_secret);
   }
 
   /**
@@ -119,11 +119,11 @@ class TestBase extends TestCase {
   /**
    * Creates a new CMS object instance.
    *
-   * @param Client $client
+   * @param ApiClient $client
    *   The $client instance to use. If NULL, then the client of this class will be used.
    * @return CMS
    */
-  protected function createCMSObject(Client $client = NULL) {
+  protected function createCMSObject(ApiClient $client = NULL) {
     if ($client === NULL) {
       $client = $this->getClient();
     }
@@ -133,11 +133,11 @@ class TestBase extends TestCase {
   /**
    * Creates a new DI object instance.
    *
-   * @param Client $client
+   * @param ApiClient $client
    *   The $client instance to use. If NULL, then the client of this class will be used.
    * @return DI
    */
-  protected function createDIObject(Client $client = NULL) {
+  protected function createDIObject(ApiClient $client = NULL) {
     if ($client === NULL) {
       $client = $this->getClient();
     }
@@ -147,11 +147,11 @@ class TestBase extends TestCase {
   /**
    * Creates a new PM object instance.
    *
-   * @param Client $client
+   * @param ApiClient $client
    *   The $client instance to use. If NULL, then the client of this class will be used.
    * @return PM
    */
-  protected function createPMObject(Client $client = NULL) {
+  protected function createPMObject(ApiClient $client = NULL) {
     if ($client === NULL) {
       $client = $this->getClient();
     }

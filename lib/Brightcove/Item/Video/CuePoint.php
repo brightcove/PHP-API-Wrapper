@@ -16,7 +16,7 @@ class CuePoint extends ObjectBase {
   protected $metadata;
   protected $force_stop;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'name');
     $this->applyProperty($json, 'type');

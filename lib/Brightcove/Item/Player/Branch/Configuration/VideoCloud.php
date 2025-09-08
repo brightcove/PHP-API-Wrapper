@@ -22,7 +22,7 @@ class VideoCloud extends ObjectBase {
    */
   protected $video;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'policy_key');

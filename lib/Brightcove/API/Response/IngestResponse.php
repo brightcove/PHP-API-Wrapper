@@ -11,9 +11,10 @@ use Brightcove\Item\ObjectBase;
  * @api
  */
 class IngestResponse extends ObjectBase {
-  protected $id;
 
-  public function applyJSON(array $json) {
+  protected string $id;
+
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'id');
   }

@@ -37,7 +37,7 @@ class StudioConfigurationPlayer extends ObjectBase {
    */
   protected $units;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'adjusted');

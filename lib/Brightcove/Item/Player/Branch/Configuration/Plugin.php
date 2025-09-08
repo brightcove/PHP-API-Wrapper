@@ -16,7 +16,7 @@ class Plugin extends ObjectBase {
    */
   protected $name;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'name');

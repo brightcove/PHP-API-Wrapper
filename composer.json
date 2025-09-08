@@ -16,15 +16,21 @@
     {
       "name": "janmashat",
       "homepage": "https://github.com/janmashat"
+    },
+    {
+      "name": "Tamás Nagy",
+      "homepage": "https://github.com/ycecube"
     }
   ],
-  "require-dev": {
-    "phpunit/phpunit": "7.2.*"
-  },
   "require": {
     "ext-curl": "*",
     "ext-json": "*",
-    "php": ">=7.1"
+    "php": ">=8.3",
+    "php-http/client-common": "^2.7",
+    "php-http/discovery": "^1.20"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^12.2"
   },
   "autoload": {
     "psr-4": {
@@ -35,6 +41,11 @@
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
     }
   }
 }

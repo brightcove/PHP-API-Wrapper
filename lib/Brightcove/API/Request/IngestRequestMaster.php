@@ -13,7 +13,7 @@ use Brightcove\Item\ObjectBase;
 class IngestRequestMaster extends ObjectBase {
   protected $url;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'url');
   }

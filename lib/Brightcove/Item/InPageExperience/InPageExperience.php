@@ -95,7 +95,7 @@ final class InPageExperience extends ObjectBase implements InPageExperienceInter
     /**
      * {@inheritdoc}
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
@@ -127,7 +127,7 @@ final class InPageExperience extends ObjectBase implements InPageExperienceInter
     /**
      * {@inheritdoc}
      */
-    public function getPublishedStatus(): string
+    public function getPublishedStatus(): ?string
     {
         return $this->publishedStatus;
     }

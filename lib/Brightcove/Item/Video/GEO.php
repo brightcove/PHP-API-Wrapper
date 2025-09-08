@@ -16,7 +16,7 @@ class GEO extends ObjectBase {
   protected $exclude_countries = FALSE;
   protected $restricted = FALSE;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'countries');
     $this->applyProperty($json, 'exclude_countries');

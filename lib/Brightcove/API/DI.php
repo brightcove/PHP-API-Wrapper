@@ -2,9 +2,10 @@
 
 namespace Brightcove\API;
 
-use Brightcove\API\API;
+use Brightcove\API\ApiBase;
 use Brightcove\API\Request\IngestRequest;
 use Brightcove\API\Response\IngestResponse;
+use Brightcove\Type\ApiType;
 
 /**
  * Class DI
@@ -15,7 +16,7 @@ use Brightcove\API\Response\IngestResponse;
 class DI extends API {
 
   protected function diRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
-    return $this->client->request($method, '1', 'ingest', $this->account, $endpoint, $result, $is_array, $post);
+    return $this->client->sendRequest($method, self::API_VERSION, ApiType::DynamicIngest, $this->account, $endpoint, $result, $is_array, $post);
   }
 
   /**

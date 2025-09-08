@@ -7,24 +7,40 @@ namespace Brightcove\API;
  *
  * @internal
  */
-abstract class API {
+abstract class API
+{
+    /**
+     * API's major version.
+     */
+    protected const string API_VERSION = '1';
 
-  protected const API_VERSION = '1';
+    /**
+     * Initializes an API handler.
+     *
+     * @param ApiClientInterface $client
+     *   API client.
+     * @param string $account
+     *   Account ID.
+     */
+    public function __construct(
+        protected ApiClientInterface $client,
+        protected string $account,
+    ) {}
 
-  protected $account;
-
-  protected $client;
-
-  /**
-   * API constructor.
-   *
-   * @param \Brightcove\API\Client $client
-   * @param $account
-   *
-   * @internal
-   */
-  public function __construct(Client $client, $account) {
-    $this->client = $client;
-    $this->account = $account;
-  }
+    /**
+     * Builds HTTP query parameters.
+     *
+     * @param array $query
+     *   List of HTTP query parameters.
+     *
+     * @return string
+     *   The built HTTP query.
+     */
+    protected function buildHttpQuery(array $query): string {
+        $query_parameters = '';
+        if ($query !== []) {
+            $query_parameters = '?' . http_build_query($query);
+        }
+        return $query_parameters;
+    }
 }

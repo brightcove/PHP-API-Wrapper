@@ -26,7 +26,7 @@ class IngestImage extends ObjectBase {
    */
   protected $height;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
     $this->applyProperty($json, 'url');
     $this->applyProperty($json, 'width');

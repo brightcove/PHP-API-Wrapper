@@ -21,7 +21,7 @@ class Player extends ObjectBase {
    */
   protected $inactive;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'template', NULL, PlayerTemplate::class);

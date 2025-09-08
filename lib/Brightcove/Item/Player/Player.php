@@ -52,7 +52,7 @@ class Player extends ObjectBase {
    */
   protected $embed_count;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'accountId');

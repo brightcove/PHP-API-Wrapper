@@ -41,7 +41,7 @@ class CreateResult extends ObjectBase {
    */
   protected $preview_embed_code;
 
-  public function applyJSON(array $json) {
+  public function applyJSON(array $json): void {
     parent::applyJSON($json);
 
     $this->applyProperty($json, 'id');

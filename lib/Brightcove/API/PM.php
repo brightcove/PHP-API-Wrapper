@@ -11,6 +11,8 @@ use Brightcove\Item\Player\PublishComment;
 use Brightcove\Item\Player\Player;
 use Brightcove\Item\Player\Branch\Configuration\Configuration;
 use Brightcove\Item\Player\UpdateData;
+use Brightcove\Type\ApiType;
+use Brightcove\Type\HttpMethod;
 
 /**
  * Class PM
@@ -20,15 +22,15 @@ use Brightcove\Item\Player\UpdateData;
  */
 class PM extends API {
 
-  protected function pmRequest($method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
-    return $this->client->request($method, '2','players', $this->account, $endpoint, $result, $is_array, $post);
+  protected function pmRequest(HttpMethod $method, $endpoint, $result, $is_array = FALSE, $post = NULL) {
+    return $this->client->sendRequest($method, '2',ApiType::Players, $this->account, $endpoint, $result, $is_array, $post);
   }
 
   /**
    * @return PlayerList|null
    */
   public function listPlayers() {
-    return $this->pmRequest('GET', '/players', PlayerList::class, FALSE);
+    return $this->pmRequest(HttpMethod::Get, '/players', PlayerList::class, FALSE);
   }
 
   /**
@@ -37,7 +39,7 @@ class PM extends API {
    * @return CreateResult|null
    */
   public function createPlayer(CreateData $player) {
-    return $this->pmRequest('POST', '/players', CreateResult::class, FALSE, $player);
+    return $this->pmRequest(HttpMethod::Post, '/players', CreateResult::class, FALSE, $player);
   }
 
   /**
@@ -46,7 +48,7 @@ class PM extends API {
    * @return Player|null
    */
   public function getPlayer($player_id) {
-    return $this->pmRequest('GET', "/players/{$player_id}", Player::class);
+    return $this->pmRequest(HttpMethod::Get, "/players/{$player_id}", Player::class);
   }
 
   /**
@@ -57,11 +59,11 @@ class PM extends API {
    * @return CreateResult|null
    */
   public function updatePlayer($player_id, UpdateData $player) {
-    return $this->pmRequest('PATCH', "/players/{$player_id}", CreateResult::class, FALSE, $player);
+    return $this->pmRequest(HttpMethod::Patch, "/players/{$player_id}", CreateResult::class, FALSE, $player);
   }
 
   public function deletePlayer($player_id) {
-    return $this->pmRequest('DELETE', "/players/{$player_id}", NULL);
+    return $this->pmRequest(HttpMethod::Delete, "/players/{$player_id}", NULL);
   }
 
   /**
@@ -72,7 +74,7 @@ class PM extends API {
    * @return Configuration|null
    */
   public function getPlayerConfigurationBranch($player_id, $branch_name) {
-    return $this->pmRequest('GET', "/players/{$player_id}/configuration/{$branch_name}", Configuration::class);
+    return $this->pmRequest(HttpMethod::Get, "/players/{$player_id}/configuration/{$branch_name}", Configuration::class);
   }
 
   /**
@@ -82,7 +84,7 @@ class PM extends API {
    * @return CreateResult|null
    */
   public function updatePlayerConfigurationBranch($player_id, Configuration $config) {
-    return $this->pmRequest('PATCH', "/players/{$player_id}/configuration", CreateResult::class, FALSE, $config);
+    return $this->pmRequest(HttpMethod::Patch, "/players/{$player_id}/configuration", CreateResult::class, FALSE, $config);
   }
 
   /**
@@ -92,7 +94,7 @@ class PM extends API {
    * @return CreateResult|null
    */
   public function publishPlayer($player_id, $comment = '') {
-    return $this->pmRequest('POST', "/players/{$player_id}/publish", CreateResult::class, FALSE, (new PublishComment())->setComment($comment));
+    return $this->pmRequest(HttpMethod::Post, "/players/{$player_id}/publish", CreateResult::class, FALSE, (new PublishComment())->setComment($comment));
   }
 
   /**
@@ -102,7 +104,7 @@ class PM extends API {
    * @return Embed
    */
   public function getEmbed($player_id, $embed_id) {
-    return $this->pmRequest('GET', "/players/{$player_id}/embeds/{$embed_id}", Embed::class, FALSE);
+    return $this->pmRequest(HttpMethod::Get, "/players/{$player_id}/embeds/{$embed_id}", Embed::class, FALSE);
   }
 
   /**
@@ -111,7 +113,7 @@ class PM extends API {
    * @return EmbedList
    */
   public function listEmbeds($player_id) {
-    return $this->pmRequest('GET', "/players/{$player_id}/embeds", EmbedList::class);
+    return $this->pmRequest(HttpMethod::Get, "/players/{$player_id}/embeds", EmbedList::class);
   }
 
   /**
@@ -121,7 +123,7 @@ class PM extends API {
    * @return Embed
    */
   public function createEmbed($player_id, Configuration $data) {
-    return $this->pmRequest('POST', "/players/{$player_id}/embeds", Embed::class, FALSE, $data);
+    return $this->pmRequest(HttpMethod::Post, "/players/{$player_id}/embeds", Embed::class, FALSE, $data);
   }
 
   /**
@@ -132,7 +134,7 @@ class PM extends API {
    * @return Embed
    */
   public function publishEmbed($player_id, $embed_id, $comment) {
-    return $this->pmRequest('POST', "/players/{$player_id}/embeds/{$embed_id}/publish", Embed::class, FALSE, (new PublishComment())->setComment($comment));
+    return $this->pmRequest(HttpMethod::Post, "/players/{$player_id}/embeds/{$embed_id}/publish", Embed::class, FALSE, (new PublishComment())->setComment($comment));
   }
 
   /**
@@ -142,7 +144,7 @@ class PM extends API {
    * @return null
    */
   public function deleteEmbed($player_id, $embed_id) {
-    return $this->pmRequest('DELETE', "/players/{$player_id}/embeds/{$embed_id}", NULL);
+    return $this->pmRequest(HttpMethod::Delete, "/players/{$player_id}/embeds/{$embed_id}", NULL);
   }
 
   /**
@@ -153,7 +155,7 @@ class PM extends API {
    * @return Configuration
    */
   public function getEmbedConfigurationBranch($player_id, $embed_id, $branch) {
-    return $this->pmRequest('GET', "/players/{$player_id}/players/{$embed_id}/{$branch}", Configuration::class);
+    return $this->pmRequest(HttpMethod::Get, "/players/{$player_id}/players/{$embed_id}/{$branch}", Configuration::class);
   }
 
   /**
@@ -164,7 +166,7 @@ class PM extends API {
    * @return Configuration
    */
   public function updateEmbedConfigurationBranch($player_id, $embed_id, Configuration $configuration) {
-    return $this->pmRequest('PATCH', "/players/{$player_id}/embeds/{$embed_id}/configuration", Configuration::class, FALSE, $configuration);
+    return $this->pmRequest(HttpMethod::Patch, "/players/{$player_id}/embeds/{$embed_id}/configuration", Configuration::class, FALSE, $configuration);
   }
 
 }
