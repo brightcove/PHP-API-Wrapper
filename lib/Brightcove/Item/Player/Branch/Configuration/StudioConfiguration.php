@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player\Branch\Configuration;
 
 use Brightcove\Item\ObjectBase;
@@ -10,32 +12,29 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player\Branch\Configuration
  * @api
  */
-class StudioConfiguration extends ObjectBase {
+class StudioConfiguration extends ObjectBase
+{
+    protected ?StudioConfigurationPlayer $player = null;
 
-  /**
-   * @var StudioConfigurationPlayer
-   */
-  protected $player;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'player', null, StudioConfigurationPlayer::class);
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'player', NULL, StudioConfigurationPlayer::class);
-  }
+    public function getPlayer(): ?StudioConfigurationPlayer
+    {
+        return $this->player;
+    }
 
-  /**
-   * @return StudioConfigurationPlayer
-   */
-  public function getPlayer() {
-    return $this->player;
-  }
-
-  /**
-   * @param StudioConfigurationPlayer $player
-   * @return StudioConfiguration
-   */
-  public function setPlayer(StudioConfigurationPlayer $player) {
-    $this->player = $player;
-    $this->fieldChanged('player');
-    return $this;
-  }
+    /**
+     * @param StudioConfigurationPlayer $player
+     * @return StudioConfiguration
+     */
+    public function setPlayer(StudioConfigurationPlayer $player): static
+    {
+        $this->player = $player;
+        $this->fieldChanged('player');
+        return $this;
+    }
 }

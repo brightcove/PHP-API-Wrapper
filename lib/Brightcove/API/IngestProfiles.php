@@ -6,18 +6,26 @@ namespace Brightcove\API;
 
 use Brightcove\Item\IngestProfiles\Ingestion;
 use Brightcove\Type\ApiType;
-use Symfony\Component\HttpFoundation\Request;
+use Brightcove\Type\HttpMethod;
 
 /**
  * Ingest Profiles API.
  */
-final class IngestProfiles extends ApiBase implements IngestProfilesInterface {
-
+final class IngestProfiles extends API implements IngestProfilesInterface
+{
     /**
      * {@inheritdoc}
      */
-    public function getProfiles(string $account_id): ?array {
-        return $this->client->sendRequest(Request::METHOD_GET, self::API_VERSION, ApiType::IngestProfiles, $account_id, '/profiles', Ingestion::class, true);
+    public function getProfiles(string $account_id): array
+    {
+        return $this->client->sendRequest(
+            HttpMethod::Get,
+            self::API_VERSION,
+            ApiType::IngestProfiles,
+            $account_id,
+            '/profiles',
+            Ingestion::class,
+            true,
+        );
     }
-
 }

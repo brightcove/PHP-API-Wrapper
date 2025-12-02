@@ -7,14 +7,12 @@ namespace Brightcove\Item\IngestProfiles;
 use Brightcove\Item\ObjectBase;
 
 /**
- * In-Page Experience entity.
+ * Ingestion profile entity.
  */
-final class Ingestion extends ObjectBase {
-
-    public function __construct(
-        public string $id,
-        public string $name,
-    ) {}
+class Ingestion extends ObjectBase
+{
+    protected ?string $id = null;
+    protected ?string $name = null;
 
     /**
      * {@inheritdoc}
@@ -27,4 +25,25 @@ final class Ingestion extends ObjectBase {
         $this->applyProperty($json, 'name');
     }
 
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+        $this->fieldChanged('name');
+    }
 }

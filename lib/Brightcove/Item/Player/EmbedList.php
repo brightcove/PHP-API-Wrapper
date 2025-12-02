@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player;
 
 use Brightcove\Item\ObjectBase;
@@ -10,57 +12,44 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player
  * @api
  */
-class EmbedList extends ObjectBase {
+class EmbedList extends ObjectBase
+{
+    /**
+     * @var Embed[]
+     */
+    protected array $items = [];
+    protected int $item_count = 0;
 
-  /**
-   * @var Embed[]
-   */
-  protected $items;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
 
-  /**
-   * @var int
-   */
-  protected $item_count;
+        $this->applyProperty($json, 'items', null, Embed::class, true);
+        $this->applyProperty($json, 'item_count');
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
+    public function getItems(): array
+    {
+        return $this->items;
+    }
 
-    $this->applyProperty($json, 'items', NULL, Embed::class, TRUE);
-    $this->applyProperty($json, 'item_count');
-  }
+    /**
+     * @param Embed[] $items
+     */
+    public function setItems(array $items): static
+    {
+        $this->items = $items;
+        return $this;
+    }
 
-  /**
-   * @return Embed[]
-   */
-  public function getItems() {
-    return $this->items;
-  }
+    public function getItemCount(): int
+    {
+        return $this->item_count;
+    }
 
-  /**
-   * @param Embed[] $items
-   *
-   * @return EmbedList
-   */
-  public function setItems($items) {
-    $this->items = $items;
-    return $this;
-  }
-
-  /**
-   * @return int
-   */
-  public function getItemCount() {
-    return $this->item_count;
-  }
-
-  /**
-   * @param int $item_count
-   *
-   * @return EmbedList
-   */
-  public function setItemCount($item_count) {
-    $this->item_count = $item_count;
-    return $this;
-  }
-
+    public function setItemCount(int $item_count): static
+    {
+        $this->item_count = $item_count;
+        return $this;
+    }
 }

@@ -14,7 +14,6 @@ use Exception;
  */
 class ApiException extends Exception
 {
-
     /**
      * Gets the response body.
      */

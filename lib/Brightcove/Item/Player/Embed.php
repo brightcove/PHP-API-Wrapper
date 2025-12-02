@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player;
 
 use Brightcove\Item\ObjectBase;
@@ -12,241 +14,142 @@ use Brightcove\Item\Player\Embed\PublishRequest;
  * @package Brightcove\Item\Player
  * @api
  */
-class Embed extends ObjectBase {
+class Embed extends ObjectBase
+{
+    protected ?BranchList $branches = null;
+    protected ?string $embed_code = null;
+    protected ?string $embed_in_page = null;
+    protected ?string $id = null;
+    protected ?string $name = null;
+    protected ?string $preview_embed_code = null;
+    protected ?PublishRequest $publish_request = null;
+    protected ?string $preview_url = null;
+    protected ?string $repository_url = null;
+    protected ?string $url = null;
 
-  /**
-   * @var BranchList
-   */
-  protected $branches;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
 
-  /**
-   * @var string
-   */
-  protected $embed_code;
+        $this->applyProperty($json, 'branches', null, BranchList::class);
+        $this->applyProperty($json, 'embed_code');
+        $this->applyProperty($json, 'embed_in_page');
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'name');
+        $this->applyProperty($json, 'preview_embed_code');
+        $this->applyProperty($json, 'publish_request', null, PublishRequest::class);
+        $this->applyProperty($json, 'preview_url');
+        $this->applyProperty($json, 'repository_url');
+        $this->applyProperty($json, 'url');
+    }
 
-  /**
-   * @var string
-   */
-  protected $embed_in_page;
+    public function getBranches(): ?BranchList
+    {
+        return $this->branches;
+    }
 
-  /**
-   * @var string
-   */
-  protected $id;
+    public function setBranches(BranchList $branches): static
+    {
+        $this->branches = $branches;
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $name;
+    public function getEmbedCode(): ?string
+    {
+        return $this->embed_code;
+    }
 
-  /**
-   * @var string
-   */
-  protected $preview_embed_code;
+    public function setEmbedCode(string $embed_code): static
+    {
+        $this->embed_code = $embed_code;
+        return $this;
+    }
 
-  /**
-   * @var PublishRequest
-   */
-  protected $publish_request;
+    public function getEmbedInPage(): ?string
+    {
+        return $this->embed_in_page;
+    }
 
-  /**
-   * @var string
-   */
-  protected $preview_url;
+    public function setEmbedInPage(string $embed_in_page): static
+    {
+        $this->embed_in_page = $embed_in_page;
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $repository_url;
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  /**
-   * @var string
-   */
-  protected $url;
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        return $this;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
-    $this->applyProperty($json, 'branches', NULL, BranchList::class);
-    $this->applyProperty($json, 'embed_code');
-    $this->applyProperty($json, 'embed_in_page');
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'name');
-    $this->applyProperty($json, 'preview_embed_code');
-    $this->applyProperty($json, 'publish_request', NULL, PublishRequest::class);
-    $this->applyProperty($json, 'preview_url');
-    $this->applyProperty($json, 'repository_url');
-    $this->applyProperty($json, 'url');
-  }
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        return $this;
+    }
 
-  /**
-   * @return \Brightcove\Item\Player\Branch\BranchList
-   */
-  public function getBranches() {
-    return $this->branches;
-  }
+    public function getPreviewEmbedCode(): ?string
+    {
+        return $this->preview_embed_code;
+    }
 
-  /**
-   * @param \Brightcove\Item\Player\Branch\BranchList $branches
-   *
-   * @return Embed
-   */
-  public function setBranches($branches) {
-    $this->branches = $branches;
-    return $this;
-  }
+    public function setPreviewEmbedCode(string $preview_embed_code): static
+    {
+        $this->preview_embed_code = $preview_embed_code;
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getEmbedCode() {
-    return $this->embed_code;
-  }
+    public function getPublishRequest(): ?PublishRequest
+    {
+        return $this->publish_request;
+    }
 
-  /**
-   * @param string $embed_code
-   *
-   * @return Embed
-   */
-  public function setEmbedCode($embed_code) {
-    $this->embed_code = $embed_code;
-    return $this;
-  }
+    public function setPublishRequest(PublishRequest $publish_request): static
+    {
+        $this->publish_request = $publish_request;
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getEmbedInPage() {
-    return $this->embed_in_page;
-  }
+    public function getPreviewUrl(): ?string
+    {
+        return $this->preview_url;
+    }
 
-  /**
-   * @param string $embed_in_page
-   *
-   * @return Embed
-   */
-  public function setEmbedInPage($embed_in_page) {
-    $this->embed_in_page = $embed_in_page;
-    return $this;
-  }
+    public function setPreviewUrl(string $preview_url): static
+    {
+        $this->preview_url = $preview_url;
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    public function getRepositoryUrl(): ?string
+    {
+        return $this->repository_url;
+    }
 
-  /**
-   * @param string $id
-   *
-   * @return Embed
-   */
-  public function setId($id) {
-    $this->id = $id;
-    return $this;
-  }
+    public function setRepositoryUrl(string $repository_url): static
+    {
+        $this->repository_url = $repository_url;
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getName() {
-    return $this->name;
-  }
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
 
-  /**
-   * @param string $name
-   *
-   * @return Embed
-   */
-  public function setName($name) {
-    $this->name = $name;
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getPreviewEmbedCode() {
-    return $this->preview_embed_code;
-  }
-
-  /**
-   * @param string $preview_embed_code
-   *
-   * @return Embed
-   */
-  public function setPreviewEmbedCode($preview_embed_code) {
-    $this->preview_embed_code = $preview_embed_code;
-    return $this;
-  }
-
-  /**
-   * @return \Brightcove\Item\Player\Embed\PublishRequest
-   */
-  public function getPublishRequest() {
-    return $this->publish_request;
-  }
-
-  /**
-   * @param \Brightcove\Item\Player\Embed\PublishRequest $publish_request
-   *
-   * @return Embed
-   */
-  public function setPublishRequest($publish_request) {
-    $this->publish_request = $publish_request;
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getPreviewUrl() {
-    return $this->preview_url;
-  }
-
-  /**
-   * @param string $preview_url
-   *
-   * @return Embed
-   */
-  public function setPreviewUrl($preview_url) {
-    $this->preview_url = $preview_url;
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getRepositoryUrl() {
-    return $this->repository_url;
-  }
-
-  /**
-   * @param string $repository_url
-   *
-   * @return Embed
-   */
-  public function setRepositoryUrl($repository_url) {
-    $this->repository_url = $repository_url;
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getUrl() {
-    return $this->url;
-  }
-
-  /**
-   * @param string $url
-   *
-   * @return Embed
-   */
-  public function setUrl($url) {
-    $this->url = $url;
-    return $this;
-  }
-
+    public function setUrl(string $url): static
+    {
+        $this->url = $url;
+        return $this;
+    }
 }

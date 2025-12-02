@@ -1,138 +1,110 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Video;
 
 use Brightcove\Item\ObjectBase;
 
 /**
- * The instance of this Class contains the sharing informations of the video object.
+ * The instance of this Class contains the sharing information of the video object.
  *
  * @api
  */
-class Sharing extends ObjectBase {
+class Sharing extends ObjectBase
+{
+    /**
+     * True, if the video was shared from another account.
+     */
+    protected bool $by_external_acct = false;
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'by_external_acct');
-    $this->applyProperty($json, 'by_id');
-    $this->applyProperty($json, 'source_id');
-    $this->applyProperty($json, 'to_external_acct');
-    $this->applyProperty($json, 'by_reference');
-  }
+    /**
+     * ID of the account that shared the video.
+     */
+    protected ?string $by_id = null;
 
-  /**
-   * True, if the video was shared from another account.
-   *
-   * @var boolean
-   */
-  protected $by_external_acct = FALSE;
-  /**
-   * Id of the account that shared the video.
-   *
-   * @var string
-   */
-  protected $by_id;
-  /**
-   * Id of the video in its original account.
-   *
-   * @var string
-   */
-  protected $source_id;
-  /**
-   * Whether the video is shared to another account.
-   *
-   * @var boolean
-   */
-  protected $to_external_acct = FALSE;
-  /**
-   * Whether the video is shared by reference.
-   *
-   * @var boolean
-   */
-  protected $by_reference = FALSE;
+    /**
+     * ID of the video in its original account.
+     */
+    protected ?string $source_id = null;
 
-  /**
-   * @return boolean
-   */
-  public function getByExternalAcct() {
-    return $this->by_external_acct;
-  }
+    /**
+     * Whether the video is shared to another account.
+     */
+    protected bool $to_external_acct = false;
 
-  /**
-   * @param boolean $by_external_acct
-   * @return $this
-   */
-  public function setByExternalAcct($by_external_acct) {
-    $this->by_external_acct = $by_external_acct;
-    $this->fieldChanged('by_external_acct');
-    return $this;
-  }
+    /**
+     * Whether the video is shared by reference.
+     */
+    protected bool $by_reference = false;
 
-  /**
-   * @return string
-   */
-  public function getById() {
-    return $this->by_id;
-  }
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'by_external_acct');
+        $this->applyProperty($json, 'by_id');
+        $this->applyProperty($json, 'source_id');
+        $this->applyProperty($json, 'to_external_acct');
+        $this->applyProperty($json, 'by_reference');
+    }
 
-  /**
-   * @param string $by_id
-   * @return $this
-   */
-  public function setById($by_id) {
-    $this->by_id = $by_id;
-    $this->fieldChanged('by_id');
-    return $this;
-  }
+    public function getByExternalAcct(): bool
+    {
+        return $this->by_external_acct;
+    }
 
-  /**
-   * @return string
-   */
-  public function getSourceId() {
-    return $this->source_id;
-  }
+    public function setByExternalAcct(bool $by_external_acct): static
+    {
+        $this->by_external_acct = $by_external_acct;
+        $this->fieldChanged('by_external_acct');
+        return $this;
+    }
 
-  /**
-   * @param string $source_id
-   * @return $this
-   */
-  public function setSourceId($source_id) {
-    $this->source_id = $source_id;
-    $this->fieldChanged('source_id');
-    return $this;
-  }
+    public function getById(): ?string
+    {
+        return $this->by_id;
+    }
 
-  /**
-   * @return boolean
-   */
-  public function getToExternalAcct() {
-    return $this->to_external_acct;
-  }
+    public function setById(string $by_id): static
+    {
+        $this->by_id = $by_id;
+        $this->fieldChanged('by_id');
+        return $this;
+    }
 
-  /**
-   * @param boolean $to_external_acct
-   * @return $this
-   */
-  public function setToExternalAcct($to_external_acct) {
-    $this->to_external_acct = $to_external_acct;
-    $this->fieldChanged('to_external_acct');
-    return $this;
-  }
+    public function getSourceId(): ?string
+    {
+        return $this->source_id;
+    }
 
-  /**
-   * @return boolean
-   */
-  public function getByReference() {
-    return $this->by_reference;
-  }
+    public function setSourceId(string $source_id): static
+    {
+        $this->source_id = $source_id;
+        $this->fieldChanged('source_id');
+        return $this;
+    }
 
-  /**
-   * @param boolean $by_reference
-   * @return $this
-   */
-  public function setByReference($by_reference) {
-    $this->by_reference = $by_reference;
-    $this->fieldChanged('by_reference');
-    return $this;
-  }
+    public function getToExternalAcct(): bool
+    {
+        return $this->to_external_acct;
+    }
+
+    public function setToExternalAcct(bool $to_external_acct): static
+    {
+        $this->to_external_acct = $to_external_acct;
+        $this->fieldChanged('to_external_acct');
+        return $this;
+    }
+
+    public function getByReference(): bool
+    {
+        return $this->by_reference;
+    }
+
+    public function setByReference(bool $by_reference): static
+    {
+        $this->by_reference = $by_reference;
+        $this->fieldChanged('by_reference');
+        return $this;
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Video;
 
 use Brightcove\Item\ObjectBase;
@@ -9,56 +11,39 @@ use Brightcove\Item\ObjectBase;
  *
  * @api
  */
-class Images extends ObjectBase {
+class Images extends ObjectBase
+{
+    protected ?Image $thumbnail = null;
+    protected ?Image $poster = null;
 
-  /**
-   * @var Image
-   */
-  protected $thumbnail;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'thumbnail');
+        $this->applyProperty($json, 'poster');
+    }
 
-  /**
-   * @var Image
-   */
-  protected $poster;
+    public function getThumbnail(): ?Image
+    {
+        return $this->thumbnail;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'thumbnail');
-    $this->applyProperty($json, 'poster');
-  }
+    public function setThumbnail(Image $thumbnail): static
+    {
+        $this->thumbnail = $thumbnail;
+        $this->fieldChanged('thumbnail');
+        return $this;
+    }
 
-  /**
-   * @return Image
-   */
-  public function getThumbnail() {
-    return $this->thumbnail;
-  }
+    public function getPoster(): ?Image
+    {
+        return $this->poster;
+    }
 
-  /**
-   * @param Image $thumbnail
-   * @return $this
-   */
-  public function setThumbnail(Image $thumbnail) {
-    $this->thumbnail = $thumbnail;
-    $this->fieldChanged('thumbnail');
-    return $this;
-  }
-
-  /**
-   * @return Image
-   */
-  public function getPoster() {
-    return $this->poster;
-  }
-
-  /**
-   * @param Image $poster
-   * @return $this
-   */
-  public function setPoster(Image $poster) {
-    $this->poster = $poster;
-    $this->fieldChanged('poster');
-    return $this;
-  }
-
+    public function setPoster(Image $poster): static
+    {
+        $this->poster = $poster;
+        $this->fieldChanged('poster');
+        return $this;
+    }
 }

@@ -7,9 +7,8 @@ namespace Brightcove\Type;
 /**
  * Sorting order options.
  */
-enum SortOrder: string {
-
+enum SortOrder: string
+{
     case default = '';
-
     case reverse = '-';
 }

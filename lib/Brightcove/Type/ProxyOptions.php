@@ -9,8 +9,8 @@ use SensitiveParameter;
 /**
  * Proxy options DTO.
  */
-final readonly class ProxyOptions {
-
+final readonly class ProxyOptions
+{
     /**
      * Initializes a proxy options DTO.
      *
@@ -38,7 +38,8 @@ final readonly class ProxyOptions {
         private ?string $password = null,
         private int $port = 0,
         private int $type = \CURLPROXY_HTTP,
-    ) {}
+    ) {
+    }
 
     /**
      * Maps properties with CURL options.
@@ -46,7 +47,8 @@ final readonly class ProxyOptions {
      * @return array
      *   CURL options mapping.
      */
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             \CURLOPT_PROXY => $this->uri,
             \CURLOPT_HTTPPROXYTUNNEL => $this->useTunnel,
@@ -56,5 +58,4 @@ final readonly class ProxyOptions {
             \CURLOPT_PROXYTYPE => $this->type,
         ];
     }
-
 }

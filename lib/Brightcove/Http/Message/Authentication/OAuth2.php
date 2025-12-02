@@ -27,7 +27,6 @@ use Psr\Http\Message\StreamFactoryInterface;
  */
 final readonly class OAuth2 implements Authentication
 {
-
     /**
      * Initializes an OAuth2 authentication.
      *
@@ -48,8 +47,8 @@ final readonly class OAuth2 implements Authentication
         private StorageInterface $storage,
         private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
-    )
-    {}
+    ) {
+    }
 
     /**
      * {@inheritdoc}
@@ -72,7 +71,7 @@ final readonly class OAuth2 implements Authentication
         $access_token = $this->storage->getAccessToken();
 
         // Acquire access token if necessary.
-        if ($access_token === NULL || $this->storage->isAccessTokenExpired()) {
+        if ($access_token === null || $this->storage->isAccessTokenExpired()) {
             $client = new PluginClient($this->client, [
                 new AuthenticationPlugin(new BasicAuth($this->clientId, $this->clientSecret)),
                 new HeaderDefaultsPlugin([
@@ -83,11 +82,14 @@ final readonly class OAuth2 implements Authentication
                 ])
             ]);
 
-            $response = $client->sendRequest($this->requestFactory->createRequest(HttpMethod::Post->value, 'https://oauth.brightcove.com/v3/access_token')
-                ->withBody($this->streamFactory->createStream('grant_type=client_credentials'))
-            );
+            $response = $client->sendRequest($this->requestFactory->createRequest(
+                HttpMethod::Post->value,
+                'https://oauth.brightcove.com/v3/access_token'
+            )->withBody($this->streamFactory->createStream('grant_type=client_credentials')));
 
-            $access_token = AccessToken::fromObject(json_decode($response->getBody()->getContents(), flags: JSON_THROW_ON_ERROR));
+            $access_token = AccessToken::fromObject(
+                json_decode($response->getBody()->getContents(), flags: JSON_THROW_ON_ERROR)
+            );
             $this->storage->storeAccessToken($access_token);
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\API\Exception;
 
 /**
@@ -8,4 +10,6 @@ namespace Brightcove\API\Exception;
  * @package Brightcove\API\Exception
  * @api
  */
-class AuthenticationException extends \Exception {}
+class AuthenticationException extends \Exception
+{
+}

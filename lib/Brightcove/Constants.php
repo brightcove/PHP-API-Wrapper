@@ -8,6 +8,7 @@ namespace Brightcove;
  * @package Brightcove
  * @api
  */
-class Constants {
-  const VERSION = 'dev';
+class Constants
+{
+    public const string VERSION = 'dev';
 }

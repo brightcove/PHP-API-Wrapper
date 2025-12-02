@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Video;
 
 use Brightcove\Item\ObjectBase;
@@ -10,32 +12,25 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Video
  * @api
  */
-class TextTrackSource extends ObjectBase {
+class TextTrackSource extends ObjectBase
+{
+    protected ?string $src = null;
 
-  /**
-   * @var string
-   */
-  protected $src;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'src');
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'src');
-  }
+    public function getSrc(): ?string
+    {
+        return $this->src;
+    }
 
-  /**
-   * @return string
-   */
-  public function getSrc() {
-    return $this->src;
-  }
-
-  /**
-   * @param string $src
-   * @return TextTrackSource
-   */
-  public function setSrc($src) {
-    $this->src = $src;
-    $this->fieldChanged('src');
-    return $this;
-  }
+    public function setSrc(string $src): static
+    {
+        $this->src = $src;
+        $this->fieldChanged('src');
+        return $this;
+    }
 }

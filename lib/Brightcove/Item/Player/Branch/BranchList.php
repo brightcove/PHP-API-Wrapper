@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player\Branch;
 
 use Brightcove\Item\ObjectBase;
@@ -10,55 +12,40 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player\Branch
  * @api
  */
-class BranchList extends ObjectBase {
-  /**
-   * @var Branch
-   */
-  protected $master;
+class BranchList extends ObjectBase
+{
+    protected ?Branch $master = null;
+    protected ?Branch $preview = null;
 
-  /**
-   * @var Branch
-   */
-  protected $preview;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
+        $this->applyProperty($json, 'master', null, Branch::class);
+        $this->applyProperty($json, 'preview', null, Branch::class);
+    }
 
-    $this->applyProperty($json, 'master', NULL, Branch::class);
-    $this->applyProperty($json, 'preview', NULL, Branch::class);
-  }
+    public function getMaster(): ?Branch
+    {
+        return $this->master;
+    }
 
-  /**
-   * @return Branch
-   */
-  public function getMaster() {
-    return $this->master;
-  }
+    public function setMaster(Branch $master): static
+    {
+        $this->master = $master;
+        $this->fieldChanged('master');
+        return $this;
+    }
 
-  /**
-   * @param Branch $master
-   * @return BranchList
-   */
-  public function setMaster(Branch $master) {
-    $this->master = $master;
-    $this->fieldChanged('master');
-    return $this;
-  }
+    public function getPreview(): ?Branch
+    {
+        return $this->preview;
+    }
 
-  /**
-   * @return Branch
-   */
-  public function getPreview() {
-    return $this->preview;
-  }
-
-  /**
-   * @param Branch $preview
-   * @return BranchList
-   */
-  public function setPreview(Branch $preview) {
-    $this->preview = $preview;
-    $this->fieldChanged('preview');
-    return $this;
-  }
+    public function setPreview(Branch $preview): static
+    {
+        $this->preview = $preview;
+        $this->fieldChanged('preview');
+        return $this;
+    }
 }

@@ -38,11 +38,6 @@
       "Brightcove\\Test\\": "test/Brightcove/Test/"
     }
   },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
   "config": {
     "allow-plugins": {
       "php-http/discovery": true

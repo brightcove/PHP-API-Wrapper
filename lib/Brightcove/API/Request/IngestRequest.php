@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\API\Request;
 
 use Brightcove\Item\ObjectBase;
@@ -10,182 +12,134 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\API\Request
  * @api
  */
-class IngestRequest extends ObjectBase {
-  /**
-   * @var IngestRequestMaster
-   */
-  protected $master;
+class IngestRequest extends ObjectBase
+{
+    protected ?IngestRequestMaster $master = null;
+    protected ?string $profile = null;
+    protected array $callbacks = [];
+    protected ?IngestImage $poster = null;
+    protected ?IngestImage $thumbnail = null;
+    protected bool $capture_images = false;
 
-  /**
-   * @var string
-   */
-  protected $profile;
+    /**
+     * @var IngestTextTrack[]
+     */
+    protected array $text_tracks = [];
 
-  /**
-   * @var array
-   */
-  protected $callbacks;
+    public function __construct()
+    {
+        $this->fieldAliases['capture_images'] = 'capture-images';
+    }
 
-  /**
-   * @var IngestImage
-   */
-  protected $poster;
+    public static function createRequest($url, $profile): static
+    {
+        $request = new static();
+        $request->setMaster(new IngestRequestMaster());
+        $request->getMaster()->setUrl($url);
+        $request->setProfile($profile);
 
-  /**
-   * @var IngestImage
-   */
-  protected $thumbnail;
+        return $request;
+    }
 
-  /**
-   * @var bool
-   */
-  protected $capture_images;
+    public function getMaster(): ?IngestRequestMaster
+    {
+        return $this->master;
+    }
 
-  /**
-   * @var IngestTextTrack[]
-   */
-  protected $text_tracks;
+    public function setMaster(IngestRequestMaster $master = null): static
+    {
+        $this->master = $master;
+        $this->fieldChanged('master');
+        return $this;
+    }
 
-  public function __construct() {
-    $this->fieldAliases["capture_images"] = "capture-images";
-  }
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'master');
+        $this->applyProperty($json, 'profile');
+        $this->applyProperty($json, 'callbacks');
+        $this->applyProperty($json, 'poster');
+        $this->applyProperty($json, 'thumbnail');
+        $this->applyProperty($json, 'capture_images');
+        $this->applyProperty($json, 'text_tracks', null, IngestTextTrack::class, true);
+    }
 
-  public static function createRequest($url, $profile) {
-    $request = new self();
-    $request->setMaster(new IngestRequestMaster());
-    $request->getMaster()->setUrl($url);
-    $request->setProfile($profile);
+    public function getProfile(): ?string
+    {
+        return $this->profile;
+    }
 
-    return $request;
-  }
+    public function setProfile(string $profile): static
+    {
+        $this->profile = $profile;
+        $this->fieldChanged('profile');
+        return $this;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'master');
-    $this->applyProperty($json, 'profile');
-    $this->applyProperty($json, 'callbacks');
-    $this->applyProperty($json, 'poster');
-    $this->applyProperty($json, 'thumbnail');
-    $this->applyProperty($json, 'capture_images');
-    $this->applyProperty($json, 'text_tracks', NULL, IngestTextTrack::class, TRUE);
-  }
+    public function getCallbacks(): array
+    {
+        return $this->callbacks;
+    }
 
-  /**
-   * @return IngestRequestMaster
-   */
-  public function getMaster() {
-    return $this->master;
-  }
+    public function setCallbacks(array $callbacks): static
+    {
+        $this->callbacks = $callbacks;
+        $this->fieldChanged('callbacks');
+        return $this;
+    }
 
-  /**
-   * @param IngestRequestMaster $master
-   * @return $this
-   */
-  public function setMaster(IngestRequestMaster $master = NULL) {
-    $this->master = $master;
-    $this->fieldChanged('master');
-    return $this;
-  }
+    public function getPoster(): ?IngestImage
+    {
+        return $this->poster;
+    }
 
-  /**
-   * @return string
-   */
-  public function getProfile() {
-    return $this->profile;
-  }
+    public function setPoster(IngestImage $poster): static
+    {
+        $this->poster = $poster;
+        $this->fieldChanged('poster');
+        return $this;
+    }
 
-  /**
-   * @param string $profile
-   * @return $this
-   */
-  public function setProfile($profile) {
-    $this->profile = $profile;
-    $this->fieldChanged('profile');
-    return $this;
-  }
+    public function getThumbnail(): ?IngestImage
+    {
+        return $this->thumbnail;
+    }
 
-  /**
-   * @return array
-   */
-  public function getCallbacks() {
-    return $this->callbacks;
-  }
+    public function setThumbnail(IngestImage $thumbnail): static
+    {
+        $this->thumbnail = $thumbnail;
+        $this->fieldChanged('thumbnail');
+        return $this;
+    }
 
-  /**
-   * @param array $callbacks
-   * @return $this
-   */
-  public function setCallbacks(array $callbacks) {
-    $this->callbacks = $callbacks;
-    $this->fieldChanged('callbacks');
-    return $this;
-  }
+    public function getCaptureImages(): bool
+    {
+        return $this->capture_images;
+    }
 
-  /**
-   * @return IngestImage
-   */
-  public function getPoster() {
-    return $this->poster;
-  }
+    public function setCaptureImages(bool $capture_images): static
+    {
+        $this->capture_images = $capture_images;
+        $this->fieldChanged('capture_images');
+        return $this;
+    }
 
-  /**
-   * @param IngestImage $poster
-   * @return IngestRequest
-   */
-  public function setPoster(IngestImage $poster) {
-    $this->poster = $poster;
-    $this->fieldChanged('poster');
-    return $this;
-  }
+    /**
+     * @return IngestTextTrack[]
+     */
+    public function getTextTracks(): array
+    {
+        return $this->text_tracks;
+    }
 
-  /**
-   * @return IngestImage
-   */
-  public function getThumbnail() {
-    return $this->thumbnail;
-  }
-
-  /**
-   * @param IngestImage $thumbnail
-   * @return IngestRequest
-   */
-  public function setThumbnail(IngestImage $thumbnail) {
-    $this->thumbnail = $thumbnail;
-    $this->fieldChanged('thumbnail');
-    return $this;
-  }
-
-  /**
-   * @return bool
-   */
-  public function getCaptureImages() {
-    return $this->capture_images;
-  }
-
-  /**
-   * @param bool $capture_images
-   * @return IngestRequestMaster
-   */
-  public function setCaptureImages($capture_images) {
-    $this->capture_images = $capture_images;
-    $this->fieldChanged('capture_images');
-    return $this;
-  }
-
-  /**
-   * @return IngestTextTrack[]
-   */
-  public function getTextTracks() {
-    return $this->text_tracks;
-  }
-
-  /**
-   * @param IngestTextTrack[] $text_tracks
-   * @return IngestRequest
-   */
-  public function setTextTracks(array $text_tracks) {
-    $this->text_tracks = $text_tracks;
-    $this->fieldChanged('text_tracks');
-    return $this;
-  }
+    /**
+     * @param IngestTextTrack[] $text_tracks
+     */
+    public function setTextTracks(array $text_tracks): static
+    {
+        $this->text_tracks = $text_tracks;
+        $this->fieldChanged('text_tracks');
+        return $this;
+    }
 }

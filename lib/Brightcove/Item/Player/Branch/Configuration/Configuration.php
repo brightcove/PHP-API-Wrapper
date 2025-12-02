@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player\Branch\Configuration;
 
 use Brightcove\Item\ObjectBase;
@@ -10,466 +12,336 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player\Branch\Configuration
  * @api
  */
-class Configuration extends ObjectBase {
-
-  /**
-   * @var bool
-   */
-  protected $autoadvance;
-
-  /**
-   * @var bool
-   */
-  protected $autoplay;
-
-  /**
-   * @var CSS
-   */
-  protected $css;
-
-  /**
-   * @var Media
-   */
-  protected $media;
-
-  /**
-   * @var Player
-   */
-  protected $player;
-
-  /**
-   * @var bool
-   */
-  protected $playlist;
-
-  /**
-   * @var bool
-   */
-  protected $playOnSelect;
-
-  /**
-   * @var string[]
-   */
-  protected $scripts;
-
-  /**
-   * @var string[]
-   */
-  protected $stylesheets;
-
-  /**
-   * @var Plugin[]
-   */
-  protected $plugins;
-
-  /**
-   * @var bool
-   */
-  protected $errors;
-
-  /**
-   * @var bool
-   */
-  protected $fullscreenControl;
-
-  /**
-   * @var array
-   */
-  protected $languages;
-
-  /**
-   * @var bool
-   */
-  protected $loop;
-
-  /**
-   * @var string
-   */
-  protected $preload;
-
-  /**
-   * @var bool|string
-   */
-  protected $skin;
-
-  /**
-   * @var array
-   */
-  protected $techOrder;
-
-  /**
-   * @var VideoCloud
-   */
-  protected $video_cloud;
-
-  /**
-   * @var StudioConfiguration
-   */
-  protected $studio_configuration;
-
-  protected $embed_name;
-
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-
-    $this->applyProperty($json, 'autoadvance');
-    $this->applyProperty($json, 'autoplay');
-    $this->applyProperty($json, 'css', NULL, CSS::class);
-    $this->applyProperty($json, 'media', NULL, Media::class);
-    $this->applyProperty($json, 'player', NULL, Player::class);
-    $this->applyProperty($json, 'playlist');
-    $this->applyProperty($json, 'playOnSelect');
-    $this->applyProperty($json, 'scripts');
-    $this->applyProperty($json, 'stylesheets');
-    $this->applyProperty($json, 'plugins', NULL, Plugin::class, TRUE);
-    $this->applyProperty($json, 'errors');
-    $this->applyProperty($json, 'fullscreenControl');
-    $this->applyProperty($json, 'languages');
-    $this->applyProperty($json, 'loop');
-    $this->applyProperty($json, 'preload');
-    $this->applyProperty($json, 'skin');
-    $this->applyProperty($json, 'techOrder');
-    $this->applyProperty($json, 'video_cloud', NULL, VideoCloud::class);
-    $this->applyProperty($json, 'studio_configuration', NULL, StudioConfiguration::class);
-
-    $this->applyProperty($json, 'embed_name');
-  }
-
-  public function getEmbedName() {
-    return $this->embed_name;
-  }
-
-  public function setEmbedName($embed_name) {
-    $this->embed_name = $embed_name;
-    $this->fieldChanged('embed_name');
-    return $this;
-  }
-
-  /**
-   * @return CSS
-   */
-  public function getCss() {
-    return $this->css;
-  }
-
-  /**
-   * @param CSS $css
-   * @return Configuration
-   */
-  public function setCss($css) {
-    $this->css = $css;
-    $this->fieldChanged('css');
-    return $this;
-  }
-
-  /**
-   * @return Media
-   */
-  public function getMedia() {
-    return $this->media;
-  }
-
-  /**
-   * @param Media $media
-   * @return Configuration
-   */
-  public function setMedia(Media $media) {
-    $this->media = $media;
-    $this->fieldChanged('media');
-    return $this;
-  }
-
-  /**
-   * @return Player
-   */
-  public function getPlayer() {
-    return $this->player;
-  }
-
-  /**
-   * @param Player $player
-   * @return Configuration
-   */
-  public function setPlayer(Player $player) {
-    $this->player = $player;
-    $this->fieldChanged('player');
-    return $this;
-  }
-
-  /**
-   * @return string[]
-   */
-  public function getScripts() {
-    return $this->scripts;
-  }
-
-  /**
-   * @param string[] $scripts
-   * @return Configuration
-   */
-  public function setScripts(array $scripts) {
-    $this->scripts = $scripts;
-    $this->fieldChanged('scripts');
-    return $this;
-  }
-
-  /**
-   * @return string[]
-   */
-  public function getStylesheets() {
-    return $this->stylesheets;
-  }
-
-  /**
-   * @param string[] $stylesheets
-   * @return Configuration
-   */
-  public function setStylesheets(array $stylesheets) {
-    $this->stylesheets = $stylesheets;
-    $this->fieldChanged('stylesheets');
-    return $this;
-  }
-
-  /**
-   * @return Plugin[]
-   */
-  public function getPlugins() {
-    return $this->plugins;
-  }
-
-  /**
-   * @param Plugin[] $plugins
-   * @return Configuration
-   */
-  public function setPlugins(array $plugins) {
-    $this->plugins = $plugins;
-    $this->fieldChanged('plugins');
-    return $this;
-  }
-
-  /**
-   * @return boolean
-   */
-  public function isErrors() {
-    return $this->errors;
-  }
-
-  /**
-   * @param boolean $errors
-   * @return Configuration
-   */
-  public function setErrors($errors) {
-    $this->errors = $errors;
-    $this->fieldChanged('errors');
-    return $this;
-  }
-
-  /**
-   * @return boolean
-   */
-  public function isFullscreenControl() {
-    return $this->fullscreenControl;
-  }
-
-  /**
-   * @param boolean $fullscreenControl
-   * @return Configuration
-   */
-  public function setFullscreenControl($fullscreenControl) {
-    $this->fullscreenControl = $fullscreenControl;
-    $this->fieldChanged('fullscreenControl');
-    return $this;
-  }
-
-  /**
-   * @return array
-   */
-  public function getLanguages() {
-    return $this->languages;
-  }
-
-  /**
-   * @param array $languages
-   * @return Configuration
-   */
-  public function setLanguages($languages) {
-    $this->languages = $languages;
-    $this->fieldChanged('languages');
-    return $this;
-  }
-
-  /**
-   * @return boolean
-   */
-  public function isLoop() {
-    return $this->loop;
-  }
-
-  /**
-   * @param boolean $loop
-   * @return Configuration
-   */
-  public function setLoop($loop) {
-    $this->loop = $loop;
-    $this->fieldChanged('loop');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getPreload() {
-    return $this->preload;
-  }
-
-  /**
-   * @param string $preload
-   * @return Configuration
-   */
-  public function setPreload($preload) {
-    $this->preload = $preload;
-    $this->fieldChanged('preload');
-    return $this;
-  }
-
-  /**
-   * @return boolean|string
-   */
-  public function getSkin() {
-    return $this->skin;
-  }
-
-  /**
-   * @param boolean|string $skin
-   * @return Configuration
-   */
-  public function setSkin($skin) {
-    $this->skin = $skin;
-    $this->fieldChanged('skin');
-    return $this;
-  }
-
-  /**
-   * @return array
-   */
-  public function getTechOrder() {
-    return $this->techOrder;
-  }
-
-  /**
-   * @param array $techOrder
-   * @return Configuration
-   */
-  public function setTechOrder($techOrder) {
-    $this->techOrder = $techOrder;
-    $this->fieldChanged('techOrder');
-    return $this;
-  }
-
-  /**
-   * @return VideoCloud
-   */
-  public function getVideoCloud() {
-    return $this->video_cloud;
-  }
-
-  /**
-   * @param VideoCloud $video_cloud
-   * @return Configuration
-   */
-  public function setVideoCloud($video_cloud) {
-    $this->video_cloud = $video_cloud;
-    $this->fieldChanged('video_cloud');
-    return $this;
-  }
-
-  /**
-   * @return StudioConfiguration
-   */
-  public function getStudioConfiguration() {
-    return $this->studio_configuration;
-  }
-
-  /**
-   * @param StudioConfiguration $studio_configuration
-   * @return Configuration
-   */
-  public function setStudioConfiguration($studio_configuration) {
-    $this->studio_configuration = $studio_configuration;
-    $this->fieldChanged('studio_configuration');
-    return $this;
-  }
-
-  /**
-   * @return bool
-   */
-  public function isAutoadvance() {
-    return $this->autoadvance;
-  }
-
-  /**
-   * @param bool $autoadvance
-   *
-   * @return Configuration
-   */
-  public function setAutoadvance($autoadvance) {
-    $this->autoadvance = $autoadvance;
-    $this->fieldChanged('autoadvance');
-    return $this;
-  }
-
-  /**
-   * @return bool
-   */
-  public function isAutoplay() {
-    return $this->autoplay;
-  }
-
-  /**
-   * @param bool $autoplay
-   *
-   * @return Configuration
-   */
-  public function setAutoplay($autoplay) {
-    $this->autoplay = $autoplay;
-    $this->fieldChanged('autoplay');
-    return $this;
-  }
-
-  /**
-   * @return bool
-   */
-  public function isPlaylist() {
-    return $this->playlist;
-  }
-
-  /**
-   * @param bool $playlist
-   *
-   * @return Configuration
-   */
-  public function setPlaylist($playlist) {
-    $this->playlist = $playlist;
-    $this->fieldChanged('playlist');
-    return $this;
-  }
-
-  /**
-   * @return bool
-   */
-  public function isPlayOnSelect() {
-    return $this->playOnSelect;
-  }
-
-  /**
-   * @param bool $playOnSelect
-   *
-   * @return Configuration
-   */
-  public function setPlayOnSelect($playOnSelect) {
-    $this->playOnSelect = $playOnSelect;
-    $this->fieldChanged('playOnSelect');
-    return $this;
-  }
-
+class Configuration extends ObjectBase
+{
+    protected string|int|null $autoadvance = null;
+    protected bool $autoplay = false;
+    protected ?CSS $css = null;
+    protected ?Media $media = null;
+    protected ?Player $player = null;
+    protected bool $playlist = false;
+    protected bool $playOnSelect = false;
+    protected array $scripts = [];
+
+    /**
+     * @var string[]
+     */
+    protected array $stylesheets = [];
+
+    /**
+     * @var Plugin[]
+     */
+    protected array $plugins = [];
+
+    /**
+     * @var bool
+     */
+    protected bool $errors = false;
+
+    /**
+     * @var bool
+     */
+    protected bool $fullscreenControl = false;
+
+    /**
+     * @var array
+     */
+    protected array $languages = [];
+
+    /**
+     * @var bool
+     */
+    protected bool $loop = false;
+
+    protected ?string $preload = null;
+    protected string|bool|null $skin = null;
+    protected array $techOrder = [];
+    protected ?VideoCloud $video_cloud = null;
+    protected ?StudioConfiguration $studio_configuration = null;
+    protected ?string $embed_name = null;
+
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+
+        $this->applyProperty($json, 'autoadvance');
+        $this->applyProperty($json, 'autoplay');
+        $this->applyProperty($json, 'css', null, CSS::class);
+        $this->applyProperty($json, 'media', null, Media::class);
+        $this->applyProperty($json, 'player', null, Player::class);
+        $this->applyProperty($json, 'playlist');
+        $this->applyProperty($json, 'playOnSelect');
+        $this->applyProperty($json, 'scripts');
+        $this->applyProperty($json, 'stylesheets');
+        $this->applyProperty($json, 'plugins', null, Plugin::class, true);
+        $this->applyProperty($json, 'errors');
+        $this->applyProperty($json, 'fullscreenControl');
+        $this->applyProperty($json, 'languages');
+        $this->applyProperty($json, 'loop');
+        $this->applyProperty($json, 'preload');
+        $this->applyProperty($json, 'skin');
+        $this->applyProperty($json, 'techOrder');
+        $this->applyProperty($json, 'video_cloud', null, VideoCloud::class);
+        $this->applyProperty($json, 'studio_configuration', null, StudioConfiguration::class);
+
+        $this->applyProperty($json, 'embed_name');
+    }
+
+    public function getEmbedName(): ?string
+    {
+        return $this->embed_name;
+    }
+
+    public function setEmbedName(string $embed_name): static
+    {
+        $this->embed_name = $embed_name;
+        $this->fieldChanged('embed_name');
+        return $this;
+    }
+
+    public function getCss(): ?CSS
+    {
+        return $this->css;
+    }
+
+    public function setCss(CSS $css): static
+    {
+        $this->css = $css;
+        $this->fieldChanged('css');
+        return $this;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->media;
+    }
+
+    public function setMedia(Media $media): static
+    {
+        $this->media = $media;
+        $this->fieldChanged('media');
+        return $this;
+    }
+
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(Player $player): static
+    {
+        $this->player = $player;
+        $this->fieldChanged('player');
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getScripts(): array
+    {
+        return $this->scripts;
+    }
+
+    public function setScripts(array $scripts): static
+    {
+        $this->scripts = $scripts;
+        $this->fieldChanged('scripts');
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getStylesheets(): array
+    {
+        return $this->stylesheets;
+    }
+
+    /**
+     * @param string[] $stylesheets
+     */
+    public function setStylesheets(array $stylesheets): static
+    {
+        $this->stylesheets = $stylesheets;
+        $this->fieldChanged('stylesheets');
+        return $this;
+    }
+
+    /**
+     * @return Plugin[]
+     */
+    public function getPlugins(): array
+    {
+        return $this->plugins;
+    }
+
+    /**
+     * @param Plugin[] $plugins
+     */
+    public function setPlugins(array $plugins): static
+    {
+        $this->plugins = $plugins;
+        $this->fieldChanged('plugins');
+        return $this;
+    }
+
+    public function isErrors(): bool
+    {
+        return $this->errors;
+    }
+
+    public function setErrors(bool $errors): static
+    {
+        $this->errors = $errors;
+        $this->fieldChanged('errors');
+        return $this;
+    }
+
+    public function isFullscreenControl(): bool
+    {
+        return $this->fullscreenControl;
+    }
+
+    public function setFullscreenControl(bool $fullscreenControl): static
+    {
+        $this->fullscreenControl = $fullscreenControl;
+        $this->fieldChanged('fullscreenControl');
+        return $this;
+    }
+
+    public function getLanguages(): array
+    {
+        return $this->languages;
+    }
+
+    public function setLanguages(array $languages): static
+    {
+        $this->languages = $languages;
+        $this->fieldChanged('languages');
+        return $this;
+    }
+
+    public function isLoop(): bool
+    {
+        return $this->loop;
+    }
+
+    public function setLoop(bool $loop): static
+    {
+        $this->loop = $loop;
+        $this->fieldChanged('loop');
+        return $this;
+    }
+
+    public function getPreload(): ?string
+    {
+        return $this->preload;
+    }
+
+    public function setPreload(string $preload): static
+    {
+        $this->preload = $preload;
+        $this->fieldChanged('preload');
+        return $this;
+    }
+
+    public function getSkin(): string|bool|null
+    {
+        return $this->skin;
+    }
+
+    public function setSkin(string|bool $skin): static
+    {
+        $this->skin = $skin;
+        $this->fieldChanged('skin');
+        return $this;
+    }
+
+    public function getTechOrder(): array
+    {
+        return $this->techOrder;
+    }
+
+    public function setTechOrder(array $techOrder): static
+    {
+        $this->techOrder = $techOrder;
+        $this->fieldChanged('techOrder');
+        return $this;
+    }
+
+    public function getVideoCloud(): ?VideoCloud
+    {
+        return $this->video_cloud;
+    }
+
+    public function setVideoCloud(VideoCloud $video_cloud): static
+    {
+        $this->video_cloud = $video_cloud;
+        $this->fieldChanged('video_cloud');
+        return $this;
+    }
+
+    public function getStudioConfiguration(): ?StudioConfiguration
+    {
+        return $this->studio_configuration;
+    }
+
+    public function setStudioConfiguration(StudioConfiguration $studio_configuration): static
+    {
+        $this->studio_configuration = $studio_configuration;
+        $this->fieldChanged('studio_configuration');
+        return $this;
+    }
+
+    public function isAutoadvance(): string|int|null
+    {
+        return $this->autoadvance;
+    }
+
+    public function setAutoadvance(string|int $autoadvance): static
+    {
+        $this->autoadvance = $autoadvance;
+        $this->fieldChanged('autoadvance');
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutoplay(): bool
+    {
+        return $this->autoplay;
+    }
+
+    public function setAutoplay(bool $autoplay): static
+    {
+        $this->autoplay = $autoplay;
+        $this->fieldChanged('autoplay');
+        return $this;
+    }
+
+    public function isPlaylist(): bool
+    {
+        return $this->playlist;
+    }
+
+    public function setPlaylist(bool $playlist): static
+    {
+        $this->playlist = $playlist;
+        $this->fieldChanged('playlist');
+        return $this;
+    }
+
+    public function isPlayOnSelect(): bool
+    {
+        return $this->playOnSelect;
+    }
+
+    public function setPlayOnSelect(bool $playOnSelect): static
+    {
+        $this->playOnSelect = $playOnSelect;
+        $this->fieldChanged('playOnSelect');
+        return $this;
+    }
 }

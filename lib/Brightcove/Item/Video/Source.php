@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Video;
 
 use Brightcove\Item\ObjectBase;
@@ -10,309 +12,193 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Video
  * @api
  */
-class Source extends ObjectBase {
-  /**
-   * @var string
-   */
-  protected $id;
+class Source extends ObjectBase
+{
+    protected ?string $id = null;
+    protected ?string $app_name = null;
+    protected ?string $stream_name = null;
+    protected ?string $codec = null;
+    protected ?string $container = null;
+    protected ?int $encoding_rate = null;
+    protected ?int $duration = null;
+    protected ?int $height = null;
+    protected ?int $width = null;
+    protected ?int $size = null;
+    protected ?string $uploaded_at = null;
+    protected ?string $src = null;
+    protected mixed $type = null;
 
-  /**
-   * @var string
-   */
-  protected $app_name;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'app_name');
+        $this->applyProperty($json, 'stream_name');
+        $this->applyProperty($json, 'codec');
+        $this->applyProperty($json, 'container');
+        $this->applyProperty($json, 'encoding_rate');
+        $this->applyProperty($json, 'duration');
+        $this->applyProperty($json, 'height');
+        $this->applyProperty($json, 'width');
+        $this->applyProperty($json, 'size');
+        $this->applyProperty($json, 'uploaded_at');
+        $this->applyProperty($json, 'src');
+        $this->applyProperty($json, 'type');
+    }
 
-  /**
-   * @var string
-   */
-  protected $stream_name;
+    public function getSrc(): ?string
+    {
+        return $this->src;
+    }
 
-  /**
-   * @var string
-   */
-  protected $codec;
+    public function setSrc(string $src): static
+    {
+        $this->src = $src;
+        $this->fieldChanged('src');
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $container;
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  /**
-   * @var int
-   */
-  protected $encoding_rate;
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+        return $this;
+    }
 
-  /**
-   * @var int
-   */
-  protected $duration;
+    public function getAppName(): ?string
+    {
+        return $this->app_name;
+    }
 
-  /**
-   * @var int
-   */
-  protected $height;
+    public function setAppName(string $app_name): static
+    {
+        $this->app_name = $app_name;
+        $this->fieldChanged('app_name');
+        return $this;
+    }
 
-  /**
-   * @var int
-   */
-  protected $width;
+    public function getStreamName(): ?string
+    {
+        return $this->stream_name;
+    }
 
-  /**
-   * @var int
-   */
-  protected $size;
+    public function setStreamName(string $stream_name): static
+    {
+        $this->stream_name = $stream_name;
+        $this->fieldChanged('stream_name');
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $uploaded_at;
+    public function getCodec(): ?string
+    {
+        return $this->codec;
+    }
 
-  /**
-   * @var string
-   */
-  protected $src;
+    public function setCodec(string $codec): static
+    {
+        $this->codec = $codec;
+        $this->fieldChanged('codec');
+        return $this;
+    }
 
-/**
-   * @var string
-   */
-  protected $type;
+    public function getContainer(): ?string
+    {
+        return $this->container;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'app_name');
-    $this->applyProperty($json, 'stream_name');
-    $this->applyProperty($json, 'codec');
-    $this->applyProperty($json, 'container');
-    $this->applyProperty($json, 'encoding_rate');
-    $this->applyProperty($json, 'duration');
-    $this->applyProperty($json, 'height');
-    $this->applyProperty($json, 'width');
-    $this->applyProperty($json, 'size');
-    $this->applyProperty($json, 'uploaded_at');
-    $this->applyProperty($json, 'src');
-    $this->applyProperty($json, 'type');
-  }
+    public function setContainer(string $container): static
+    {
+        $this->container = $container;
+        $this->fieldChanged('container');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getSrc() {
-    return $this->src;
-  }
+    public function getEncodingRate(): ?int
+    {
+        return $this->encoding_rate;
+    }
 
-  /**
-   * @param string $src
-   * @return Source
-   */
-  public function setSrc($src) {
-    $this->src = $src;
-    $this->fieldChanged('src');
-    return $this;
-  }
+    public function setEncodingRate(int $encoding_rate): static
+    {
+        $this->encoding_rate = $encoding_rate;
+        $this->fieldChanged('encoding_rate');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
 
-  /**
-   * @param string $id
-   * @return Source
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
-  }
+    public function setDuration(int $duration): static
+    {
+        $this->duration = $duration;
+        $this->fieldChanged('duration');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getAppName() {
-    return $this->app_name;
-  }
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
 
-  /**
-   * @param string $app_name
-   * @return Source
-   */
-  public function setAppName($app_name) {
-    $this->app_name = $app_name;
-    $this->fieldChanged('app_name');
-    return $this;
-  }
+    public function setHeight(int $height): static
+    {
+        $this->height = $height;
+        $this->fieldChanged('height');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getStreamName() {
-    return $this->stream_name;
-  }
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
 
-  /**
-   * @param string $stream_name
-   * @return Source
-   */
-  public function setStreamName($stream_name) {
-    $this->stream_name = $stream_name;
-    $this->fieldChanged('stream_name');
-    return $this;
-  }
+    public function setWidth(int $width): static
+    {
+        $this->width = $width;
+        $this->fieldChanged('width');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getCodec() {
-    return $this->codec;
-  }
+    public function getSize(): ?int
+    {
+        return $this->size;
+    }
 
-  /**
-   * @param string $codec
-   * @return Source
-   */
-  public function setCodec($codec) {
-    $this->codec = $codec;
-    $this->fieldChanged('codec');
-    return $this;
-  }
+    public function setSize(int $size): static
+    {
+        $this->size = $size;
+        $this->fieldChanged('size');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getContainer() {
-    return $this->container;
-  }
+    public function getUploadedAt(): ?string
+    {
+        return $this->uploaded_at;
+    }
 
-  /**
-   * @param string $container
-   * @return Source
-   */
-  public function setContainer($container) {
-    $this->container = $container;
-    $this->fieldChanged('container');
-    return $this;
-  }
+    public function setUploadedAt(string $uploaded_at): static
+    {
+        $this->uploaded_at = $uploaded_at;
+        $this->fieldChanged('uploaded_at');
+        return $this;
+    }
 
-  /**
-   * @return int
-   */
-  public function getEncodingRate() {
-    return $this->encoding_rate;
-  }
+    public function getType(): mixed
+    {
+        return $this->type;
+    }
 
-  /**
-   * @param int $encoding_rate
-   * @return Source
-   */
-  public function setEncodingRate($encoding_rate) {
-    $this->encoding_rate = $encoding_rate;
-    $this->fieldChanged('encoding_rate');
-    return $this;
-  }
-
-  /**
-   * @return int
-   */
-  public function getDuration() {
-    return $this->duration;
-  }
-
-  /**
-   * @param int $duration
-   * @return Source
-   */
-  public function setDuration($duration) {
-    $this->duration = $duration;
-    $this->fieldChanged('duration');
-    return $this;
-  }
-
-  /**
-   * @return int
-   */
-  public function getHeight() {
-    return $this->height;
-  }
-
-  /**
-   * @param int $height
-   * @return Source
-   */
-  public function setHeight($height) {
-    $this->height = $height;
-    $this->fieldChanged('height');
-    return $this;
-  }
-
-  /**
-   * @return int
-   */
-  public function getWidth() {
-    return $this->width;
-  }
-
-  /**
-   * @param int $width
-   * @return Source
-   */
-  public function setWidth($width) {
-    $this->width = $width;
-    $this->fieldChanged('width');
-    return $this;
-  }
-
-  /**
-   * @return int
-   */
-  public function getSize() {
-    return $this->size;
-  }
-
-  /**
-   * @param int $size
-   * @return Source
-   */
-  public function setSize($size) {
-    $this->size = $size;
-    $this->fieldChanged('size');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getUploadedAt() {
-    return $this->uploaded_at;
-  }
-
-  /**
-   * @param string $uploaded_at
-   * @return Source
-   */
-  public function setUploadedAt($uploaded_at) {
-    $this->uploaded_at = $uploaded_at;
-    $this->fieldChanged('uploaded_at');
-    return $this;
-  }
-
-  /**
-  * @return mixed
-  */
-  public function getType()
-  {
-    return $this->type;
-  }
-
-  /**
-   * @param mixed $type
-   * @return Source
-   */
-  public function setType($type)
-  {
-    $this->type = $type;
-	$this->fieldChanged('type');
-	return $this;
-  }
+    public function setType(mixed $type): static
+    {
+        $this->type = $type;
+        $this->fieldChanged('type');
+        return $this;
+    }
 }

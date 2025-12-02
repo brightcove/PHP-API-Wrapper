@@ -7,8 +7,8 @@ namespace Brightcove\Type;
 /**
  * HTTP response.
  */
-enum HttpResponse: int {
-
+enum HttpResponse: int
+{
     /**
      * HTTP success.
      */

@@ -9,7 +9,6 @@ namespace Brightcove\Type;
  */
 interface SortInterface
 {
-
     /**
      * Returns the field that needs to be sorted.
      */

@@ -8,15 +8,13 @@ use Brightcove\Type\AccessToken;
 
 /**
  * Storage in memory.
- *
- * @todo Inject a time service.
  */
-final class MemoryStorage implements StorageInterface {
-
+final class MemoryStorage implements StorageInterface
+{
     /**
      * Access token.
      */
-    private ?AccessToken $accessToken = NULL;
+    private ?AccessToken $accessToken = null;
 
     /**
      * Expiration time of the token.
@@ -36,7 +34,7 @@ final class MemoryStorage implements StorageInterface {
      */
     public function isAccessTokenExpired(): bool
     {
-        return $this->accessTokenExpiresAt < time();
+        return $this->accessTokenExpiresAt < \time();
     }
 
     /**
@@ -45,6 +43,6 @@ final class MemoryStorage implements StorageInterface {
     public function storeAccessToken(AccessToken $accessToken): void
     {
         $this->accessToken = $accessToken;
-        $this->accessTokenExpiresAt = time() + $accessToken->expiresIn;
+        $this->accessTokenExpiresAt = \time() + $accessToken->expiresIn;
     }
 }

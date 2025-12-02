@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item;
 
 /**
@@ -8,147 +10,95 @@ namespace Brightcove\Item;
  * @package Brightcove\Item
  * @api
  */
-class CustomField extends ObjectBase {
-  /**
-   * @var string
-   */
-  protected $id;
+class CustomField extends ObjectBase
+{
+    protected ?string $id = null;
+    protected ?string $display_name = null;
+    protected ?string $description = null;
+    protected bool $required = false;
+    protected ?string $type = null;
+    protected array $enum_values = [];
 
-  /**
-   * @var string
-   */
-  protected $display_name;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'display_name');
+        $this->applyProperty($json, 'description');
+        $this->applyProperty($json, 'required');
+        $this->applyProperty($json, 'type');
+        $this->applyProperty($json, 'enum_values');
+    }
 
-  /**
-   * @var string
-   */
-  protected $description;
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  /**
-   * @var bool
-   */
-  protected $required;
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $type;
+    public function getDisplayName(): ?string
+    {
+        return $this->display_name;
+    }
 
-  /**
-   * @var array
-   */
-  protected $enum_values;
+    public function setDisplayName(string $display_name): static
+    {
+        $this->display_name = $display_name;
+        $this->fieldChanged('display_name');
+        return $this;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'display_name');
-    $this->applyProperty($json, 'description');
-    $this->applyProperty($json, 'required');
-    $this->applyProperty($json, 'type');
-    $this->applyProperty($json, 'enum_values');
-  }
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+        $this->fieldChanged('description');
+        return $this;
+    }
 
-  /**
-   * @param string $id
-   * @return CustomField
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
-  }
+    public function isRequired(): bool
+    {
+        return $this->required;
+    }
 
-  /**
-   * @return string
-   */
-  public function getDisplayName() {
-    return $this->display_name;
-  }
+    public function setRequired(bool $required): static
+    {
+        $this->required = $required;
+        $this->fieldChanged('required');
+        return $this;
+    }
 
-  /**
-   * @param string $display_name
-   * @return CustomField
-   */
-  public function setDisplayName($display_name) {
-    $this->display_name = $display_name;
-    $this->fieldChanged('display_name');
-    return $this;
-  }
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
 
-  /**
-   * @return string
-   */
-  public function getDescription() {
-    return $this->description;
-  }
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+        $this->fieldChanged('type');
+        return $this;
+    }
 
-  /**
-   * @param string $description
-   * @return CustomField
-   */
-  public function setDescription($description) {
-    $this->description = $description;
-    $this->fieldChanged('description');
-    return $this;
-  }
+    public function getEnumValues(): array
+    {
+        return $this->enum_values;
+    }
 
-  /**
-   * @return boolean
-   */
-  public function isRequired() {
-    return $this->required;
-  }
-
-  /**
-   * @param boolean $required
-   * @return CustomField
-   */
-  public function setRequired($required) {
-    $this->required = $required;
-    $this->fieldChanged('required');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getType() {
-    return $this->type;
-  }
-
-  /**
-   * @param string $type
-   * @return CustomField
-   */
-  public function setType($type) {
-    $this->type = $type;
-    $this->fieldChanged('type');
-    return $this;
-  }
-
-  /**
-   * @return array
-   */
-  public function getEnumValues() {
-    return $this->enum_values;
-  }
-
-  /**
-   * @param array $enum_values
-   * @return CustomField
-   */
-  public function setEnumValues(array $enum_values) {
-    $this->enum_values = $enum_values;
-    $this->fieldChanged('enum_values');
-    return $this;
-  }
-
+    public function setEnumValues(array $enum_values): static
+    {
+        $this->enum_values = $enum_values;
+        $this->fieldChanged('enum_values');
+        return $this;
+    }
 }

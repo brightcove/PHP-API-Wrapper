@@ -8,7 +8,6 @@ use Brightcove\Type\AccessToken;
 
 interface StorageInterface
 {
-
     /**
      * Gets an existing access token.
      *
@@ -32,5 +31,4 @@ interface StorageInterface
      *   Access token to store.
      */
     public function storeAccessToken(AccessToken $accessToken): void;
-
 }

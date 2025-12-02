@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player;
 
 use Brightcove\Item\ObjectBase;
@@ -10,147 +12,96 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player
  * @api
  */
-class CreateResult extends ObjectBase {
-  /**
-   * @var string
-   */
-  protected $id;
+class CreateResult extends ObjectBase
+{
+    protected ?string $id;
+    protected ?string $url;
+    protected ?string $embed_code;
+    protected ?string $embed_in_page;
+    protected ?string $preview_url;
+    protected ?string $preview_embed_code;
 
-  /**
-   * @var string
-   */
-  protected $url;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
 
-  /**
-   * @var string
-   */
-  protected $embed_code;
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'url');
+        $this->applyProperty($json, 'emebed_code');
+        $this->applyProperty($json, 'embed_in_page');
+        $this->applyProperty($json, 'preview_url');
+        $this->applyProperty($json, 'preview_embed_code');
+    }
 
-  /**
-   * @var string
-   */
-  protected $embed_in_page;
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  /**
-   * @var string
-   */
-  protected $preview_url;
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $preview_embed_code;
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
+    public function setUrl(string $url): static
+    {
+        $this->url = $url;
+        $this->fieldChanged('url');
+        return $this;
+    }
 
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'url');
-    $this->applyProperty($json, 'emebed_code');
-    $this->applyProperty($json, 'embed_in_page');
-    $this->applyProperty($json, 'preview_url');
-    $this->applyProperty($json, 'preview_embed_code');
-  }
+    public function getEmbedCode(): ?string
+    {
+        return $this->embed_code;
+    }
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    public function setEmbedCode(string $embed_code): static
+    {
+        $this->embed_code = $embed_code;
+        $this->fieldChanged('embed_code');
+        return $this;
+    }
 
-  /**
-   * @param string $id
-   * @return CreateResult
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
-  }
+    public function getEmbedInPage(): ?string
+    {
+        return $this->embed_in_page;
+    }
 
-  /**
-   * @return string
-   */
-  public function getUrl() {
-    return $this->url;
-  }
+    public function setEmbedInPage(string $embed_in_page): static
+    {
+        $this->embed_in_page = $embed_in_page;
+        $this->fieldChanged('embed_in_page');
+        return $this;
+    }
 
-  /**
-   * @param string $url
-   * @return CreateResult
-   */
-  public function setUrl($url) {
-    $this->url = $url;
-    $this->fieldChanged('url');
-    return $this;
-  }
+    public function getPreviewUrl(): ?string
+    {
+        return $this->preview_url;
+    }
 
-  /**
-   * @return string
-   */
-  public function getEmbedCode() {
-    return $this->embed_code;
-  }
+    public function setPreviewUrl(string $preview_url): static
+    {
+        $this->preview_url = $preview_url;
+        $this->fieldChanged('preview_url');
+        return $this;
+    }
 
-  /**
-   * @param string $embed_code
-   * @return CreateResult
-   */
-  public function setEmbedCode($embed_code) {
-    $this->embed_code = $embed_code;
-    $this->fieldChanged('embed_code');
-    return $this;
-  }
+    public function getPreviewEmbedCode(): ?string
+    {
+        return $this->preview_embed_code;
+    }
 
-  /**
-   * @return string
-   */
-  public function getEmbedInPage() {
-    return $this->embed_in_page;
-  }
-
-  /**
-   * @param string $embed_in_page
-   * @return CreateResult
-   */
-  public function setEmbedInPage($embed_in_page) {
-    $this->embed_in_page = $embed_in_page;
-    $this->fieldChanged('embed_in_page');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getPreviewUrl() {
-    return $this->preview_url;
-  }
-
-  /**
-   * @param string $preview_url
-   * @return CreateResult
-   */
-  public function setPreviewUrl($preview_url) {
-    $this->preview_url = $preview_url;
-    $this->fieldChanged('preview_url');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getPreviewEmbedCode() {
-    return $this->preview_embed_code;
-  }
-
-  /**
-   * @param string $preview_embed_code
-   * @return CreateResult
-   */
-  public function setPreviewEmbedCode($preview_embed_code) {
-    $this->preview_embed_code = $preview_embed_code;
-    $this->fieldChanged('preview_embed_code');
-    return $this;
-  }
+    public function setPreviewEmbedCode(string $preview_embed_code): static
+    {
+        $this->preview_embed_code = $preview_embed_code;
+        $this->fieldChanged('preview_embed_code');
+        return $this;
+    }
 }

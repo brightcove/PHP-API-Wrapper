@@ -8,8 +8,8 @@ use Brightcove\Type\HttpMethod;
 use Http\Promise\Promise;
 use Psr\Http\Client\ClientExceptionInterface;
 
-interface ApiClientInterface {
-
+interface ApiClientInterface
+{
     /**
      * Sends an authorized request to a Brightcove API endpoint.
      *
@@ -39,7 +39,16 @@ interface ApiClientInterface {
      *
      * @internal
      */
-    public function sendRequest(HttpMethod $method, string $api_version, ApiType $api_type, string $account_id, string $endpoint, ?string $result, bool $is_array = false, ?ObjectInterface $post = null,): ObjectInterface|array|null;
+    public function sendRequest(
+        HttpMethod $method,
+        string $api_version,
+        ApiType $api_type,
+        string $account_id,
+        string $endpoint,
+        ?string $result,
+        bool $is_array = false,
+        ?ObjectInterface $post = null,
+    ): ObjectInterface|array|null;
 
     /**
      * Sends an async request.
@@ -64,7 +73,14 @@ interface ApiClientInterface {
      *
      * @internal
      */
-    public function sendAsyncRequest(HttpMethod $method, string $api_version, ApiType $api_type, string $account_id, string $endpoint, ?ObjectInterface $post = null,): Promise;
+    public function sendAsyncRequest(
+        HttpMethod $method,
+        string $api_version,
+        ApiType $api_type,
+        string $account_id,
+        string $endpoint,
+        ?ObjectInterface $post = null,
+    ): Promise;
 
     /**
      * Sets consumer name and version for the User-Agent header.
@@ -73,5 +89,4 @@ interface ApiClientInterface {
      *   Consumer name and version.
      */
     public static function setConsumer(string $consumer): void;
-
 }

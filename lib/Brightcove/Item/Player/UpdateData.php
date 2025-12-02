@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player;
 
 use Brightcove\Item\ObjectBase;
@@ -10,58 +12,39 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player
  * @api
  */
-class UpdateData extends ObjectBase {
+class UpdateData extends ObjectBase
+{
+    protected ?string $name = null;
+    protected ?string $description = null;
 
-  /**
-   * @var string
-   */
-  protected $name;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'name');
+        $this->applyProperty($json, 'description');
+    }
 
-  /**
-   * @var string
-   */
-  protected $description;
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'name');
-    $this->applyProperty($json, 'description');
-  }
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        $this->fieldChanged('name');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getName() {
-    return $this->name;
-  }
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 
-  /**
-   * @param string $name
-   *
-   * @return UpdateData
-   */
-  public function setName($name) {
-    $this->name = $name;
-    $this->fieldChanged('name');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getDescription() {
-    return $this->description;
-  }
-
-  /**
-   * @param string $description
-   *
-   * @return UpdateData
-   */
-  public function setDescription($description) {
-    $this->description = $description;
-    $this->fieldChanged('description');
-    return $this;
-  }
-
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+        $this->fieldChanged('description');
+        return $this;
+    }
 }

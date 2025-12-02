@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item;
 
 /**
@@ -8,288 +10,198 @@ namespace Brightcove\Item;
  * @package Brightcove\Item
  * @api
  */
-class Playlist extends ObjectBase {
-  /**
-   * @var string
-   */
-  protected $id;
+class Playlist extends ObjectBase
+{
+    protected ?string $id = null;
+    protected ?string $account = null;
+    protected ?string $created_at = null;
+    protected ?string $description = null;
+    protected bool $favorite = false;
+    protected ?int $limit = null;
+    protected ?string $name = null;
+    protected ?string $reference_id = null;
+    protected ?string $search = null;
+    protected ?string $type = null;
+    protected ?string $updated_at = null;
 
-  /**
-   * @var string
-   */
-  protected $account;
+    /**
+     * Video IDs.
+     */
+    protected array $video_ids = [];
 
-  /**
-   * @var string
-   */
-  protected $created_at;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'account');
+        $this->applyProperty($json, 'created_at');
+        $this->applyProperty($json, 'description');
+        $this->applyProperty($json, 'favorite');
+        $this->applyProperty($json, 'limit');
+        $this->applyProperty($json, 'name');
+        $this->applyProperty($json, 'reference_id');
+        $this->applyProperty($json, 'search');
+        $this->applyProperty($json, 'type');
+        $this->applyProperty($json, 'updated_at');
+        $this->applyProperty($json, 'video_ids');
+    }
 
-  /**
-   * @var string
-   */
-  protected $description;
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  /**
-   * @var bool
-   */
-  protected $favorite;
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+        return $this;
+    }
 
-  /**
-   * @var int
-   */
-  protected $limit;
+    public function getAccount(): ?string
+    {
+        return $this->account;
+    }
 
-  /**
-   * @var string
-   */
-  protected $name;
+    public function setAccount(string $account): static
+    {
+        $this->account = $account;
+        $this->fieldChanged('account');
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $reference_id;
+    public function getCreatedAt(): ?string
+    {
+        return $this->created_at;
+    }
 
-  /**
-   * @var string
-   */
-  protected $search;
+    public function setCreatedAt(string $created_at): static
+    {
+        $this->created_at = $created_at;
+        $this->fieldChanged('created_at');
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $type;
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 
-  /**
-   * @var string
-   */
-  protected $updated_at;
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+        $this->fieldChanged('description');
+        return $this;
+    }
 
-  /**
-   * Video IDs.
-   */
-  protected array $video_ids = [];
+    public function isFavorite(): bool
+    {
+        return $this->favorite;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'account');
-    $this->applyProperty($json, 'created_at');
-    $this->applyProperty($json, 'description');
-    $this->applyProperty($json, 'favorite');
-    $this->applyProperty($json, 'limit');
-    $this->applyProperty($json, 'name');
-    $this->applyProperty($json, 'reference_id');
-    $this->applyProperty($json, 'search');
-    $this->applyProperty($json, 'type');
-    $this->applyProperty($json, 'updated_at');
-    $this->applyProperty($json, 'video_ids');
-  }
+    public function setFavorite(bool $favorite): static
+    {
+        $this->favorite = $favorite;
+        $this->fieldChanged('favorite');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    public function getLimit(): ?int
+    {
+        return $this->limit;
+    }
 
-  /**
-   * @param string $id
-   * @return Playlist
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
-  }
+    public function setLimit(int $limit): static
+    {
+        $this->limit = $limit;
+        $this->fieldChanged('limit');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getAccount() {
-    return $this->account;
-  }
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
-  /**
-   * @param string $account
-   * @return Playlist
-   */
-  public function setAccount($account) {
-    $this->account = $account;
-    $this->fieldChanged('account');
-    return $this;
-  }
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        $this->fieldChanged('name');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getCreatedAt() {
-    return $this->created_at;
-  }
+    public function getReferenceId(): ?string
+    {
+        return $this->reference_id;
+    }
 
-  /**
-   * @param string $created_at
-   * @return Playlist
-   */
-  public function setCreatedAt($created_at) {
-    $this->created_at = $created_at;
-    $this->fieldChanged('created_at');
-    return $this;
-  }
+    public function setReferenceId(string $reference_id): static
+    {
+        $this->reference_id = $reference_id;
+        $this->fieldChanged('reference_id');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getDescription() {
-    return $this->description;
-  }
+    public function getSearch(): ?string
+    {
+        return $this->search;
+    }
 
-  /**
-   * @param string $description
-   * @return Playlist
-   */
-  public function setDescription($description) {
-    $this->description = $description;
-    $this->fieldChanged('description');
-    return $this;
-  }
+    public function setSearch(string $search): static
+    {
+        $this->search = $search;
+        $this->fieldChanged('search');
+        return $this;
+    }
 
-  /**
-   * @return boolean
-   */
-  public function isFavorite() {
-    return $this->favorite;
-  }
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
 
-  /**
-   * @param boolean $favorite
-   * @return Playlist
-   */
-  public function setFavorite($favorite) {
-    $this->favorite = $favorite;
-    $this->fieldChanged('favorite');
-    return $this;
-  }
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+        $this->fieldChanged('type');
+        return $this;
+    }
 
-  /**
-   * @return int
-   */
-  public function getLimit() {
-    return $this->limit;
-  }
+    public function getUpdatedAt(): ?string
+    {
+        return $this->updated_at;
+    }
 
-  /**
-   * @param int $limit
-   * @return Playlist
-   */
-  public function setLimit($limit) {
-    $this->limit = $limit;
-    $this->fieldChanged('limit');
-    return $this;
-  }
+    public function setUpdatedAt(string $updated_at): static
+    {
+        $this->updated_at = $updated_at;
+        $this->fieldChanged('updated_at');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getName() {
-    return $this->name;
-  }
+    /**
+     * Gets video IDs.
+     *
+     * @return array
+     *   Video IDs.
+     */
+    public function getVideoIds(): array
+    {
+        return $this->video_ids;
+    }
 
-  /**
-   * @param string $name
-   * @return Playlist
-   */
-  public function setName($name) {
-    $this->name = $name;
-    $this->fieldChanged('name');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getReferenceId() {
-    return $this->reference_id;
-  }
-
-  /**
-   * @param string $reference_id
-   * @return Playlist
-   */
-  public function setReferenceId($reference_id) {
-    $this->reference_id = $reference_id;
-    $this->fieldChanged('reference_id');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getSearch() {
-    return $this->search;
-  }
-
-  /**
-   * @param string $search
-   * @return Playlist
-   */
-  public function setSearch($search) {
-    $this->search = $search;
-    $this->fieldChanged('search');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getType() {
-    return $this->type;
-  }
-
-  /**
-   * @param string $type
-   * @return Playlist
-   */
-  public function setType($type) {
-    $this->type = $type;
-    $this->fieldChanged('type');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getUpdatedAt() {
-    return $this->updated_at;
-  }
-
-  /**
-   * @param string $updated_at
-   * @return Playlist
-   */
-  public function setUpdatedAt($updated_at) {
-    $this->updated_at = $updated_at;
-    $this->fieldChanged('updated_at');
-    return $this;
-  }
-
-  /**
-   * Gets video IDs.
-   *
-   * @return array
-   *   Video IDs.
-   */
-  public function getVideoIds(): array {
-    return $this->video_ids;
-  }
-
-  /**
-   * @param array $video_ids
-   * @return Playlist
-   */
-  public function setVideoIds(array $video_ids) {
-    $this->video_ids = $video_ids;
-    $this->fieldChanged('video_ids');
-    return $this;
-  }
-
+    /**
+     * Set video IDs.
+     *
+     * @param array $video_ids
+     *   List of video IDs.
+     *
+     * @return Playlist
+     *   The current playlist.
+     */
+    public function setVideoIds(array $video_ids): static
+    {
+        $this->video_ids = $video_ids;
+        $this->fieldChanged('video_ids');
+        return $this;
+    }
 }

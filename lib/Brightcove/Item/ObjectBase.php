@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item;
 
 /**
@@ -10,20 +12,31 @@ namespace Brightcove\Item;
 class ObjectBase implements ObjectInterface
 {
     /**
+     * Key-value pairs of field aliases. This will be used when the field gets serialized.
+     */
+    protected array $fieldAliases = [];
+
+    /**
      * This internal list keeps track of the changed fields.
      *
      * This is necessary bookkeeping for patchJSON().
-     *
-     * @var array
      */
     private array $changedFields = [];
 
     /**
-     * Key-value pairs of field aliases. This will be used when the field gets serialized.
-     *
-     * @var array
+     * @internal
      */
-    protected array $fieldAliases = [];
+    public static function fromJSON(array|string $json): static
+    {
+        if (is_string($json)) {
+            $json = json_decode($json, true);
+        }
+
+        $ret = new static();
+        $ret->applyJSON($json);
+
+        return $ret;
+    }
 
     /**
      * Marks a field as changed.
@@ -53,19 +66,6 @@ class ObjectBase implements ObjectInterface
     }
 
     /**
-     * Resolves the field name alias if there's any.
-     *
-     * @param string $name
-     * @return string
-     *
-     * @internal
-     */
-    protected function canonicalFieldName($name): string
-    {
-        return $this->fieldAliases[$name] ?? $name;
-    }
-
-    /**
      * @internal
      */
     public function postJSON(): array
@@ -92,6 +92,19 @@ class ObjectBase implements ObjectInterface
             }
         }
         return $data;
+    }
+
+    /**
+     * Resolves the field name alias if there's any.
+     *
+     * @param string $name
+     * @return string
+     *
+     * @internal
+     */
+    protected function canonicalFieldName($name): string
+    {
+        return $this->fieldAliases[$name] ?? $name;
     }
 
     /**
@@ -130,13 +143,6 @@ class ObjectBase implements ObjectInterface
     }
 
     /**
-     * @param array $json
-     *
-     * @internal
-     */
-    public function applyJSON(array $json): void {}
-
-    /**
      * Helper method for applyJSON().
      *
      * Applies exactly one property on $this.
@@ -168,7 +174,11 @@ class ObjectBase implements ObjectInterface
         }
 
         if ($classname === null) {
-            $this->$name = $json[$json_name];
+            if (is_string($json[$json_name]) && empty($json[$json_name])) {
+                $this->$name = null;
+            } else {
+                $this->$name = $json[$json_name];
+            }
         } elseif ($is_array) {
             $arr = [];
             foreach ($json[$json_name] as $k => $v) {
@@ -185,21 +195,11 @@ class ObjectBase implements ObjectInterface
     }
 
     /**
-     * @param array|string $json
-     *
-     * @return static
+     * @param array $json
      *
      * @internal
      */
-    public static function fromJSON($json): static
+    public function applyJSON(array $json): void
     {
-        if (is_string($json)) {
-            $json = json_decode($json, true);
-        }
-
-        $ret = new static();
-        $ret->applyJSON($json);
-
-        return $ret;
     }
 }

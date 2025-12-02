@@ -12,34 +12,42 @@ use Brightcove\Item\ObjectInterface;
 use Brightcove\Type\ApiType;
 use Brightcove\Type\HttpMethod;
 use Brightcove\Type\SortInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 
 /**
  * In-Page Experience API.
  */
 final class InPageExperience extends API implements InPageExperienceInterface
 {
-    private const API_BASE_PATH = '/experiences';
+    private const string API_BASE_PATH = '/experiences';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete(string $id): void
+    {
+        $this->sendRequest(HttpMethod::Delete, self::API_BASE_PATH . '/' . $id, null);
+    }
 
     /**
      * API request callback.
+     *
+     * @template Response
      *
      * @param HttpMethod $method
      *   HTTP method.
      * @param string $endpoint
      *   API endpoint
-     * @param string|null $result
-     *   NULL to return the unmarshalled JSON, or a class name to deserialize
-     *   into.
-     *   This class must implement ObjectInterface.
-     * @param ObjectInterface|null $post
-     *   An ObjectInterface to post.
+     * @param Response|class-string $result
+     *    Response result.
      *
-     * @return ObjectInterface|ObjectInterface[]|null
-     *   The given result based on $result.
+     * @return Response|Response[]|null
+     *   Response object.
      *
-     * @throws \Brightcove\API\Exception\ApiException
+     * @throws ClientExceptionInterface
+     *   If the request is failed.
      */
-    private function request(HttpMethod $method, string $endpoint, ?string $result, $post = null)
+    private function sendRequest(HttpMethod $method, string $endpoint, mixed $result): ObjectInterface|array|null
     {
         return $this->client->sendRequest(
             $method,
@@ -48,17 +56,7 @@ final class InPageExperience extends API implements InPageExperienceInterface
             $this->account,
             $endpoint,
             $result,
-            false,
-            $post
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(string $id): void
-    {
-        $this->request(HttpMethod::Delete, self::API_BASE_PATH . '/' . $id, null);
     }
 
     /**
@@ -66,7 +64,7 @@ final class InPageExperience extends API implements InPageExperienceInterface
      */
     public function get(string $id): InPageExperienceItemInterface
     {
-        return $this->request(HttpMethod::Get, self::API_BASE_PATH . '/' . $id, InPageExperienceItem::class);
+        return $this->sendRequest(HttpMethod::Get, self::API_BASE_PATH . '/' . $id, InPageExperienceItem::class);
     }
 
     /**
@@ -79,14 +77,14 @@ final class InPageExperience extends API implements InPageExperienceInterface
             $http_query['q'] = $search;
         }
         if ($sort !== null) {
-            $http_query['sort'] = (string) $sort;
+            $http_query['sort'] = (string)$sort;
         }
         $http_query = http_build_query($http_query);
 
-        return $this->request(
+        return $this->sendRequest(
             HttpMethod::Get,
-            static::API_BASE_PATH . (!empty($http_query) ? "?{$http_query}" : ''),
-            InPageExperienceList::class
+            self::API_BASE_PATH . (!empty($http_query) ? "?{$http_query}" : ''),
+            InPageExperienceList::class,
         );
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player\Branch\Configuration;
 
 use Brightcove\Item\ObjectBase;
@@ -10,126 +12,86 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player\Branch\Configuration
  * @api
  */
-class StudioConfigurationPlayer extends ObjectBase {
+class StudioConfigurationPlayer extends ObjectBase
+{
+    protected bool $adjusted = false;
+    protected ?float $height = null;
+    protected ?float $width = null;
+    protected bool $responsive = false;
+    protected ?string $units = null;
 
-  /**
-   * @var bool
-   */
-  protected $adjusted;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
 
-  /**
-   * @var string
-   */
-  protected $height;
+        $this->applyProperty($json, 'adjusted');
+        $this->applyProperty($json, 'height');
+        $this->applyProperty($json, 'width');
+        $this->applyProperty($json, 'units');
+        $this->applyProperty($json, 'responsive');
+    }
 
-  /**
-   * @var string
-   */
-  protected $width;
+    public function isAdjusted(): bool
+    {
+        return $this->adjusted;
+    }
 
-  /**
-   * @var bool
-   */
-  protected $responsive;
+    public function setAdjusted(bool $adjusted): static
+    {
+        $this->adjusted = $adjusted;
+        $this->fieldChanged('adjusted');
+        return $this;
+    }
 
-  /**
-   * @var string
-   */
-  protected $units;
+    public function getHeight(): ?float
+    {
+        return $this->height;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
+    public function setHeight(float $height): static
+    {
+        $this->height = $height;
+        $this->fieldChanged('height');
+        return $this;
+    }
 
-    $this->applyProperty($json, 'adjusted');
-    $this->applyProperty($json, 'height');
-    $this->applyProperty($json, 'width');
-    $this->applyProperty($json, 'units');
-    $this->applyProperty($json, 'responsive');
-  }
+    public function getWidth(): ?float
+    {
+        return $this->width;
+    }
 
-  /**
-   * @return bool
-   */
-  public function isAdjusted() {
-    return $this->adjusted;
-  }
+    public function setWidth(float $width): static
+    {
+        $this->width = $width;
+        $this->fieldChanged('width');
+        return $this;
+    }
 
-  /**
-   * @param bool $adjusted
-   * @return StudioConfigurationPlayer
-   */
-  public function setAdjusted($adjusted) {
-    $this->adjusted = $adjusted;
-    $this->fieldChanged('adjusted');
-    return $this;
-  }
+    public function getUnits(): ?string
+    {
+        return $this->units;
+    }
 
-  /**
-   * @return string
-   */
-  public function getHeight() {
-    return $this->height;
-  }
+    public function setUnits(string $units): static
+    {
+        $this->units = $units;
+        $this->fieldChanged('units');
+        return $this;
+    }
 
-  /**
-   * @param string $height
-   * @return StudioConfigurationPlayer
-   */
-  public function setHeight($height) {
-    $this->height = $height;
-    $this->fieldChanged('height');
-    return $this;
-  }
+    public function isResponsive(): bool
+    {
+        return $this->responsive;
+    }
 
-  /**
-   * @return string
-   */
-  public function getWidth() {
-    return $this->width;
-  }
-
-  /**
-   * @param string $width
-   * @return StudioConfigurationPlayer
-   */
-  public function setWidth($width) {
-    $this->width = $width;
-    $this->fieldChanged('width');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getUnits() {
-    return $this->units;
-  }
-
-  /**
-   * @param $units
-   * @return StudioConfigurationPlayer
-   */
-  public function setUnits($units) {
-    $this->units = $units;
-    $this->fieldChanged('units');
-    return $this;
-  }
-
-  /**
-   * @return bool
-   */
-  public function isResponsive() {
-      return $this->responsive;
-  }
-
-  /**
-   * @param bool $is_response
-   * @return StudioConfigurationPlayer
-   */
-  public function setResponse($is_response) {
-      $this->responsive = $is_response;
-      $this->fieldChanged('responsive');
-      return $this;
-  }
-
+    /**
+     * @param bool $is_response
+     * @return StudioConfigurationPlayer
+     */
+    public function setResponse(bool $is_response): static
+    {
+        $this->responsive = $is_response;
+        $this->fieldChanged('responsive');
+        return $this;
+    }
 }

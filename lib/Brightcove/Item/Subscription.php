@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item;
 
 use Brightcove\API\Request\SubscriptionRequest;
@@ -10,55 +12,39 @@ use Brightcove\API\Request\SubscriptionRequest;
  * @package Brightcove\Item
  * @api
  */
-class Subscription extends SubscriptionRequest {
+class Subscription extends SubscriptionRequest
+{
+    protected ?string $id;
+    protected ?string $service_account;
 
-  /**
-   * @var string
-   */
-  protected $id;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'service_account');
+    }
 
-  /**
-   * @var string
-   */
-  protected $service_account;
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'service_account');
-  }
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    public function getServiceAccount(): ?string
+    {
+        return $this->service_account;
+    }
 
-  /**
-   * @param string $id
-   * @return Subscription
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getServiceAccount() {
-    return $this->service_account;
-  }
-
-  /**
-   * @param string $service_account
-   * @return Subscription
-   */
-  public function setServiceAccount($service_account) {
-    $this->service_account = $service_account;
-    $this->fieldChanged('service_account');
-    return $this;
-  }
+    public function setServiceAccount(string $service_account): static
+    {
+        $this->service_account = $service_account;
+        $this->fieldChanged('service_account');
+        return $this;
+    }
 }

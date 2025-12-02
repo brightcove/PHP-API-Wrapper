@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\API\Request;
 
 use Brightcove\Item\ObjectBase;
@@ -10,56 +12,39 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\API\Request
  * @api
  */
-class SubscriptionRequest extends ObjectBase {
+class SubscriptionRequest extends ObjectBase
+{
+    protected ?string $endpoint = null;
+    protected array $events = [];
 
-  /**
-   * @var string
-   */
-  protected $endpoint;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'endpoint');
+        $this->applyProperty($json, 'events');
+    }
 
-  /**
-   * @var array
-   */
-  protected $events;
+    public function getEndpoint(): string
+    {
+        return $this->endpoint;
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'endpoint');
-    $this->applyProperty($json, 'events');
-  }
+    public function setEndpoint(string $endpoint): static
+    {
+        $this->endpoint = $endpoint;
+        $this->fieldChanged('endpoint');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getEndpoint() {
-    return $this->endpoint;
-  }
+    public function getEvents(): array
+    {
+        return $this->events;
+    }
 
-  /**
-   * @param string $endpoint
-   * @return SubscriptionRequest
-   */
-  public function setEndpoint($endpoint) {
-    $this->endpoint = $endpoint;
-    $this->fieldChanged('endpoint');
-    return $this;
-  }
-
-  /**
-   * @return array
-   */
-  public function getEvents() {
-    return $this->events;
-  }
-
-  /**
-   * @param array $events
-   * @return SubscriptionRequest
-   */
-  public function setEvents(array $events) {
-    $this->events = $events;
-    $this->fieldChanged('events');
-    return $this;
-  }
-
+    public function setEvents(array $events): static
+    {
+        $this->events = $events;
+        $this->fieldChanged('events');
+        return $this;
+    }
 }

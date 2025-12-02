@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Video;
 
 use Brightcove\Item\ObjectBase;
@@ -8,66 +10,53 @@ use Brightcove\Item\ObjectBase;
  * An image what represents a video, only can be thumbnail or poster.
  * @api
  */
-class Image extends ObjectBase {
-  protected $id;
-  protected $src;
-  protected $sources;
+class Image extends ObjectBase
+{
+    protected ?string $id = null;
+    protected ?string $src = null;
+    protected array $sources = [];
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'src');
-    $this->applyProperty($json, 'sources');
-  }
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'src');
+        $this->applyProperty($json, 'sources');
+    }
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  /**
-   * @param string $id
-   * @return $this
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
-  }
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getSrc() {
-    return $this->src;
-  }
+    public function getSrc(): ?string
+    {
+        return $this->src;
+    }
 
-  /**
-   * @param string $src
-   * @return $this
-   */
-  public function setSrc($src) {
-    $this->src = $src;
-    $this->fieldChanged('src');
-    return $this;
-  }
+    public function setSrc(string $src): static
+    {
+        $this->src = $src;
+        $this->fieldChanged('src');
+        return $this;
+    }
 
-  /**
-   * @return array
-   */
-  public function getSources() {
-    return $this->sources;
-  }
+    public function getSources(): array
+    {
+        return $this->sources;
+    }
 
-  /**
-   * @param array $sources
-   * @return $this
-   */
-  public function setSources(array $sources) {
-    $this->sources = $sources;
-    $this->fieldChanged('sources');
-    return $this;
-  }
+    public function setSources(array $sources): static
+    {
+        $this->sources = $sources;
+        $this->fieldChanged('sources');
+        return $this;
+    }
 }

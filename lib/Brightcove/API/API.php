@@ -25,7 +25,8 @@ abstract class API
     public function __construct(
         protected ApiClientInterface $client,
         protected string $account,
-    ) {}
+    ) {
+    }
 
     /**
      * Builds HTTP query parameters.
@@ -36,7 +37,8 @@ abstract class API
      * @return string
      *   The built HTTP query.
      */
-    protected function buildHttpQuery(array $query): string {
+    protected function buildHttpQuery(array $query): string
+    {
         $query_parameters = '';
         if ($query !== []) {
             $query_parameters = '?' . http_build_query($query);

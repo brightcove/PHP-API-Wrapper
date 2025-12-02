@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Video;
 
 use Brightcove\Item\ObjectBase;
@@ -9,594 +11,473 @@ use Brightcove\Item\ObjectBase;
  *
  * @api
  */
-class Video extends ObjectBase {
-  /**
-   * The video id.
-   *
-   * @var string
-   */
-  protected $id;
-  /**
-   * The id of the account.
-   *
-   * @var string
-   */
-  protected $account_id;
-  /**
-   * It will be true if all processing of renditions and images is complete.
-   *
-   * @var boolean
-   */
-  protected $complete;
+class Video extends ObjectBase
+{
+    /**
+     * The video id.
+     */
+    protected ?string $id = null;
 
-  /**
-   * ISO 8601 date-time string
-   * Date-time video was added to the account; example: "2014-12-09T06:07:11.877Z".
-   *
-   * @var string
-   */
-  protected $created_at;
-  /**
-   * Array of cue_point objects.
-   *
-   * Marker at a precise time point in the duration of a video.
-   * You can use cue points to trigger mid-roll ads or
-   * to separate chapters or scenes in a long-form video.
-   *
-   * @var CuePoint[]
-   */
-  protected $cue_points;
-  /**
-   * Map of custom field name:value pairs; only fields that have values are included.
-   *
-   * @var array
-   */
-  protected $custom_fields;
-  /**
-   * The short description of the video - 250 single-byte characters maximum.
-   *
-   * @var string
-   */
-  protected $description;
-  /**
-   * Length of the video in milliseconds.
-   *
-   * @var int
-   */
-  protected $duration;
-  /**
-   * Indicates whether ad requests are permitted for the video.
-   *
-   * @var string
-   */
-  protected $economics;
-  /**
-   * This is a reference to folder fields.
-   *
-   * @var string
-   */
-  protected $folder_id;
-  /**
-   * If geo-restriction is enabled for the account,
-   * this array will contain geo objects which represents
-   * geo-restriction properties for the video
-   *
-   * @var GEO[]
-   */
-  protected $geo;
-  /**
-   * List of image objects
-   *
-   * @var Image[]
-   */
-  protected $images;
-  /**
-   * Descript a related link.
-   *
-   * @var Link
-   */
-  protected $link;
-  /**
-   * Maximum 5000 single-byte characters allowed.
-   *
-   * @var string
-   */
-  protected $long_description;
-  /**
-   * Video title - required field
-   *
-   * @var string
-   */
-  protected $name;
-  /**
-   * Any value that is unique within the account
-   *
-   * @var string
-   */
-  protected $reference_id;
-  /**
-   * @var Schedule
-   */
-  protected $schedule;
-  /**
-   * Sharing object
-   *
-   * @var Sharing $sharing
-   */
-  protected $sharing;
-  /**
-   * Current status of the video: ACTIVE | INACTIVE | PENDING | DELETED.
-   *
-   * @var String.
-   */
-  protected $state;
-  /**
-   * Array of tags (strings) added to the video.
-   *
-   * @var string[].
-   */
-  protected $tags;
-  /**
-   * Array of text_track objects.
-   *
-   * @var TextTrack[]
-   */
-  protected $text_tracks;
-  /**
-   * ISO 8601 date-time string
-   * date-time video was last modified.
-   * Example: "2015-01-13T17:45:21.977Z"
-   *
-   * @var string
-   */
-  protected $updated_at;
-  /**
-   * The mapping projection for 360° videos, e.g. "equirectangular"
-   *
-   * @var string
-   */
-  protected $projection;
-  /**
-   * ISO 8601 date-time string
-   * Date-time video was published, can differ from created_at; example: "2014-12-09T06:07:11.877Z".
-   *
-   * @var string
-   */
-  protected $published_at;
+    /**
+     * The id of the account.
+     */
+    protected ?string $account_id = null;
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'id');
-    $this->applyProperty($json, 'account_id');
-    $this->applyProperty($json, 'complete');
-    $this->applyProperty($json, 'created_at');
-    $this->applyProperty($json, 'cue_points', NULL, CuePoint::class, TRUE);
-    $this->applyProperty($json, 'custom_fields');
-    $this->applyProperty($json, 'description');
-    $this->applyProperty($json, 'duration');
-    $this->applyProperty($json, 'economics');
-    $this->applyProperty($json, 'folder_id');
-    $this->applyProperty($json, 'geo', NULL, GEO::class);
-    $this->applyProperty($json, 'images', NULL, Image::class, TRUE);
-    $this->applyProperty($json, 'link', NULL, Link::class);
-    $this->applyProperty($json, 'long_description');
-    $this->applyProperty($json, 'name');
-    $this->applyProperty($json, 'reference_id');
-    $this->applyProperty($json, 'schedule', NULL, Schedule::class);
-    $this->applyProperty($json, 'sharing', NULL, Sharing::class);
-    $this->applyProperty($json, 'state');
-    $this->applyProperty($json, 'tags');
-    $this->applyProperty($json, 'text_tracks', NULL, TextTrack::class, TRUE);
-    $this->applyProperty($json, 'updated_at');
-    $this->applyProperty($json, 'projection');
-    $this->applyProperty($json, 'published_at');
-  }
+    /**
+     * It will be true if all processing of renditions and images is complete.
+     */
+    protected ?bool $complete = null;
 
-  /**
-   * @return string
-   */
-  public function getId() {
-    return $this->id;
-  }
+    /**
+     * ISO 8601 date-time string
+     * Date-time video was added to the account; example: "2014-12-09T06:07:11.877Z".
+     */
+    protected ?string $created_at = null;
 
-  /**
-   * @param string $id
-   * @return $this
-   */
-  public function setId($id) {
-    $this->id = $id;
-    $this->fieldChanged('id');
-    return $this;
-  }
+    /**
+     * Array of cue_point objects.
+     *
+     * Marker at a precise time point in the duration of a video.
+     * You can use cue points to trigger mid-roll ads or
+     * to separate chapters or scenes in a long-form video.
+     *
+     * @var CuePoint[]
+     */
+    protected array $cue_points = [];
 
-  /**
-   * @return string
-   */
-  public function getAccountId() {
-    return $this->account_id;
-  }
+    /**
+     * Map of custom field name:value pairs; only fields that have values are included.
+     */
+    protected array $custom_fields = [];
 
-  /**
-   * @param string $account_id
-   * @return $this
-   */
-  public function setAccountId($account_id) {
-    $this->account_id = $account_id;
-    $this->fieldChanged('account_id');
-    return $this;
-  }
+    /**
+     * The short description of the video - 250 single-byte characters maximum.
+     */
+    protected ?string $description = null;
 
-  /**
-   * @return string
-   */
-  public function getComplete() {
-    return $this->complete;
-  }
+    /**
+     * Length of the video in milliseconds.
+     */
+    protected ?int $duration = null;
 
-  /**
-   * @param string $complete
-   * @return $this
-   */
-  public function setComplete($complete) {
-    $this->complete = $complete;
-    $this->fieldChanged('complete');
-    return $this;
-  }
+    /**
+     * Indicates whether ad requests are permitted for the video.
+     */
+    protected ?string $economics = null;
 
-  /**
-   * @return string
-   */
-  public function getCreatedAt() {
-    return $this->created_at;
-  }
+    /**
+     * This is a reference to folder fields.
+     */
+    protected ?string $folder_id = null;
 
-  /**
-   * @param string $created_at
-   * @return $this
-   */
-  public function setCreatedAt($created_at) {
-    $this->created_at = $created_at;
-    $this->fieldChanged('created_at');
-    return $this;
-  }
+    /**
+     * If geo-restriction is enabled for the account,
+     * this array will contain geo objects which represents
+     * geo-restriction properties for the video.
+     */
+    protected ?GEO $geo = null;
 
-  /**
-   * @return CuePoint[]
-   */
-  public function getCuePoints() {
-    return $this->cue_points;
-  }
+    /**
+     * List of image objects.
+     *
+     * @var Image[]|null
+     */
+    protected ?array $images = null;
 
-  /**
-   * @param CuePoint[] $cue_points
-   * @return $this
-   */
-  public function setCuePoints(array $cue_points) {
-    $this->cue_points = $cue_points;
-    $this->fieldChanged('cue_points');
-    return $this;
-  }
+    /**
+     * Describe a related link.
+     */
+    protected ?Link $link = null;
 
-  /**
-   * @return array
-   */
-  public function getCustomFields() {
-    return $this->custom_fields;
-  }
+    /**
+     * Maximum 5000 single-byte characters allowed.
+     */
+    protected ?string $long_description = null;
 
-  /**
-   * @param array $custom_fields
-   * @return $this
-   */
-  public function setCustomFields(array $custom_fields) {
-    $this->custom_fields = $custom_fields;
-    $this->fieldChanged('custom_fields');
-    return $this;
-  }
+    /**
+     * Video title - required field
+     */
+    protected ?string $name = null;
 
-  /**
-   * @return string
-   */
-  public function getDescription() {
-    return $this->description;
-  }
+    /**
+     * Any value that is unique within the account
+     */
+    protected ?string $reference_id = null;
 
-  /**
-   * @param string $description
-   * @return $this
-   */
-  public function setDescription($description) {
-    $this->description = $description;
-    $this->fieldChanged('description');
-    return $this;
-  }
+    /**
+     * Video schedule.
+     */
+    protected ?Schedule $schedule = null;
 
-  /**
-   * @return string
-   */
-  public function getDuration() {
-    return $this->duration;
-  }
+    /**
+     * Sharing object.
+     */
+    protected ?Sharing $sharing = null;
 
-  /**
-   * @param string $duration
-   * @return $this
-   */
-  public function setDuration($duration) {
-    $this->duration = $duration;
-    $this->fieldChanged('duration');
-    return $this;
-  }
+    /**
+     * Current status of the video: ACTIVE | INACTIVE | PENDING | DELETED.
+     */
+    protected ?string $state = null;
 
-  /**
-   * @return string
-   */
-  public function getEconomics() {
-    return $this->economics;
-  }
+    /**
+     * Array of tags (strings) added to the video.
+     *
+     * @var string[].
+     */
+    protected array $tags = [];
 
-  /**
-   * @param string $economics
-   * @return $this
-   */
-  public function setEconomics($economics) {
-    $this->economics = $economics;
-    $this->fieldChanged('economics');
-    return $this;
-  }
+    /**
+     * Array of text_track objects.
+     *
+     * @var TextTrack[]|null
+     */
+    protected ?array $text_tracks = [];
 
-  /**
-   * @return string
-   */
-  public function getFolderId() {
-    return $this->folder_id;
-  }
+    /**
+     * ISO 8601 date-time string
+     * date-time video was last modified.
+     * Example: "2015-01-13T17:45:21.977Z".
+     */
+    protected ?string $updated_at = null;
 
-  /**
-   * @param string $folder_id
-   * @return $this
-   */
-  public function setFolderId($folder_id) {
-    $this->folder_id = $folder_id;
-    $this->fieldChanged('folder_id');
-    return $this;
-  }
+    /**
+     * The mapping projection for 360° videos, e.g. "equirectangular"
+     */
+    protected ?string $projection = null;
 
-  /**
-   * @return GEO
-   */
-  public function getGeo() {
-    return $this->geo;
-  }
+    /**
+     * ISO 8601 date-time string
+     * Date-time video was published, can differ from created_at; example: "2014-12-09T06:07:11.877Z".
+     */
+    protected ?string $published_at = null;
 
-  /**
-   * @param GEO $geo
-   * @return $this
-   */
-  public function setGeo(GEO $geo = NULL) {
-    $this->geo = $geo;
-    $this->fieldChanged('geo');
-    return $this;
-  }
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'id');
+        $this->applyProperty($json, 'account_id');
+        $this->applyProperty($json, 'complete');
+        $this->applyProperty($json, 'created_at');
+        $this->applyProperty($json, 'cue_points', null, CuePoint::class, true);
+        $this->applyProperty($json, 'custom_fields');
+        $this->applyProperty($json, 'description');
+        $this->applyProperty($json, 'duration');
+        $this->applyProperty($json, 'economics');
+        $this->applyProperty($json, 'folder_id');
+        $this->applyProperty($json, 'geo', null, GEO::class);
+        $this->applyProperty($json, 'images', null, Image::class, true);
+        $this->applyProperty($json, 'link', null, Link::class);
+        $this->applyProperty($json, 'long_description');
+        $this->applyProperty($json, 'name');
+        $this->applyProperty($json, 'reference_id');
+        $this->applyProperty($json, 'schedule', null, Schedule::class);
+        $this->applyProperty($json, 'sharing', null, Sharing::class);
+        $this->applyProperty($json, 'state');
+        $this->applyProperty($json, 'tags');
+        $this->applyProperty($json, 'text_tracks', null, TextTrack::class, true);
+        $this->applyProperty($json, 'updated_at');
+        $this->applyProperty($json, 'projection');
+        $this->applyProperty($json, 'published_at');
+    }
 
-  /**
-   * @return Image[]
-   */
-  public function getImages() {
-    return $this->images;
-  }
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-  /**
-   * @param Image[] $images
-   * @return $this
-   */
-  public function setImages(array $images) {
-    $this->images = $images;
-    $this->fieldChanged('images');
-    return $this;
-  }
+    public function setId(string $id): static
+    {
+        $this->id = $id;
+        $this->fieldChanged('id');
+        return $this;
+    }
 
-  /**
-   * @return Link $link
-   */
-  public function getLink() {
-    return $this->link;
-  }
+    public function getAccountId(): ?string
+    {
+        return $this->account_id;
+    }
 
-  /**
-   * @param  Link $link
-   * @return $this
-   */
-  public function setLink(Link $link = NULL) {
-    $this->link = $link;
-    $this->fieldChanged('link');
-    return $this;
-  }
+    public function setAccountId(string $account_id): static
+    {
+        $this->account_id = $account_id;
+        $this->fieldChanged('account_id');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getLongDescription() {
-    return $this->long_description;
-  }
+    public function getComplete(): ?bool
+    {
+        return $this->complete;
+    }
 
-  /**
-   * @param string $long_description
-   * @return $this
-   */
-  public function setLongDescription($long_description) {
-    $this->long_description = $long_description;
-    $this->fieldChanged('long_description');
-    return $this;
-  }
+    public function setComplete(bool $complete): static
+    {
+        $this->complete = $complete;
+        $this->fieldChanged('complete');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getName() {
-    return $this->name;
-  }
+    public function getCreatedAt(): ?string
+    {
+        return $this->created_at;
+    }
 
-  /**
-   * @param string $name
-   * @return $this
-   */
-  public function setName($name) {
-    $this->name = $name;
-    $this->fieldChanged('name');
-    return $this;
-  }
+    public function setCreatedAt(string $created_at): static
+    {
+        $this->created_at = $created_at;
+        $this->fieldChanged('created_at');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getReferenceId() {
-    return $this->reference_id;
-  }
+    /**
+     * @return CuePoint[]
+     */
+    public function getCuePoints(): array
+    {
+        return $this->cue_points;
+    }
 
-  /**
-   * @param string $reference_id
-   * @return $this
-   */
-  public function setReferenceId($reference_id) {
-    $this->reference_id = $reference_id;
-    $this->fieldChanged('reference_id');
-    return $this;
-  }
+    public function setCuePoints(array $cue_points): static
+    {
+        $this->cue_points = $cue_points;
+        $this->fieldChanged('cue_points');
+        return $this;
+    }
 
-  /**
-   * @return Schedule
-   */
-  public function getSchedule() {
-    return $this->schedule;
-  }
+    public function getCustomFields(): array
+    {
+        return $this->custom_fields;
+    }
 
-  /**
-   * @param Schedule $schedule
-   * @return $this
-   */
-  public function setSchedule(Schedule $schedule = NULL) {
-    $this->schedule = $schedule;
-    $this->fieldChanged('schedule');
-    return $this;
-  }
+    public function setCustomFields(array $custom_fields): static
+    {
+        $this->custom_fields = $custom_fields;
+        $this->fieldChanged('custom_fields');
+        return $this;
+    }
 
-  /**
-   * @return Sharing
-   */
-  public function getSharing() {
-    return $this->sharing;
-  }
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 
-  /**
-   * @param Sharing $sharing
-   * @return $this
-   */
-  public function setSharing(Sharing $sharing = NULL) {
-    $this->sharing = $sharing;
-    $this->fieldChanged('sharing');
-    return $this;
-  }
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+        $this->fieldChanged('description');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getState() {
-    return $this->state;
-  }
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
 
-  /**
-   * @param string $state
-   * @return $this
-   */
-  public function setState($state) {
-    $this->state = $state;
-    $this->fieldChanged('state');
-    return $this;
-  }
+    public function setDuration(int $duration): static
+    {
+        $this->duration = $duration;
+        $this->fieldChanged('duration');
+        return $this;
+    }
 
-  /**
-   * @return array
-   */
-  public function getTags() {
-    return $this->tags;
-  }
+    public function getEconomics(): ?string
+    {
+        return $this->economics;
+    }
 
-  /**
-   * @param array $tags
-   * @return $this
-   */
-  public function setTags(array $tags) {
-    $this->tags = $tags;
-    $this->fieldChanged('tags');
-    return $this;
-  }
+    public function setEconomics(string $economics): static
+    {
+        $this->economics = $economics;
+        $this->fieldChanged('economics');
+        return $this;
+    }
 
-  /**
-   * @return TextTrack[]
-   */
-  public function getTextTracks() {
-    return $this->text_tracks;
-  }
+    public function getFolderId(): ?string
+    {
+        return $this->folder_id;
+    }
 
-  /**
-   * @param TextTrack[] $text_tracks
-   * @return $this
-   */
-  public function setTextTracks(array $text_tracks) {
-    $this->text_tracks = $text_tracks;
-    $this->fieldChanged('text_tracks');
-    return $this;
-  }
+    /**
+     * @param string $folder_id
+     * @return $this
+     */
+    public function setFolderId(string $folder_id): static
+    {
+        $this->folder_id = $folder_id;
+        $this->fieldChanged('folder_id');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getUpdatedAt() {
-    return $this->updated_at;
-  }
+    public function getGeo(): ?GEO
+    {
+        return $this->geo;
+    }
 
-  /**
-   * @param string $updated_at
-   * @return $this
-   */
-  public function setUpdatedAt($updated_at) {
-    $this->updated_at = $updated_at;
-    $this->fieldChanged('updated_at');
-    return $this;
-  }
+    public function setGeo(GEO $geo = null): static
+    {
+        $this->geo = $geo;
+        $this->fieldChanged('geo');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getProjection() {
-    return $this->projection;
-  }
+    public function getImages(): ?array
+    {
+        return $this->images;
+    }
 
-  /**
-   * @param string $projection
-   * @return $this
-   */
-  public function setProjection($projection) {
-    $this->projection = $projection;
-    $this->fieldChanged('projection');
-    return $this;
-  }
+    /**
+     * @param Image[] $images
+     */
+    public function setImages(array $images): static
+    {
+        $this->images = $images;
+        $this->fieldChanged('images');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getPublishedAt() {
-    return $this->published_at;
-  }
+    public function getLink(): ?Link
+    {
+        return $this->link;
+    }
 
-  /**
-   * @param string $published_at
-   * @return $this
-   */
-  public function setPublishedAt($published_at) {
-    $this->published_at = $published_at;
-    $this->fieldChanged('published_at');
-    return $this;
-  }
+    public function setLink(Link $link): static
+    {
+        $this->link = $link;
+        $this->fieldChanged('link');
+        return $this;
+    }
+
+    public function getLongDescription(): ?string
+    {
+        return $this->long_description;
+    }
+
+    public function setLongDescription(string $long_description): static
+    {
+        $this->long_description = $long_description;
+        $this->fieldChanged('long_description');
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        $this->fieldChanged('name');
+        return $this;
+    }
+
+    public function getReferenceId(): ?string
+    {
+        return $this->reference_id;
+    }
+
+    public function setReferenceId(string $reference_id): static
+    {
+        $this->reference_id = $reference_id;
+        $this->fieldChanged('reference_id');
+        return $this;
+    }
+
+    public function getSchedule(): ?Schedule
+    {
+        return $this->schedule;
+    }
+
+    public function setSchedule(Schedule $schedule): static
+    {
+        $this->schedule = $schedule;
+        $this->fieldChanged('schedule');
+        return $this;
+    }
+
+    public function getSharing(): ?Sharing
+    {
+        return $this->sharing;
+    }
+
+    public function setSharing(Sharing $sharing): static
+    {
+        $this->sharing = $sharing;
+        $this->fieldChanged('sharing');
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): static
+    {
+        $this->state = $state;
+        $this->fieldChanged('state');
+        return $this;
+    }
+
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(array $tags): static
+    {
+        $this->tags = $tags;
+        $this->fieldChanged('tags');
+        return $this;
+    }
+
+    public function getTextTracks(): ?array
+    {
+        return $this->text_tracks;
+    }
+
+    /**
+     * @param TextTrack[] $text_tracks
+     */
+    public function setTextTracks(array $text_tracks): static
+    {
+        $this->text_tracks = $text_tracks;
+        $this->fieldChanged('text_tracks');
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?string
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(string $updated_at): static
+    {
+        $this->updated_at = $updated_at;
+        $this->fieldChanged('updated_at');
+        return $this;
+    }
+
+    public function getProjection(): ?string
+    {
+        return $this->projection;
+    }
+
+    public function setProjection(string $projection): static
+    {
+        $this->projection = $projection;
+        $this->fieldChanged('projection');
+        return $this;
+    }
+
+    public function getPublishedAt(): ?string
+    {
+        return $this->published_at;
+    }
+
+    public function setPublishedAt(string $published_at): static
+    {
+        $this->published_at = $published_at;
+        $this->fieldChanged('published_at');
+        return $this;
+    }
 }

@@ -26,8 +26,8 @@ final readonly class AccessToken
         public string $accessToken,
         public int $expiresIn,
         public string $tokenType,
-    )
-    {}
+    ) {
+    }
 
     /**
      * Creates a new instance from a response object.

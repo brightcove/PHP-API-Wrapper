@@ -7,9 +7,8 @@ namespace Brightcove\Type;
 /**
  * Sort type.
  */
-final class Sort implements SortInterface
+final readonly class Sort implements SortInterface
 {
-
     /**
      * Initializes a sort type.
      *
@@ -19,9 +18,10 @@ final class Sort implements SortInterface
      *   The order of the field.
      */
     public function __construct(
-        private readonly string $fieldName,
-        private readonly SortOrder $order = SortOrder::default
-    ) {}
+        private string $fieldName,
+        private SortOrder $order = SortOrder::default
+    ) {
+    }
 
     /**
      * {@inheritdoc}

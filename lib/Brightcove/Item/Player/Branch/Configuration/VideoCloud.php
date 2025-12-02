@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player\Branch\Configuration;
 
 use Brightcove\Item\ObjectBase;
@@ -10,57 +12,40 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player\Branch\Configuration
  * @api
  */
-class VideoCloud extends ObjectBase {
+class VideoCloud extends ObjectBase
+{
+    protected ?string $policy_key = null;
+    protected ?string $video = null;
 
-  /**
-   * @var string
-   */
-  protected $policy_key;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
 
-  /**
-   * @var string
-   */
-  protected $video;
+        $this->applyProperty($json, 'policy_key');
+        $this->applyProperty($json, 'video');
+    }
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
+    public function getPolicyKey(): ?string
+    {
+        return $this->policy_key;
+    }
 
-    $this->applyProperty($json, 'policy_key');
-    $this->applyProperty($json, 'video');
-  }
+    public function setPolicyKey(string $policy_key): static
+    {
+        $this->policy_key = $policy_key;
+        $this->fieldChanged('policy_key');
+        return $this;
+    }
 
-  /**
-   * @return string
-   */
-  public function getPolicyKey() {
-    return $this->policy_key;
-  }
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
 
-  /**
-   * @param string $policy_key
-   * @return VideoCloud
-   */
-  public function setPolicyKey($policy_key) {
-    $this->policy_key = $policy_key;
-    $this->fieldChanged('policy_key');
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getVideo() {
-    return $this->video;
-  }
-
-  /**
-   * @param string $video
-   * @return VideoCloud
-   */
-  public function setVideo($video) {
-    $this->video = $video;
-    $this->fieldChanged('video');
-    return $this;
-  }
-
+    public function setVideo(string $video): static
+    {
+        $this->video = $video;
+        $this->fieldChanged('video');
+        return $this;
+    }
 }

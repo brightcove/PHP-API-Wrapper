@@ -23,12 +23,13 @@ use Http\Client\HttpAsyncClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Promise\Promise;
 use Psr\Http\{Client\ClientExceptionInterface,
-  Client\ClientInterface,
-  Message\RequestFactoryInterface,
-  Message\RequestInterface,
-  Message\ResponseInterface,
-  Message\StreamFactoryInterface,
-  Message\StreamInterface};
+    Client\ClientInterface,
+    Message\RequestFactoryInterface,
+    Message\RequestInterface,
+    Message\ResponseInterface,
+    Message\StreamFactoryInterface,
+    Message\StreamInterface
+};
 use SensitiveParameter;
 
 /**
@@ -88,9 +89,17 @@ final class ApiClient implements ApiClientInterface
 
         // Initializes pluggable client.
         $this->client = new PluginClient(
-            $client, [
+            $client,
+            array_merge([
                 new AuthenticationPlugin(
-                    new OAuth2($client, $clientId, $clientSecret, $storage, $this->requestFactory, $this->streamFactory),
+                    new OAuth2(
+                        $client,
+                        $clientId,
+                        $clientSecret,
+                        $storage,
+                        $this->requestFactory,
+                        $this->streamFactory
+                    ),
                 ),
                 new ErrorPlugin(),
                 new HeaderDefaultsPlugin([
@@ -99,9 +108,10 @@ final class ApiClient implements ApiClientInterface
                 ]),
                 new RetryPlugin([
                     'exception_delay' => [self::class, 'exceptionDelay'],
-                    'retries' => 10,
+                    'retries' => 5,
                 ]),
-            ] + $additionalPlugins, $options,
+            ], $additionalPlugins),
+            $options,
         );
     }
 
@@ -120,8 +130,11 @@ final class ApiClient implements ApiClientInterface
      *
      * @internal
      */
-    public static function exceptionDelay(RequestInterface $request, ClientExceptionInterface $client_exception, int $retries,): int
-    {
+    public static function exceptionDelay(
+        RequestInterface $request,
+        ClientExceptionInterface $client_exception,
+        int $retries,
+    ): int {
         // Wait explicitly 2 seconds to be on the safe side if we hit too many requests.
         // @see https://support.brightcove.com/overview-cms-api.html#Rate_limiting
         if ($client_exception->getCode() === 429) {
@@ -155,22 +168,31 @@ final class ApiClient implements ApiClientInterface
                 $responses[] = $promise->wait();
             }
             microtime(100);
-        } while(!$finished);
+        } while (!$finished);
         return $responses;
     }
 
     /**
      * {@inheritDoc}
      */
-    public static function setConsumer(string $consumer): void {
+    public static function setConsumer(string $consumer): void
+    {
         self::$consumer = $consumer;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function sendRequest(HttpMethod $method, string $api_version, ApiType $api_type, string $account_id, string $endpoint, ?string $result, bool $is_array = false, ?ObjectInterface $post = null,): ObjectInterface|array|null
-    {
+    public function sendRequest(
+        HttpMethod $method,
+        string $api_version,
+        ApiType $api_type,
+        string $account_id,
+        string $endpoint,
+        ?string $result,
+        bool $is_array = false,
+        ?ObjectInterface $post = null,
+    ): ObjectInterface|array|null {
         $request = $this->requestFactory->createRequest(
             $method->value,
             $this->getApiBaseUrl($api_type, $api_version, $account_id, $endpoint),
@@ -178,7 +200,7 @@ final class ApiClient implements ApiClientInterface
 
         $body = $this->prepareBody($method, $post);
         if ($body !== null) {
-            $request->withBody($body);
+            $request = $request->withBody($body);
         }
 
         $response = $this->client->sendRequest($request);
@@ -200,8 +222,14 @@ final class ApiClient implements ApiClientInterface
     /**
      * {@inheritDoc}
      */
-    public function sendAsyncRequest(HttpMethod $method, string $api_version, ApiType $api_type, string $account_id, string $endpoint, ?ObjectInterface $post = null,): Promise
-    {
+    public function sendAsyncRequest(
+        HttpMethod $method,
+        string $api_version,
+        ApiType $api_type,
+        string $account_id,
+        string $endpoint,
+        ?ObjectInterface $post = null,
+    ): Promise {
         $request = $this->requestFactory->createRequest(
             $method->value,
             $this->getApiBaseUrl($api_type, $api_version, $account_id, $endpoint),
@@ -209,7 +237,7 @@ final class ApiClient implements ApiClientInterface
 
         $body = $this->prepareBody($method, $post);
         if ($body !== null) {
-          $request->withBody($body);
+            $request = $request->withBody($body);
         }
 
         return $this->client->sendAsyncRequest($request);
@@ -223,10 +251,11 @@ final class ApiClient implements ApiClientInterface
      */
     private function getUserAgent(): string
     {
-        return sprintf('PHP-API-Wrapper/%s (%s;%s curl/%s)%s',
+        return sprintf(
+            'PHP-API-Wrapper/%s (%s;%s curl/%s)%s',
             Constants::VERSION,
             $_SERVER['HTTP_HOST'] ?: gethostname(),
-            isset($_SERVER['SERVER_SOFTWARE']) ? " {$_SERVER['SERVER_SOFTWARE']}": '',
+            isset($_SERVER['SERVER_SOFTWARE']) ? " {$_SERVER['SERVER_SOFTWARE']}" : '',
             curl_version()['version'],
             self::$consumer !== null ? ' ' . self::$consumer : '',
         );
@@ -256,7 +285,7 @@ final class ApiClient implements ApiClientInterface
         }
 
         if ($body !== null) {
-          return $this->streamFactory->createStream($body);
+            return $this->streamFactory->createStream($body);
         }
 
         return null;
@@ -279,6 +308,12 @@ final class ApiClient implements ApiClientInterface
      */
     private function getApiBaseUrl(ApiType $api_type, string $api_version, string $account_id, string $endpoint): string
     {
-        return sprintf('https://%s.api.brightcove.com/v%s/accounts/%s%s', $api_type->value, $api_version, $account_id, $endpoint);
+        return sprintf(
+            'https://%s.api.brightcove.com/v%s/accounts/%s%s',
+            $api_type->value,
+            $api_version,
+            $account_id,
+            $endpoint,
+        );
     }
 }

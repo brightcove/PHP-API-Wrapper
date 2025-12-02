@@ -28,8 +28,12 @@ class CMS extends API implements CmsInterface
     /**
      * {@inheritDoc}
      */
-    public function listVideos(?string $search = null, ?string $sort = null, ?int $limit = null, ?int $offset = null): array
-    {
+    public function listVideos(
+        ?string $search = null,
+        ?string $sort = null,
+        ?int $limit = null,
+        ?int $offset = null,
+    ): array {
         $query = [];
         if ($search !== null) {
             $query['q'] = urlencode($search);
@@ -179,7 +183,13 @@ class CMS extends API implements CmsInterface
         $promises = [];
 
         foreach ($playlist_ids as $playlist_id) {
-            $promises[] = $this->client->sendAsyncRequest(HttpMethod::Get, self::API_VERSION, ApiType::CMS, $this->account, "/playlists/{$playlist_id}");
+            $promises[] = $this->client->sendAsyncRequest(
+                HttpMethod::Get,
+                self::API_VERSION,
+                ApiType::CMS,
+                $this->account,
+                "/playlists/{$playlist_id}",
+            );
         }
 
         $playlists = [];
@@ -188,8 +198,7 @@ class CMS extends API implements CmsInterface
             $status_code = $response->getStatusCode();
             if ($status_code === HttpResponse::Ok->value) {
                 $playlists[] = Playlist::fromJSON($value);
-            }
-            elseif ($status_code !== HttpResponse::NotFound->value) {
+            } elseif ($status_code !== HttpResponse::NotFound->value) {
                 // Skip not found, but throw an exception in any other case.
                 throw new CmsException(sprintf('Failed to get playlist: %s', $value));
             }
@@ -199,48 +208,50 @@ class CMS extends API implements CmsInterface
     }
 
     /**
-     * @param Playlist $playlist
-     * @return Playlist
+     * {@inheritDoc}
      */
-    public function createPlaylist(Playlist $playlist)
+    public function createPlaylist(Playlist $playlist): Playlist
     {
         return $this->sendRequest(HttpMethod::Post, '/playlists', Playlist::class, false, $playlist);
     }
 
     /**
-     * @param string $playlist_id
-     * @return Playlist
+     * {@inheritDoc}
      */
-    public function getPlaylist($playlist_id)
+    public function getPlaylist(string $playlist_id): Playlist
     {
         return $this->sendRequest(HttpMethod::Get, "/playlists/{$playlist_id}", Playlist::class);
     }
 
     /**
-     * @param Playlist $playlist
-     * @return Playlist
+     * {@inheritDoc}
      */
-    public function updatePlaylist(Playlist $playlist)
+    public function updatePlaylist(Playlist $playlist): Playlist
     {
         $playlist->fieldUnchanged('id');
-        return $this->sendRequest(HttpMethod::Patch, "/playlists/{$playlist->getId()}", Playlist::class, false, $playlist);
+        return $this->sendRequest(
+            HttpMethod::Patch,
+            "/playlists/{$playlist->getId()}",
+            Playlist::class,
+            false,
+            $playlist,
+        );
     }
 
     /**
-     * @param string $playlist_id
+     * {@inheritDoc}
      */
-    public function deletePlaylist($playlist_id)
+    public function deletePlaylist(string $playlist_id): void
     {
-        $this->sendRequest(HttpMethod::Delete, "/playlists/{$playlist_id}", null);
+        $this->sendRequest(HttpMethod::Delete, "/playlists/{$playlist_id}");
     }
 
     /**
-     * @param string $playlist_id
-     * @return int
+     * {@inheritDoc}
      */
-    public function getVideoCountInPlaylist($playlist_id)
+    public function getVideoCountInPlaylist(string $playlist_id): ?int
     {
-        $result = $this->sendRequest(HttpMethod::Get, "/counts/playlists/{$playlist_id}/videos", null);
+        $result = $this->sendRequest(HttpMethod::Get, "/counts/playlists/{$playlist_id}/videos");
         if ($result && !empty($result['count'])) {
             return $result['count'];
         }
@@ -248,36 +259,33 @@ class CMS extends API implements CmsInterface
     }
 
     /**
-     * @param string $playlist_id
-     * @return Video[]
+     * {@inheritDoc}
      */
-    public function getVideosInPlaylist($playlist_id)
+    public function getVideosInPlaylist(string $playlist_id): array
     {
         return $this->sendRequest(HttpMethod::Get, "/playlists/{$playlist_id}/videos", Video::class, true);
     }
 
     /**
-     * @return Subscription[]|null
+     * {@inheritDoc}
      */
-    public function getSubscriptions()
+    public function getSubscriptions(): array
     {
         return $this->sendRequest(HttpMethod::Get, '/subscriptions', Subscription::class, true);
     }
 
     /**
-     * @param string $subscription_id
-     * @return Subscription
+     * {@inheritDoc}
      */
-    public function getSubscription($subscription_id)
+    public function getSubscription(string $subscription_id): Subscription
     {
         return $this->sendRequest(HttpMethod::Get, "/subscriptions/{$subscription_id}", Subscription::class);
     }
 
     /**
-     * @param SubscriptionRequest $request
-     * @return Subscription|null
+     * {@inheritDoc}
      */
-    public function createSubscription(SubscriptionRequest $request)
+    public function createSubscription(SubscriptionRequest $request): Subscription
     {
         return $this->sendRequest(HttpMethod::Post, '/subscriptions', Subscription::class, false, $request);
     }
@@ -287,7 +295,7 @@ class CMS extends API implements CmsInterface
      */
     public function deleteSubscription(string $subscription_id): void
     {
-        $this->sendRequest(HttpMethod::Delete, "/subscriptions/{$subscription_id}", null);
+        $this->sendRequest(HttpMethod::Delete, "/subscriptions/{$subscription_id}");
     }
 
     /**
@@ -297,13 +305,14 @@ class CMS extends API implements CmsInterface
      *
      * @param HttpMethod $method
      *   HTTP method.
-     * @param $endpoint
+     * @param string $endpoint
      *   API endpoint.
      * @param Response|class-string $result
-     *
+     *   Response result.
      * @param bool $is_array
-     *
-     * @param $post
+     *   If the result is an array.
+     * @param ?ObjectInterface $post
+     *   An ObjectInterface to post.
      *
      * @return Response|Response[]|null
      *   Response object.
@@ -311,8 +320,22 @@ class CMS extends API implements CmsInterface
      * @throws ClientExceptionInterface
      *   If the request is failed.
      */
-    protected function sendRequest(HttpMethod $method, string $endpoint, mixed $result = null, bool $is_array = false, $post = null): ObjectInterface|array|null
-    {
-        return $this->client->sendRequest($method, self::API_VERSION, ApiType::CMS, $this->account, $endpoint, $result, $is_array, $post,);
+    protected function sendRequest(
+        HttpMethod $method,
+        string $endpoint,
+        mixed $result = null,
+        bool $is_array = false,
+        ?ObjectInterface $post = null,
+    ): ObjectInterface|array|null {
+        return $this->client->sendRequest(
+            $method,
+            self::API_VERSION,
+            ApiType::CMS,
+            $this->account,
+            $endpoint,
+            $result,
+            $is_array,
+            $post,
+        );
     }
 }

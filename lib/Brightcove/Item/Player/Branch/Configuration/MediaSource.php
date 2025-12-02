@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Player\Branch\Configuration;
 
 use Brightcove\Item\ObjectBase;
@@ -10,55 +12,40 @@ use Brightcove\Item\ObjectBase;
  * @package Brightcove\Item\Player\Branch\Configuration
  * @api
  */
-class MediaSource extends ObjectBase {
-  /**
-   * @var string
-   */
-  protected $type;
+class MediaSource extends ObjectBase
+{
+    protected ?string $type = null;
+    protected ?string $src = null;
 
-  /**
-   * @var string
-   */
-  protected $src;
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
+        $this->applyProperty($json, 'type');
+        $this->applyProperty($json, 'src');
+    }
 
-    $this->applyProperty($json, 'type');
-    $this->applyProperty($json, 'src');
-  }
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
 
-  /**
-   * @return string
-   */
-  public function getType() {
-    return $this->type;
-  }
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+        $this->fieldChanged('type');
+        return $this;
+    }
 
-  /**
-   * @param string $type
-   * @return MediaSource
-   */
-  public function setType($type) {
-    $this->type = $type;
-    $this->fieldChanged('type');
-    return $this;
-  }
+    public function getSrc(): ?string
+    {
+        return $this->src;
+    }
 
-  /**
-   * @return string
-   */
-  public function getSrc() {
-    return $this->src;
-  }
-
-  /**
-   * @param string $src
-   * @return MediaSource
-   */
-  public function setSrc($src) {
-    $this->src = $src;
-    $this->fieldChanged('src');
-    return $this;
-  }
+    public function setSrc(string $src): static
+    {
+        $this->src = $src;
+        $this->fieldChanged('src');
+        return $this;
+    }
 }

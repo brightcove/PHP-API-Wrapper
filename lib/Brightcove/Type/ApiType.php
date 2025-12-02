@@ -7,8 +7,8 @@ namespace Brightcove\Type;
 /**
  * API type list.
  */
-enum ApiType: string {
-
+enum ApiType: string
+{
     /**
      * CMS API.
      */
@@ -33,5 +33,4 @@ enum ApiType: string {
      * Players API.
      */
     case Players = 'players';
-
 }

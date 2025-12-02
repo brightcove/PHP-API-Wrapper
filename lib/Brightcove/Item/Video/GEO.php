@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Brightcove\Item\Video;
 
 use Brightcove\Item\ObjectBase;
@@ -11,66 +13,53 @@ use Brightcove\Item\ObjectBase;
  *
  * @api
  */
-class GEO extends ObjectBase {
-  protected $countries = [];
-  protected $exclude_countries = FALSE;
-  protected $restricted = FALSE;
+class GEO extends ObjectBase
+{
+    protected array $countries = [];
+    protected bool $exclude_countries = false;
+    protected bool $restricted = false;
 
-  public function applyJSON(array $json): void {
-    parent::applyJSON($json);
-    $this->applyProperty($json, 'countries');
-    $this->applyProperty($json, 'exclude_countries');
-    $this->applyProperty($json, 'restricted');
-  }
+    public function applyJSON(array $json): void
+    {
+        parent::applyJSON($json);
+        $this->applyProperty($json, 'countries');
+        $this->applyProperty($json, 'exclude_countries');
+        $this->applyProperty($json, 'restricted');
+    }
 
-  /**
-   * @return array
-   */
-  public function getCountries() {
-    return $this->countries;
-  }
+    public function getCountries(): array
+    {
+        return $this->countries;
+    }
 
-  /**
-   * @param array $countries
-   * @return $this
-   */
-  public function setCountries($countries) {
-    $this->countries = $countries;
-    $this->fieldChanged('countries');
-    return $this;
-  }
+    public function setCountries(array $countries): static
+    {
+        $this->countries = $countries;
+        $this->fieldChanged('countries');
+        return $this;
+    }
 
-  /**
-   * @return boolean
-   */
-  public function isExcludeCountries() {
-    return $this->exclude_countries;
-  }
+    public function isExcludeCountries(): bool
+    {
+        return $this->exclude_countries;
+    }
 
-  /**
-   * @param boolean $exclude_countries
-   * @return $this
-   */
-  public function setExcludeCountries($exclude_countries) {
-    $this->exclude_countries = $exclude_countries;
-    $this->fieldChanged('exclude_countries');
-    return $this;
-  }
+    public function setExcludeCountries(bool $exclude_countries): static
+    {
+        $this->exclude_countries = $exclude_countries;
+        $this->fieldChanged('exclude_countries');
+        return $this;
+    }
 
-  /**
-   * @return boolean
-   */
-  public function isRestricted() {
-    return $this->restricted;
-  }
+    public function isRestricted(): bool
+    {
+        return $this->restricted;
+    }
 
-  /**
-   * @param boolean $restricted
-   * @return $this
-   */
-  public function setRestricted($restricted) {
-    $this->restricted = $restricted;
-    $this->fieldChanged('restricted');
-    return $this;
-  }
+    public function setRestricted(bool $restricted): static
+    {
+        $this->restricted = $restricted;
+        $this->fieldChanged('restricted');
+        return $this;
+    }
 }

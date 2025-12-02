@@ -7,8 +7,8 @@ namespace Brightcove\Type;
 /**
  * HTTP methods.
  */
-enum HttpMethod: string {
-
+enum HttpMethod: string
+{
     case Get = 'GET';
     case Post = 'POST';
     case Put = 'PUT';
@@ -18,5 +18,4 @@ enum HttpMethod: string {
     case Head = 'HEAD';
     case Trace = 'TRACE';
     case Connect = 'CONNECT';
-
 }
