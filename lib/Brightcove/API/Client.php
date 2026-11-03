@@ -167,7 +167,7 @@ class Client {
    *
    * @internal
    */
-  public static function HTTPRequest($method, $url, array $headers = [], $postdata = NULL, callable $extraconfig = NULL) {
+  public static function HTTPRequest($method, $url, array $headers = [], $postdata = NULL, ?callable $extraconfig = NULL) {
     $ch = curl_init();
 
     if ($postdata !== NULL) {
@@ -319,7 +319,7 @@ class Client {
    *
    * @internal
    */
-  public function request($method, $api_version, $api_type, $account, $endpoint, $result, $is_array = FALSE, ObjectInterface $post = NULL) {
+  public function request($method, $api_version, $api_type, $account, $endpoint, $result, $is_array = FALSE, ?ObjectInterface $post = NULL) {
     $body = NULL;
     if ($post) {
       if ($method === 'PATCH') {
