@@ -373,7 +373,7 @@ class Video extends ObjectBase {
    * @param GEO $geo
    * @return $this
    */
-  public function setGeo(GEO $geo = NULL) {
+  public function setGeo(?GEO $geo = NULL) {
     $this->geo = $geo;
     $this->fieldChanged('geo');
     return $this;
@@ -407,7 +407,7 @@ class Video extends ObjectBase {
    * @param  Link $link
    * @return $this
    */
-  public function setLink(Link $link = NULL) {
+  public function setLink(?Link $link = NULL) {
     $this->link = $link;
     $this->fieldChanged('link');
     return $this;
@@ -475,7 +475,7 @@ class Video extends ObjectBase {
    * @param Schedule $schedule
    * @return $this
    */
-  public function setSchedule(Schedule $schedule = NULL) {
+  public function setSchedule(?Schedule $schedule = NULL) {
     $this->schedule = $schedule;
     $this->fieldChanged('schedule');
     return $this;
@@ -492,7 +492,7 @@ class Video extends ObjectBase {
    * @param Sharing $sharing
    * @return $this
    */
-  public function setSharing(Sharing $sharing = NULL) {
+  public function setSharing(?Sharing $sharing = NULL) {
     $this->sharing = $sharing;
     $this->fieldChanged('sharing');
     return $this;

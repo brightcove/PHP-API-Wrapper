@@ -81,7 +81,7 @@ class IngestRequest extends ObjectBase {
    * @param IngestRequestMaster $master
    * @return $this
    */
-  public function setMaster(IngestRequestMaster $master = NULL) {
+  public function setMaster(?IngestRequestMaster $master = NULL) {
     $this->master = $master;
     $this->fieldChanged('master');
     return $this;
