@@ -71,7 +71,7 @@ final class InPageExperience extends API implements InPageExperienceInterface
     /**
      * {@inheritdoc}
      */
-    public function getAll(string $search = null, SortInterface $sort = null): InPageExperienceListInterface
+    public function getAll(?string $search = null, ?SortInterface $sort = null): InPageExperienceListInterface
     {
         $http_query = [];
         if ($search !== null) {

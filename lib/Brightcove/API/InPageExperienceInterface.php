@@ -38,5 +38,5 @@ interface InPageExperienceInterface
     *
     * @throws APIException
     */
-    public function getAll(string $search = null, SortInterface $sort = null): InPageExperienceListInterface;
+    public function getAll(?string $search = null, ?SortInterface $sort = null): InPageExperienceListInterface;
 }

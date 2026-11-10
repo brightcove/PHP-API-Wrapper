@@ -33,7 +33,7 @@ class APIException extends \Exception {
    * @param \Exception $previous
    * @param string $responseBody
    */
-  public function __construct($message = "", $code = 0, \Exception $previous = NULL, $responseBody = '') {
+  public function __construct($message = "", $code = 0, ?\Exception $previous = NULL, $responseBody = '') {
     parent::__construct($message, $code, $previous);
     $this->setResponseBody($responseBody);
   }
